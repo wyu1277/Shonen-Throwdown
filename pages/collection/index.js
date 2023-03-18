@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 const Collection = () => {
 	const supabase = useSupabaseClient();
 	// const user = useUser();
+	//! user to check if logged in
 	const [data, setData] = useState();
 
 	useEffect(() => {
