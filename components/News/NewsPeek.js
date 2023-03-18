@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import classes from "./NewsPeek.module.css";
 import { motion } from "framer-motion";
-import container from "./newsvariants";
 
 const NewsPeek = ({ article }) => {
   const router = useRouter();
