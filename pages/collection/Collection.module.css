@@ -1,0 +1,15 @@
+.searchBar {
+	height: 20px;
+}
+
+.card {
+	height: 200px;
+	width: 120px;
+	color: white;
+	border: solid 2px white;
+	margin: 25px;
+}
+
+.cardParent {
+	display: flex;
+}
