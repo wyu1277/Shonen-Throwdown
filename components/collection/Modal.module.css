@@ -1,6 +1,5 @@
 .card {
 	height: 800px;
-	margin: 25px;
 	z-index: 3;
 	position: fixed;
 	top: 10%;
@@ -10,4 +9,13 @@
 .img {
 	object-fit: cover;
 	height: 80%;
+}
+
+.close {
+	height: 30px;
+	width: 70px;
+	position: fixed;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
 }

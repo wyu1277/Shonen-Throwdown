@@ -6,7 +6,9 @@ let Modal = ({ open, card, onClose }) => {
 	if (!open) return null;
 	return ReactDom.createPortal(
 		<div className={styles.card}>
-			<button onClick={onClose}>Close</button>
+			<button onClick={onClose} className={styles.close}>
+				Close
+			</button>
 			<img src={card.image} alt={card.name} className={styles.img} />
 		</div>,
 		document.getElementById('portal')

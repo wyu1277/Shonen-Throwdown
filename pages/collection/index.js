@@ -27,7 +27,7 @@ const Collection = () => {
 	};
 
 	return (
-		<div>
+		<div className={styles.pageParent}>
 			<div className={styles.searchParent}>
 				<input
 					className={styles.searchBar}
@@ -45,10 +45,14 @@ const Collection = () => {
 						</div>
 					))
 				) : (
-					<div>There are no cards</div>
+					<div className={styles.loading}>
+						<h1>Loading...</h1>
+					</div>
 				)}
 			</div>
-			<Modal open={selectedCard !== null} card={selectedCard} onClose={() => setSelectedCard(null)} />
+			<div className={styles.modalParent}>
+				<Modal open={selectedCard !== null} card={selectedCard} onClose={() => setSelectedCard(null)} />
+			</div>
 		</div>
 	);
 };

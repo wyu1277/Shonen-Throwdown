@@ -16,16 +16,27 @@
 }
 
 .card {
-	height: 500px;
+	height: 300px;
 	margin: 20px;
 	box-sizing: border-box;
 }
 
 .card:hover {
-	transform: scale(1.1);
+	transform: scale(1.2);
 }
 
 .img {
 	object-fit: cover;
 	height: 100%;
+}
+
+.modalParent {
+	display: flex;
+	justify-content: center;
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
