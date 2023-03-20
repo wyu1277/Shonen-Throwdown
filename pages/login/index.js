@@ -19,6 +19,7 @@ const LoginPage = () => {
     // Only run query once user is logged in.
     if (user) loadData();
     dispatch(authActions.retrieveUserInfo(user));
+    console.log(user);
   }, [user]);
 
   if (!user)
