@@ -1,0 +1,13 @@
+.card {
+	height: 800px;
+	margin: 25px;
+	z-index: 3;
+	position: fixed;
+	top: 10%;
+	left: 50%;
+}
+
+.img {
+	object-fit: cover;
+	height: 80%;
+}

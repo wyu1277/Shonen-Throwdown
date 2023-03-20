@@ -75,3 +75,7 @@ a {
 		color-scheme: dark;
 	}
 }
+
+.portal {
+	z-index: 10;
+}

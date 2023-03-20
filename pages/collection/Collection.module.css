@@ -1,19 +1,31 @@
+.searchParent {
+	margin: 20px;
+	display: flex;
+	justify-content: center;
+}
+
 .searchBar {
-	height: 20px;
+	height: 40px;
+	width: 50%;
+}
+
+.cardParent {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .card {
-	height: 250px;
-	width: 150px;
-	color: white;
-	border: solid 2px white;
-	margin: 25px;
+	height: 500px;
+	margin: 20px;
+	box-sizing: border-box;
 }
 
 .card:hover {
 	transform: scale(1.1);
 }
 
-.cardParent {
-	display: flex;
+.img {
+	object-fit: cover;
+	height: 100%;
 }
