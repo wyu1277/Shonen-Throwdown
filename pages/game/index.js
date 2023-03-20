@@ -2,23 +2,28 @@ import React from "react";
 import supabase from "@/lib/supabase";
 
 const Game = () => {
-  const channel = supabase
-    .channel("room1")
-    .on("broadcast", { event: "cursor-pos" }, (payload) => {
-      console.log("Cursor position received!", payload);
-    })
-    .subscribe((status) => {
-      setInterval(() => {
-        channel.send({
-          type: "broadcast",
-          event: "cursor-pos",
-          payload: { x: Math.random(), y: Math.random() },
-        });
-        console.log(status);
-      }, 100);
-    });
+  supabase
+    .channel("any")
+    .on(
+      "boardcast",
+      { event: "*", schema: "public", table: "messages" },
+      (payload) => {
+        console.log("Change received!", payload);
+      }
+    )
+    .subscribe();
 
-  return <div>Game</div>;
+  return (
+    <div>
+      <p>hi</p>
+      <form>
+        <div>
+          <label htmlFor="content">Message</label>
+          <textarea name="content" id="content"></textarea>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default Game;
