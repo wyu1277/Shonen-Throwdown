@@ -1,5 +1,5 @@
 import React from "react";
-import TeamMate from "@/components/teammate";
+// import TeamMate from "@/components/teammate";
 
 const About = () => {
   const team = [
