@@ -8,6 +8,7 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
     console.log("HOPE STRING");
     console.log(hope);
     const user = await supabase.from("users").select().eq("email", hope);
+    console.log(user);
     const data = user ? user : false;
     console.log(data);
     return data;
@@ -22,8 +23,8 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(searchUser.fulfilled, (state, action) => {
-      state.user = action.payload;
-      console.log(action.payload);
+      state.user = action.payload.data[0];
+      console.log(action.payload.data);
       console.log("extra reducers string");
     });
   },

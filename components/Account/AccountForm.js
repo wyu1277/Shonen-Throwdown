@@ -1,8 +1,28 @@
 import classes from "./AccountSetupForm.module.css";
+import { useRef } from "react";
+import { useRouter } from "next/router";
+import supabase from "@/lib/supabase";
+import { v4 as uuidv4 } from "uuid";
 
 const AccountSetupForm = () => {
-  const submitHandler = (event) => {
+  const router = useRouter();
+
+  const fnameRef = useRef();
+  const lnameRef = useRef();
+  const phoneRef = useRef();
+  const emailRef = useRef();
+
+  const submitHandler = async (event) => {
     event.preventDefault();
+
+    const fname = fnameRef.current.value;
+    const lname = lnameRef.current.value;
+    const phone = phoneRef.current.value;
+    const email = emailRef.current.value;
+    const result = await supabase
+      .from("users")
+      .insert([{ id: uuidv4(), fname, lname, phone, email }]);
+    console.log(result);
   };
 
   return (
@@ -15,6 +35,7 @@ const AccountSetupForm = () => {
             name="fName"
             placeholder="First Name"
             className={classes.input}
+            ref={fnameRef}
           />
         </div>
         <div>
@@ -23,6 +44,7 @@ const AccountSetupForm = () => {
             name="lName"
             placeholder="Last Name"
             className={classes.input}
+            ref={lnameRef}
           />
         </div>
         <div>
@@ -32,6 +54,7 @@ const AccountSetupForm = () => {
             placeholder="Phone"
             type="number"
             className={classes.input}
+            ref={phoneRef}
           />
         </div>
         <div>
@@ -41,6 +64,7 @@ const AccountSetupForm = () => {
             placeholder="Email"
             type="email"
             className={classes.input}
+            ref={emailRef}
           />
         </div>
         <button>Submit</button>

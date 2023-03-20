@@ -1,9 +1,17 @@
 import { useSelector } from "react-redux";
+import AccountDetails from "@/components/Account/AccountDetails";
+import classes from "../../styles/UserPage.module.css";
 
 const UserPage = () => {
-  const state = useSelector((state) => state);
-  console.log(state);
-  return <h1>UserPage</h1>;
+  const user = useSelector((state) => {
+    return state.user.user;
+  });
+
+  return (
+    <div className={classes.container}>
+      {user && <AccountDetails user={user} />}
+    </div>
+  );
 };
 
 export default UserPage;

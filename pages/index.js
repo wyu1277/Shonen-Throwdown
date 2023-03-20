@@ -17,6 +17,7 @@ const Home = () => {
   console.log(userState);
   useEffect(() => {
     if (userAuth) {
+      console.log(userAuth);
       dispatch(searchUser(userAuth.email));
     }
     if (userAuth && userState?.data?.length === 0) {
