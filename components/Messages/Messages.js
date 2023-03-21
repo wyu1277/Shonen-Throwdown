@@ -35,8 +35,9 @@ const Messages = () => {
   //   .subscribe();
 
   useEffect(() => {
+    const channel = supabase.channel("test");
     const messages = supabase
-      .channel("*")
+      .channel("test")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "messages" },
@@ -44,8 +45,24 @@ const Messages = () => {
           setChat((current) => [...current, payload.new]);
         }
       )
+      .on("presence", { event: "join" }, () => {
+        const state = channel.presenceState();
+        console.log(state);
+      })
+
       .subscribe();
   });
+
+  // useEffect(() => {
+  //   const channel = supabase.channel("test");
+  //   supabase
+  //     .channel("test")
+  //     .on("presence", { event: "sync" }, () => {
+  //       const state = channel.presenceState("id");
+  //       console.log(state);
+  //     })
+  //     .subscribe();
+  // });
 
   return (
     <ul>

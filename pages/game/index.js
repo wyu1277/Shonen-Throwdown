@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Messages from "@/components/Messages/Messages";
 import supabase from "@/lib/supabase";
+import GameRoom from "@/components/GameRoom/GameRoom";
 
 const Game = () => {
-  supabase
-    .channel("any")
-    .on(
-      "boardcast",
-      { event: "*", schema: "public", table: "messages" },
-      (payload) => {
-        console.log("Change received!", payload);
-      }
-    )
-    .subscribe();
+  const channel = supabase.channel("test");
+
+  useEffect(() => {
+    channel.on("presence", { event: "sync " }, () => {
+      const state = channel.presenceState();
+      console.log(state);
+    });
+  });
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -27,6 +26,7 @@ const Game = () => {
 
   return (
     <div>
+      <GameRoom />
       <Messages />
       <form onSubmit={submitHandler}>
         <label htmlFor="content">Message</label>
