@@ -5,6 +5,7 @@ const initialState = {};
 
 export const searchUser = createAsyncThunk("search4user", async (hope) => {
   try {
+    console.log(hope, "hope");
     const user = await supabase.from("users").select().eq("email", hope);
     if (user.data.length === 0) {
       await supabase.from("users").insert([
@@ -14,8 +15,9 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
       ]);
     }
 
-    const data = user ? user : false;
-    return data;
+    const data = user.data;
+    console.log(data[0], "hope");
+    return data[0];
   } catch (error) {
     console.log(error);
   }
@@ -39,8 +41,13 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(searchUser.pending, (state, action) => {
+        console.log("Initiating search");
+      })
       .addCase(searchUser.fulfilled, (state, action) => {
-        state.user = action.payload.data;
+        console.log("Fulfilled Search");
+        console.log(action.payload, "ACTION PAYLOAD");
+        state.user = action.payload;
       })
       .addCase(updateUser.pending, (state, action) => {
         console.log("Initiating update user");
@@ -52,5 +59,4 @@ const userSlice = createSlice({
 });
 
 export const userActions = userSlice.actions;
-
 export default userSlice.reducer;

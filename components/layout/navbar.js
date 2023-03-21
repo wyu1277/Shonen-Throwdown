@@ -12,7 +12,6 @@ const Navbar = () => {
     await supabaseClient.auth.signOut();
     router.push("/login");
   };
-  console.log(user, "NAV_USER");
   return (
     <div className={styles.nav}>
       <Link href="/">Home</Link>
