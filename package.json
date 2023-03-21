@@ -20,8 +20,9 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.0.5",
     "server-only": "^0.0.1",
-    "uuid": "^9.0.0"
-  },
+    "uuid": "^9.0.0",
+    "@supabase/supabase-js": "^2.11.0",
+    "mdbreact": "^5.2.0"},
   "devDependencies": {
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1"
