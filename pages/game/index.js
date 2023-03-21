@@ -6,13 +6,6 @@ import GameRoom from "@/components/GameRoom/GameRoom";
 const Game = () => {
   const channel = supabase.channel("test");
 
-  useEffect(() => {
-    channel.on("presence", { event: "sync " }, () => {
-      const state = channel.presenceState();
-      console.log(state);
-    });
-  });
-
   const submitHandler = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
