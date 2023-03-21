@@ -7,6 +7,8 @@ const UserPage = () => {
     return state.user.user;
   });
 
+  console.log("USERPAGE");
+  console.log(user);
   return (
     <div className={classes.container}>
       {user && <AccountDetails user={user} />}

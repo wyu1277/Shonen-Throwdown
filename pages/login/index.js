@@ -2,10 +2,12 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-import { authActions } from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import classes from "../../styles/LoginPage.module.css";
 
 const LoginPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
@@ -18,18 +20,20 @@ const LoginPage = () => {
     }
     // Only run query once user is logged in.
     if (user) loadData();
-    dispatch(authActions.retrieveUserInfo(user));
+    if (user) router.push("/");
   }, [user]);
 
   if (!user)
     return (
-      <Auth
-        redirectTo="http://localhost:3000/"
-        appearance={{ theme: ThemeSupa }}
-        supabaseClient={supabaseClient}
-        providers={["google", "github"]}
-        socialLayout="horizontal"
-      />
+      <div className={classes.auth}>
+        <Auth
+          redirectTo="http://localhost:3000/"
+          appearance={{ theme: ThemeSupa }}
+          supabaseClient={supabaseClient}
+          providers={["google", "github"]}
+          socialLayout="horizontal"
+        />
+      </div>
     );
 
   return (
