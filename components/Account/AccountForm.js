@@ -3,14 +3,24 @@ import { useRef } from "react";
 import { useRouter } from "next/router";
 import supabase from "@/lib/supabase";
 import { v4 as uuidv4 } from "uuid";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "@/store/slices/userSlice";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const AccountSetupForm = () => {
+  const dispatch = useDispatch();
+  const user = useUser();
   const router = useRouter();
+  const userState = useSelector((state) => {
+    return state.user.user;
+  });
+
+  console.log(userState, "USERSTATE");
 
   const fnameRef = useRef();
   const lnameRef = useRef();
   const phoneRef = useRef();
-  const emailRef = useRef();
+  const usernameRef = useRef();
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -18,11 +28,16 @@ const AccountSetupForm = () => {
     const fname = fnameRef.current.value;
     const lname = lnameRef.current.value;
     const phone = phoneRef.current.value;
-    const email = emailRef.current.value;
-    const result = await supabase
-      .from("users")
-      .insert([{ id: uuidv4(), fname, lname, phone, email }]);
-    console.log(result);
+    const username = usernameRef.current.value;
+    const info = {
+      fname,
+      lname,
+      phone,
+      email: user.email,
+      id: userState[0].id,
+      username,
+    };
+    dispatch(updateUser(info));
   };
 
   return (
@@ -58,15 +73,16 @@ const AccountSetupForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="username">Username:</label>
           <input
-            name="email"
-            placeholder="Email"
-            type="email"
+            name="username"
+            placeholder="Username"
+            type="text"
             className={classes.input}
-            ref={emailRef}
+            ref={usernameRef}
           />
         </div>
+
         <button>Submit</button>
       </form>
     </div>

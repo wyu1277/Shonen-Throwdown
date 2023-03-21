@@ -2,7 +2,6 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
-import { authActions } from "@/store/slices/authSlice";
 import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
@@ -18,7 +17,7 @@ const LoginPage = () => {
     }
     // Only run query once user is logged in.
     if (user) loadData();
-    dispatch(authActions.retrieveUserInfo(user));
+    console.log(user);
   }, [user]);
 
   if (!user)
