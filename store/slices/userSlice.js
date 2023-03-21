@@ -23,7 +23,6 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
 
 export const updateUser = createAsyncThunk("updateUser", async (hope) => {
   try {
-    console.log(hope);
     const updatedUser = await supabase
       .from("users")
       .update(hope)
@@ -42,8 +41,6 @@ const userSlice = createSlice({
     builder
       .addCase(searchUser.fulfilled, (state, action) => {
         state.user = action.payload.data;
-        console.log(current(state));
-        console.log("extra reducers string");
       })
       .addCase(updateUser.pending, (state, action) => {
         console.log("Initiating update user");

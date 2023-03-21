@@ -13,7 +13,6 @@ const Home = ({ user }) => {
   const userData = useSelector((state) => {
     return state.user.user;
   });
-  console.log(userData);
   useEffect(() => {
     if (user) {
       dispatch(searchUser(userInfo.email));
@@ -22,7 +21,7 @@ const Home = ({ user }) => {
     if (user && userData?.[0]?.username === null) {
       router.push("/login/setup-account");
     }
-  }, []);
+  }, [user]);
 
   return (
     <>

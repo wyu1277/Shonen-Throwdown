@@ -3,8 +3,10 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
@@ -17,6 +19,7 @@ const LoginPage = () => {
     }
     // Only run query once user is logged in.
     if (user) loadData();
+    if (user) router.push("/");
     console.log(user);
   }, [user]);
 
