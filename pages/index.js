@@ -15,7 +15,7 @@ const Home = ({ user }) => {
   });
   useEffect(() => {
     if (user) {
-      dispatch(searchUser(userInfo?.email));
+      dispatch(searchUser(user.email));
     }
 
     if (user && userData?.[0]?.username === null) {
@@ -40,6 +40,15 @@ export const getServerSideProps = async (context) => {
     return {
       redirect: {
         destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  if (session && userData?.[0].username === null) {
+    return {
+      redirect: {
+        destination: "/login/setup-account",
         permanent: false,
       },
     };

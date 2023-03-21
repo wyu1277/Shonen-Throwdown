@@ -4,6 +4,7 @@ import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import classes from "../../styles/LoginPage.module.css";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -24,13 +25,15 @@ const LoginPage = () => {
 
   if (!user)
     return (
-      <Auth
-        redirectTo="http://localhost:3000/"
-        appearance={{ theme: ThemeSupa }}
-        supabaseClient={supabaseClient}
-        providers={["google", "github"]}
-        socialLayout="horizontal"
-      />
+      <div className={classes.auth}>
+        <Auth
+          redirectTo="http://localhost:3000/"
+          appearance={{ theme: ThemeSupa }}
+          supabaseClient={supabaseClient}
+          providers={["google", "github"]}
+          socialLayout="horizontal"
+        />
+      </div>
     );
 
   return (
