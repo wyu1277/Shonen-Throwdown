@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import supabase from "@/lib/supabase";
+import { useRouter } from "next/router";
 
 const GameRoom = () => {
+  const router = useRouter();
   const [presence, setPresence] = useState();
   const channel = supabase.channel("test", {
     config: {
@@ -32,8 +34,9 @@ const GameRoom = () => {
     });
 
   const leaveHandler = () => {
-    supabase.removeAllChannels();
+    channel.unsubscribe("test");
     console.log("removed all channels");
+    router.push("http://localhost:3000/");
   };
 
   return (
