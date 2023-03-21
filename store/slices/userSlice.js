@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import supabase from "../../lib/supabase";
 
 const initialState = {};
@@ -23,8 +23,8 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(searchUser.fulfilled, (state, action) => {
-      state.user = action.payload.data[0];
-      console.log(action.payload.data);
+      state.user = action.payload.data;
+      console.log(current(state));
       console.log("extra reducers string");
     });
   },

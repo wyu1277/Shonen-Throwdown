@@ -11,9 +11,8 @@ const Home = () => {
     return state.auth.user;
   });
   const userState = useSelector((state) => {
-    return state.user.user;
+    return state.user;
   });
-  console.log(userAuth);
   console.log(userState);
   useEffect(() => {
     if (userAuth) {
