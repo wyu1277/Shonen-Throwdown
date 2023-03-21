@@ -8,10 +8,11 @@ const Navbar = () => {
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
-  const signOutHandler = () => {
-    supabaseClient.auth.signOut();
+  const signOutHandler = async () => {
+    await supabaseClient.auth.signOut();
     router.push("/login");
   };
+  console.log(user, "NAV_USER");
   return (
     <div className={styles.nav}>
       <Link href="/">Home</Link>
@@ -22,7 +23,7 @@ const Navbar = () => {
       {!user && <Link href="/login">Login/Sign Up</Link>}
 
       {user && <Link href="/user">Account</Link>}
-      {user && <button onClick={signOutHandler}>Sign Out</button>}
+      {user && <button onClick={() => signOutHandler()}>Sign Out</button>}
     </div>
   );
 };

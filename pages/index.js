@@ -15,7 +15,7 @@ const Home = ({ user }) => {
   });
   useEffect(() => {
     if (user) {
-      dispatch(searchUser(userInfo.email));
+      dispatch(searchUser(userInfo?.email));
     }
 
     if (user && userData?.[0]?.username === null) {
