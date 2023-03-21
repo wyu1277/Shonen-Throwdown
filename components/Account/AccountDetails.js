@@ -1,6 +1,7 @@
 import classes from "./AccountDetails.module.css";
 
 const AccountDetails = ({ user }) => {
+  console.log(user);
   return (
     <div className={classes.container}>
       <h1> Account Details </h1>
