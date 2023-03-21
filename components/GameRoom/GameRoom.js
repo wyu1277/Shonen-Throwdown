@@ -13,12 +13,12 @@ const GameRoom = () => {
     .on("presence", { event: "sync" }, () => {
       const state = channel.presenceState();
       setPresence(state);
-      console.log("this is state", state);
+      console.log("this is state");
     })
     .on("presence", { event: "join" }, ({ newPresences }) => {
-      console.log(newPresences, "Has Joined");
+      console.log(newPresences[0].user_id, "Has Joined");
     })
-    .on("presence", { event: "leave" }, ({ key, leftPresences }) => {
+    .on("presence", { event: "leave" }, ({ leftPresences }) => {
       console.log(leftPresences, "has left");
     })
     .subscribe(async (status) => {
@@ -27,11 +27,21 @@ const GameRoom = () => {
           user_id: 2,
           online_at: new Date().toISOString(),
         });
-        console.log(presenceTrackStatus);
+        console.log("this is track", presenceTrackStatus);
       }
     });
 
-  return <div>GameRoom</div>;
+  const leaveHandler = () => {
+    supabase.removeAllChannels();
+    console.log("removed all channels");
+  };
+
+  return (
+    <div>
+      GameRoom
+      <button onClick={leaveHandler}>Leave Room</button>
+    </div>
+  );
 };
 
 export default GameRoom;
