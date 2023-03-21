@@ -5,19 +5,35 @@ import Modal from "@/components/collection/modal";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import styles from "./Collection.module.css";
+import { motion } from "framer-motion";
 
 const Collection = () => {
   const supabase = useSupabaseClient();
+  const user = useUser();
+
   const [data, setData] = useState();
   const [searchInput, setSearchInput] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
+  const [pageMessage, setPageMessage] = useState("Loading...");
 
   useEffect(() => {
-    const loadData = async () => {
-      const { data } = await supabase.from("cards").select("*");
-      setData(data);
-    };
-    loadData();
+    setTimeout(() => {
+      setPageMessage("There are no cards avalible");
+    }, 1000);
+    if (!user) {
+      const loadData = async () => {
+        const { data } = await supabase.from("cards").select("*");
+        setData(data);
+      };
+      loadData();
+    } else {
+      const loadData = async () => {
+        const { data } = await supabase.from("collections").select("*");
+        setData(data);
+        console.log("logged in collection", data);
+      };
+      loadData();
+    }
   }, []);
 
   const filteredData =
@@ -44,17 +60,18 @@ const Collection = () => {
       <div className={styles.cardParent}>
         {filteredData !== undefined ? (
           filteredData.map((card) => (
-            <div
+            <motion.div
+              whileHover={{ scale: 1.5 }}
               key={card.id}
               onClick={() => handleCardClick(card)}
               className={styles.card}
             >
               <img src={card.image} alt={card.name} className={styles.img} />
-            </div>
+            </motion.div>
           ))
         ) : (
           <div className={styles.loading}>
-            <h1>Loading...</h1>
+            <h1>{pageMessage}</h1>
           </div>
         )}
       </div>

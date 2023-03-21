@@ -34,7 +34,7 @@ const AccountSetupForm = () => {
       lname,
       phone,
       email: user.email,
-      id: userState[0].id,
+      id: userState.id,
       username,
     };
     dispatch(updateUser(info));
