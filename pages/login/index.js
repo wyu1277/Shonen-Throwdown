@@ -20,7 +20,6 @@ const LoginPage = () => {
     // Only run query once user is logged in.
     if (user) loadData();
     if (user) router.push("/");
-    console.log(user);
   }, [user]);
 
   if (!user)
