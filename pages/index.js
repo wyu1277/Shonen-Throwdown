@@ -28,8 +28,8 @@ const Home = ({ user }) => {
     }
     // console.log(userData, "USERDATA");
     setIsLoading(false);
-  }, [isLoading]);
-
+  }, []);
+  console.log(userData, "Userdata");
   return (
     <motion.div
       variants={container}

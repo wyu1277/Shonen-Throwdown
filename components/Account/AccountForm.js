@@ -30,11 +30,11 @@ const AccountSetupForm = () => {
     const phone = phoneRef.current.value;
     const username = usernameRef.current.value;
     const info = {
+      id: user.id,
       fname,
       lname,
       phone,
       email: user.email,
-      id: userState.id,
       username,
     };
     dispatch(updateUser(info));
