@@ -29,7 +29,7 @@ const Collection = () => {
         const { data } = await supabase
           .from("users")
           .select("id")
-          .eq("auth_id", user.id);
+          .eq("id", user.id);
         const publicId = data[0].id;
         const cardIds = await supabase
           .from("collections")
