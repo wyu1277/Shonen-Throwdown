@@ -6,7 +6,7 @@ const Messages = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await supabase.from("messages").select("*");
+      const { data } = await supabase.from("messages").select("*, users(*)");
       setChat(data);
     };
     getData();
@@ -32,19 +32,10 @@ const Messages = () => {
   });
 
   return (
-    // <ul>
-    //   {chat.map((message) => (
-    //     <li key={message.id}>
-    //       <h2>{message.users.username}</h2>
-    //       <h4>Message:</h4>
-    //       <p>{message.content}</p>
-    //     </li>
-    //   ))}
-    // </ul>
     <ul>
       {chat.map((message) => (
         <li key={message.id}>
-          <h3>{message.created_at}</h3>
+          <h2>{message.users.username}</h2>
           <h4>Message:</h4>
           <p>{message.content}</p>
         </li>

@@ -16,7 +16,15 @@ const NewsPage = ({ news }) => {
       exit="exit"
       className={classes.newsbody}
     >
-      <NewsPages news={news} />
+      <motion.div
+        variants={container}
+        initial="initial"
+        animate="visible"
+        exit="exit"
+        className={classes.newsbody}
+      >
+        <NewsPages news={news} />
+      </motion.div>
     </motion.div>
   );
 };

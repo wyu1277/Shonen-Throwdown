@@ -10,7 +10,7 @@ const GameRoom = () => {
   const [presence, setPresence] = useState();
   const [player1, setPlayer1] = useState();
   const [player2, setPlayer2] = useState();
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState();
 
   console.log("this is user #######################", user);
 
@@ -18,14 +18,13 @@ const GameRoom = () => {
     const getUser = async () => {
       const { data } = await supabase
         .from("users")
-        .select("username")
-        .eq("id", user.user.auth_id);
+        .select("*")
+        .eq("auth_id", user.id)
+        .single();
       setUsername(data);
     };
     getUser();
   }, []);
-
-  console.log(username);
 
   useEffect(() => {
     const channel = supabase.channel("test", {
