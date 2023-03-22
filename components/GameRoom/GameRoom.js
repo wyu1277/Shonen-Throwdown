@@ -19,7 +19,7 @@ const GameRoom = () => {
       const { data } = await supabase
         .from("users")
         .select("username")
-        .eq("email", user.email);
+        .eq("id", user.user.auth_id);
       setUsername(data);
     };
     getUser();

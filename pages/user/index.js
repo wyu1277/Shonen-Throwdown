@@ -9,8 +9,6 @@ const UserPage = () => {
     return state.user.user;
   });
 
-  console.log("USERPAGE");
-  console.log(user);
   return (
     <motion.div
       variant={container}
