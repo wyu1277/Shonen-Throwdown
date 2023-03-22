@@ -5,6 +5,7 @@ import supabase from "@/lib/supabase";
 const GameRoom = () => {
   const router = useRouter();
   const [presence, setPresence] = useState();
+  const [player1, player2] = useState();
 
   useEffect(() => {
     const channel = supabase.channel("test", {
@@ -16,7 +17,6 @@ const GameRoom = () => {
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
         setPresence(state);
-        console.log("this is state", presence);
       })
       .on("presence", { event: "join" }, ({ newPresences }) => {
         console.log(newPresences, "Has Joined");
@@ -41,10 +41,13 @@ const GameRoom = () => {
     router.push("http://localhost:3000/");
   };
 
+  console.log("this is state", presence);
+
   return (
     <div>
-      GameRoom
+      <h1>GameRoom</h1>
       <button onClick={leaveHandler}>Leave Room</button>
+      <h3>Users In Chat: </h3>
     </div>
   );
 };
