@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchUser } from "@/store/slices/userSlice";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import container from "@/styles/variants";
 
 const Home = ({ user }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const dispatch = useDispatch();
   const userInfo = useUser();
@@ -16,6 +17,8 @@ const Home = ({ user }) => {
     return state.user.user;
   });
   useEffect(() => {
+    console.log("loading");
+    setIsLoading(true);
     if (user) {
       dispatch(searchUser(user.email));
     }
@@ -24,7 +27,8 @@ const Home = ({ user }) => {
       router.push("/login/setup-account");
     }
     console.log(userData, "USERDATA");
-  });
+    setIsLoading(false);
+  }, [user]);
 
   return (
     <motion.div
@@ -33,8 +37,14 @@ const Home = ({ user }) => {
       animate="visible"
       exit="exit"
     >
-      <div>Hello, {user.email}</div>
-      <p>Peppermint Patties Home Page</p>
+      {isLoading ? (
+        <div>loading</div>
+      ) : (
+        <>
+          <div>Hello, {user.email}</div>
+          <p>Peppermint Patties Home Page</p>
+        </>
+      )}
     </motion.div>
   );
 };

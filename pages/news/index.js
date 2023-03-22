@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import NewsPages from "@/components/News/NewsPage";
 import supabase from "@/lib/supabase";
 import classes from "./index.module.css";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
+import { useState } from "react";
 
 const NewsPage = ({ news }) => {
   const router = useRouter();
