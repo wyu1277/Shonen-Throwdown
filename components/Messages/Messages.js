@@ -5,13 +5,6 @@ const Messages = () => {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    //   const getData = async () => {
-    //     const { data } = await supabase.from("messages").select("*, users(*)");
-    //     setChat(data);
-    //   };
-    //   getData();
-    // }, []);
-
     const getData = async () => {
       const { data } = await supabase.from("messages").select("*");
       setChat(data);
@@ -20,9 +13,9 @@ const Messages = () => {
   }, []);
 
   useEffect(() => {
-    const channel = supabase.channel("test");
+    const channel = supabase.channel("chat");
     const messages = supabase
-      .channel("test")
+      .channel("chat")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "messages" },
@@ -31,10 +24,7 @@ const Messages = () => {
           console.log(payload);
         }
       )
-      .on("presence", { event: "join" }, () => {
-        const state = channel.presenceState();
-        console.log(state);
-      });
+      .subscribe();
 
     return () => {
       supabase.removeChannel(channel);

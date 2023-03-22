@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import supabase from "@/lib/supabase";
-import { socket } from "@supabase/realtime-js";
 
 const GameRoom = () => {
   const router = useRouter();
@@ -33,10 +32,6 @@ const GameRoom = () => {
           console.log("this is track", status);
         }
       });
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
   const leaveHandler = () => {
