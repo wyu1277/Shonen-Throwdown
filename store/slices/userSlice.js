@@ -42,7 +42,7 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(searchUser.pending, (state, action) => {
-        console.log("Initiating search");
+        state.loading = true;
       })
       .addCase(searchUser.fulfilled, (state, action) => {
         console.log("Fulfilled Search");
