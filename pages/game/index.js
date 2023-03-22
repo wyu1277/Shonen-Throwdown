@@ -4,8 +4,6 @@ import supabase from "@/lib/supabase";
 import GameRoom from "@/components/GameRoom/GameRoom";
 
 const Game = () => {
-  const channel = supabase.channel("test");
-
   const submitHandler = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;

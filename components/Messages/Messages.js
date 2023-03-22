@@ -5,34 +5,19 @@ const Messages = () => {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
+    //   const getData = async () => {
+    //     const { data } = await supabase.from("messages").select("*, users(*)");
+    //     setChat(data);
+    //   };
+    //   getData();
+    // }, []);
+
     const getData = async () => {
       const { data } = await supabase.from("messages").select("*");
       setChat(data);
     };
     getData();
   }, []);
-
-  // supabase
-  //   .channel("test")
-  //   .on("broadcast", { event: "supa" }, (payload) => console.log(payload))
-  //   .subscribe();
-
-  // supabase.channel("test").subscribe((status) => {
-  //   if (status === "SUBSCRIBED") {
-  //     channel.send({
-  //       type: "broadcast",
-  //       event: "supa",
-  //       payload: { org: "supabase" },
-  //     });
-  //   }
-  // });
-
-  // supabase
-  //   .channel("any")
-  //   .on("broadcast", { event: "*", table: "messages" }, (payload) =>
-  //     console.log(payload)
-  //   )
-  //   .subscribe();
 
   useEffect(() => {
     const channel = supabase.channel("test");
@@ -43,33 +28,34 @@ const Messages = () => {
         { event: "*", schema: "public", table: "messages" },
         (payload) => {
           setChat((current) => [...current, payload.new]);
+          console.log(payload);
         }
       )
       .on("presence", { event: "join" }, () => {
         const state = channel.presenceState();
         console.log(state);
-      })
+      });
 
-      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
   });
 
-  // useEffect(() => {
-  //   const channel = supabase.channel("test");
-  //   supabase
-  //     .channel("test")
-  //     .on("presence", { event: "sync" }, () => {
-  //       const state = channel.presenceState("id");
-  //       console.log(state);
-  //     })
-  //     .subscribe();
-  // });
-
   return (
+    // <ul>
+    //   {chat.map((message) => (
+    //     <li key={message.id}>
+    //       <h2>{message.users.username}</h2>
+    //       <h4>Message:</h4>
+    //       <p>{message.content}</p>
+    //     </li>
+    //   ))}
+    // </ul>
     <ul>
       {chat.map((message) => (
         <li key={message.id}>
-          <h4>{message.created_at}</h4>
-          <h2>Message:</h2>
+          <h3>{message.created_at}</h3>
+          <h4>Message:</h4>
           <p>{message.content}</p>
         </li>
       ))}
