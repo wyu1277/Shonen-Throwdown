@@ -20,15 +20,15 @@ const Home = ({ user }) => {
     console.log("loading");
     setIsLoading(true);
     if (user) {
-      dispatch(searchUser(user.email));
+      dispatch(searchUser(user.id));
     }
 
     if (user && userData?.username === null) {
       router.push("/login/setup-account");
     }
-    console.log(userData, "USERDATA");
+    // console.log(userData, "USERDATA");
     setIsLoading(false);
-  }, [user]);
+  });
 
   return (
     <motion.div

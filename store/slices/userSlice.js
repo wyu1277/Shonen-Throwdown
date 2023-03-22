@@ -6,11 +6,12 @@ const initialState = {};
 export const searchUser = createAsyncThunk("search4user", async (hope) => {
   try {
     console.log(hope, "hope");
-    const user = await supabase.from("users").select().eq("email", hope);
+    const user = await supabase.from("users").select().eq("auth_id", hope);
+    console.log(user);
     if (user.data.length === 0) {
       await supabase.from("users").insert([
         {
-          email: hope,
+          auth_id: hope,
         },
       ]);
     }
