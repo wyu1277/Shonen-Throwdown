@@ -13,7 +13,7 @@ const Collection = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
   const [pageMessage, setPageMessage] = useState("Loading...");
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setPageMessage("There are no cards avalible");

@@ -13,7 +13,7 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
     console.log(data);
     return data[0];
   } catch (error) {
-    console.log(error);
+    console.log(error, "Error Search");
   }
 });
 
