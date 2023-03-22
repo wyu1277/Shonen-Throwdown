@@ -14,10 +14,12 @@ const Collection = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [pageMessage, setPageMessage] = useState("Loading...");
   const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     setTimeout(() => {
       setPageMessage("There are no cards avalible");
     }, 1000);
+
     if (!user) {
       const loadData = async () => {
         const { data } = await supabase.from("cards").select("*");
@@ -26,21 +28,15 @@ const Collection = () => {
       loadData();
     } else {
       const loadData = async () => {
-        const { data } = await supabase
-          .from("users")
-          .select("id")
-          .eq("id", user.id);
-        const publicId = data[0].id;
         const cardIds = await supabase
           .from("collections")
           .select("cards_id")
-          .eq("user_id", publicId);
+          .eq("user_id", user.id);
         const cardIdArr = cardIds.data.map((card) => card.cards_id);
         const cards = await supabase
           .from("cards")
           .select("*")
           .in("id", cardIdArr);
-        // console.log('logged in collection', publicId);
         // console.log('logged in collection', cardIds.data);
         // console.log('cardIdArr', cardIdArr);
         // console.log('cards', cards.data);
