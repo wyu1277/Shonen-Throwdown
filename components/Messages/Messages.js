@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
 
-const Messages = () => {
+const Messages = ({ user }) => {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Messages = () => {
         { event: "*", schema: "public", table: "messages" },
         (payload) => {
           setChat((current) => [...current, payload.new]);
-          console.log(payload);
+          console.log("THIS IS THE MUTHAFUCKIN PAYLOAD", payload);
         }
       )
       .subscribe();
@@ -31,16 +31,38 @@ const Messages = () => {
     };
   });
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const { content } = Object.fromEntries(new FormData(form));
+
+    form.reset();
+    const { data } = await supabase
+      .from("messages")
+      .insert({ content: content, user_id: user.id });
+    console.log(
+      "this is userid in submit handler################################################",
+      user
+    );
+  };
+
   return (
-    <ul>
-      {chat.map((message) => (
-        <li key={message.id}>
-          <h2>{message.users.username}</h2>
-          <h4>Message:</h4>
-          <p>{message.content}</p>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul>
+        {chat.map((message) => (
+          <li key={message.id}>
+            <h2>{message.users.username}</h2>
+            <h4>Message:</h4>
+            <p>{message.content}</p>
+          </li>
+        ))}
+      </ul>
+      <form onSubmit={submitHandler}>
+        <label htmlFor="content">Message</label>
+        <textarea name="content" type="text"></textarea>
+        <button>Send</button>
+      </form>
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@ import supabase from "@/lib/supabase";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
+
 const GameRoom = () => {
   const user = useUser();
   const router = useRouter();
@@ -12,7 +13,7 @@ const GameRoom = () => {
   const [player2, setPlayer2] = useState();
   const [username, setUsername] = useState();
 
-  console.log("this is user #######################", user);
+  console.log("this is user #######################", username);
 
   useEffect(() => {
     const getUser = async () => {
@@ -68,7 +69,7 @@ const GameRoom = () => {
     <div>
       <h1>GameRoom</h1>
       <button onClick={leaveHandler}>Leave Room</button>
-      <h3>Users In Chat: </h3>
+      <h3>Users In Chat:</h3>
     </div>
   );
 };
