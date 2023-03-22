@@ -6,6 +6,7 @@ import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect, useState } from "react";
 import styles from "./Collection.module.css";
 import { motion } from "framer-motion";
+import container from "../../styles/variants";
 
 const Collection = () => {
   const supabase = useSupabaseClient();
@@ -47,7 +48,13 @@ const Collection = () => {
   };
 
   return (
-    <div className={styles.pageParent}>
+    <motion.div
+      variants={container}
+      initial="initial"
+      animate="visible"
+      exit="exit"
+      className={styles.pageParent}
+    >
       <div className={styles.searchParent}>
         <input
           className={styles.searchBar}
@@ -65,6 +72,7 @@ const Collection = () => {
               key={card.id}
               onClick={() => handleCardClick(card)}
               className={styles.card}
+              //   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
             >
               <img src={card.image} alt={card.name} className={styles.img} />
             </motion.div>
@@ -82,7 +90,7 @@ const Collection = () => {
           onClose={() => setSelectedCard(null)}
         />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

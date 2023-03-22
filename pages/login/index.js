@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import classes from "../../styles/LoginPage.module.css";
+import { motion } from "framer-motion";
+import container from "@/styles/variants";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -25,7 +27,13 @@ const LoginPage = () => {
 
   if (!user)
     return (
-      <div className={classes.auth}>
+      <motion.div
+        variants={container}
+        initial="initial"
+        animate="visible"
+        exit="exit"
+        className={classes.auth}
+      >
         <Auth
           redirectTo="http://localhost:3000/"
           appearance={{ theme: ThemeSupa }}
@@ -33,17 +41,22 @@ const LoginPage = () => {
           providers={["google", "github"]}
           socialLayout="horizontal"
         />
-      </div>
+      </motion.div>
     );
 
   return (
-    <>
+    <motion.div
+      variants={container}
+      initial="initial"
+      animate="visible"
+      exit="exit"
+    >
       <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
       <p>user:</p>
       <pre>{JSON.stringify(user, null, 2)}</pre>
       <p>client-side data fetching with RLS</p>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
+    </motion.div>
   );
 };
 

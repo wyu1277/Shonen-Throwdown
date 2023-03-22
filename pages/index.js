@@ -4,6 +4,8 @@ import { searchUser } from "@/store/slices/userSlice";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
+import container from "@/styles/variants";
 
 const Home = ({ user }) => {
   const router = useRouter();
@@ -25,10 +27,15 @@ const Home = ({ user }) => {
   });
 
   return (
-    <>
+    <motion.div
+      variants={container}
+      initial="initial"
+      animate="visible"
+      exit="exit"
+    >
       <div>Hello, {user.email}</div>
       <p>Peppermint Patties Home Page</p>
-    </>
+    </motion.div>
   );
 };
 
