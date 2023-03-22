@@ -1,14 +1,9 @@
-// import { Auth } from '@supabase/auth-ui-react';
-// import { ThemeSupa } from '@supabase/auth-ui-shared';
-//! INSTALL WHEN NEEDED
-
 import Modal from '@/components/collection/modal';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useEffect, useState } from 'react';
 import styles from './Collection.module.css';
 import { motion } from 'framer-motion';
 import container from '../../styles/variants';
-
 
 const Collection = () => {
 	const supabase = useSupabaseClient();
@@ -18,8 +13,6 @@ const Collection = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
-
-	console.log('userID', user.id);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -47,9 +40,6 @@ const Collection = () => {
 			loadData();
 		}
 	}, []);
-
-	console.log('data', data);
-
 
 	const filteredData = data && data.filter((card) => card.name.toLowerCase().includes(searchInput.toLowerCase()));
 
@@ -92,7 +82,6 @@ const Collection = () => {
 			</div>
 		</motion.div>
 	);
-
 };
 
 export default Collection;
