@@ -8,14 +8,14 @@ const Game = () => {
   const user = useUser();
   const [username, setUsername] = useState();
 
-  console.log("this is user #######################", username);
+  console.log("this is user ####################### in game", username);
 
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase
         .from("users")
         .select("*")
-        .eq("auth_id", user.id)
+        .eq("id", user.id)
         .single();
       setUsername(data);
     };
@@ -24,7 +24,7 @@ const Game = () => {
 
   return (
     <div>
-      <GameRoom />
+      <GameRoom user={username} />
       <Messages user={username} />
     </div>
   );

@@ -10,17 +10,15 @@ const Messages = ({ user }) => {
       setChat(data);
     };
     getData();
-  }, []);
 
-  useEffect(() => {
     const channel = supabase.channel("chat");
     const messages = supabase
       .channel("chat")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "messages" },
-        (payload) => {
-          setChat((current) => [...current, payload.new]);
+        async (payload) => {
+          await setChat((current) => [...current, payload.new]);
           console.log("THIS IS THE MUTHAFUCKIN PAYLOAD", payload);
         }
       )
@@ -29,7 +27,7 @@ const Messages = ({ user }) => {
     return () => {
       supabase.removeChannel(channel);
     };
-  });
+  }, [chat]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
