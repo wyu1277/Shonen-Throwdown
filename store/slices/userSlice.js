@@ -8,16 +8,17 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
     console.log(hope, "hope");
     const user = await supabase.from("users").select().eq("auth_id", hope);
     console.log(user);
-    if (user.data.length === 0) {
-      await supabase.from("users").insert([
-        {
-          auth_id: hope,
-        },
-      ]);
-    }
+    // if (user.data.length === 0) {
+    //   const { data, error } = await supabase.from("users").insert([
+    //     {
+    //       auth_id: hope,
+    //     },
+    //   ]);
+    //   console.log("SEARCH USER ERROR", error);
+    // }
 
     const data = user.data;
-    console.log(data[0], "hope");
+    // console.log(data[0], "hope");
     return data[0];
   } catch (error) {
     console.log(error);
@@ -47,7 +48,7 @@ const userSlice = createSlice({
       })
       .addCase(searchUser.fulfilled, (state, action) => {
         console.log("Fulfilled Search");
-        console.log(action.payload, "ACTION PAYLOAD");
+        // console.log(action.payload, "ACTION PAYLOAD");
         state.user = action.payload;
       })
       .addCase(updateUser.pending, (state, action) => {

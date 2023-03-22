@@ -17,7 +17,7 @@ const Home = ({ user }) => {
     return state.user.user;
   });
   useEffect(() => {
-    console.log("loading");
+    // console.log("loading");
     setIsLoading(true);
     if (user) {
       dispatch(searchUser(user.id));
@@ -28,7 +28,7 @@ const Home = ({ user }) => {
     }
     // console.log(userData, "USERDATA");
     setIsLoading(false);
-  });
+  }, [isLoading]);
 
   return (
     <motion.div

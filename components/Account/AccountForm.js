@@ -15,7 +15,7 @@ const AccountSetupForm = () => {
     return state.user.user;
   });
 
-  console.log(userState, "USERSTATE");
+  // console.log(userState, "USERSTATE");
 
   const fnameRef = useRef();
   const lnameRef = useRef();
