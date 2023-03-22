@@ -1,16 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import supabase from "@/lib/supabase";
-
+import { useUser } from "@supabase/auth-helpers-react";
+import { useSelector } from "react-redux";
+import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 const GameRoom = () => {
+  const user = useUser();
   const router = useRouter();
   const [presence, setPresence] = useState();
-  const [player1, player2] = useState();
+  const [player1, setPlayer1] = useState();
+  const [player2, setPlayer2] = useState();
+  const [username, setUsername] = useState(null);
+
+  console.log("this is user #######################", user);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase
+        .from("users")
+        .select("username")
+        .eq("email", user.email);
+      setUsername(data);
+    };
+    getUser();
+  }, []);
+
+  console.log(username);
 
   useEffect(() => {
     const channel = supabase.channel("test", {
       config: {
-        presence: { user_id: 2 },
+        presence: { user: "" },
       },
     });
     channel
@@ -28,7 +48,9 @@ const GameRoom = () => {
         if (status === "SUBSCRIBED") {
           const status = await channel.track({
             online_at: new Date().toISOString(),
+            user_id: user.id,
           });
+          await channel.untrack();
           console.log("this is track", status);
         }
       });
