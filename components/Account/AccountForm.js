@@ -38,6 +38,7 @@ const AccountSetupForm = () => {
       username,
     };
     dispatch(updateUser(info));
+    router.push("/");
   };
 
   return (

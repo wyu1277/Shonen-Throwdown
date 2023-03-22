@@ -1,5 +1,7 @@
 import React from "react";
 // import TeamMate from "@/components/teammate";
+import { motion } from "framer-motion";
+import container from "@/styles/variants";
 
 const About = () => {
   const team = [
@@ -36,7 +38,12 @@ const About = () => {
   ];
 
   return (
-    <div>
+    <motion.div
+      variants={container}
+      initial="initial"
+      animate="visible"
+      exit="exit"
+    >
       <h1>ABOUT</h1>
       <h2>The Game</h2>
       <p>
@@ -57,7 +64,7 @@ const About = () => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
