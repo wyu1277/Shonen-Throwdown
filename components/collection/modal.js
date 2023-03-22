@@ -18,7 +18,6 @@ let Modal = (props) => {
   //     </motion.div>,
   //     document.getElementById("portal")
   //   );
-
   return (
     <motion.div className="backdrop">
       <div

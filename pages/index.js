@@ -28,7 +28,7 @@ const Home = ({ user }) => {
     }
     // console.log(userData, "USERDATA");
     setIsLoading(false);
-  }, []);
+  });
   console.log(userData, "Userdata");
   return (
     <motion.div
