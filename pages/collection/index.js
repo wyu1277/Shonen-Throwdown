@@ -6,6 +6,7 @@ import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useEffect, useState } from 'react';
 import styles from './Collection.module.css';
 import { motion } from 'framer-motion';
+import container from '../../styles/variants';
 
 const Collection = () => {
 	const supabase = useSupabaseClient();
@@ -15,6 +16,8 @@ const Collection = () => {
 	const [searchInput, setSearchInput] = useState('');
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
+
+	console.log('userID', user.id);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -28,13 +31,22 @@ const Collection = () => {
 			loadData();
 		} else {
 			const loadData = async () => {
-				const { data } = await supabase.from('collections').select('*').eq('user', user.id);
-				setData(data);
-				console.log('logged in collection', data);
+				const { data } = await supabase.from('users').select('id').eq('auth_id', user.id);
+				const publicId = data[0].id;
+				const cardIds = await supabase.from('collections').select('cards_id').eq('user_id', publicId);
+				const cardIdArr = cardIds.data.map((card) => card.cards_id);
+				const cards = await supabase.from('cards').select('*').in('id', cardIdArr);
+				// console.log('logged in collection', publicId);
+				// console.log('logged in collection', cardIds.data);
+				// console.log('cardIdArr', cardIdArr);
+				// console.log('cards', cards.data);
+				setData(cards.data);
 			};
 			loadData();
 		}
 	}, []);
+
+	console.log('data', data);
 
 	const filteredData = data && data.filter((card) => card.name.toLowerCase().includes(searchInput.toLowerCase()));
 
@@ -43,7 +55,7 @@ const Collection = () => {
 	};
 
 	return (
-		<div className={styles.pageParent}>
+		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
 			<div className={styles.searchParent}>
 				<input
 					className={styles.searchBar}
@@ -61,6 +73,7 @@ const Collection = () => {
 							key={card.id}
 							onClick={() => handleCardClick(card)}
 							className={styles.card}
+							//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
 						>
 							<img src={card.image} alt={card.name} className={styles.img} />
 						</motion.div>
@@ -74,7 +87,7 @@ const Collection = () => {
 			<div className={styles.modalParent}>
 				<Modal open={selectedCard !== null} card={selectedCard} onClose={() => setSelectedCard(null)} />
 			</div>
-		</div>
+		</motion.div>
 	);
 };
 
