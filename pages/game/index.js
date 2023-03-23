@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const Game = () => {
   const user = useUser();
-  const [currentUser, setCurrentUser] = useState();
   const publicUser = useSelector((state) => state.user.user);
 
   return (
