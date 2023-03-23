@@ -4,6 +4,7 @@ import supabase from "@/lib/supabase";
 import GameRoom from "@/components/GameRoom/GameRoom";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
+import Channels from "@/components/Channels/Channels";
 
 const Game = () => {
   const user = useUser();
@@ -13,6 +14,7 @@ const Game = () => {
     <div>
       <GameRoom props={publicUser} />
       <Messages props={publicUser} />
+      <Channels />
     </div>
   );
 };

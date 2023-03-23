@@ -4,7 +4,7 @@ import supabase from "@/lib/supabase";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 
-const GameRoom = ({ props }) => {
+const GameRoom = ({ props, gameId }) => {
   const [lobby, setLobby] = useState();
   const [presence, setPresence] = useState();
   const router = useRouter();
@@ -20,7 +20,7 @@ const GameRoom = ({ props }) => {
   // }
 
   useEffect(() => {
-    const channel = supabase.channel("beta-test", {
+    const channel = supabase.channel(`${gameId}`, {
       config: { presence: { key: `${props.username}` } },
     });
     channel
@@ -106,7 +106,7 @@ const GameRoom = ({ props }) => {
       <div>
         <h4>Player 1: </h4>
         player 1 buttons
-        <button onClick={clickHandler} value={props.decks}>
+        <button onClick={clickHandler} value="1">
           1
         </button>
         <button onClick={clickHandler} value="2">
