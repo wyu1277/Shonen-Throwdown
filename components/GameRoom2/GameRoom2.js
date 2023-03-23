@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 
 const GameRoom = ({ props }) => {
   const [lobby, setLobby] = useState();
+  const [presence, setPresence] = useState();
   const router = useRouter();
   const [player1, setPlayer1] = useState();
   const [player2, setPlayer2] = useState();
@@ -20,21 +21,24 @@ const GameRoom = ({ props }) => {
 
   useEffect(() => {
     const channel = supabase.channel("beta-test", {
-      config: { presence: { key: props.username } },
+      config: { presence: { key: `${props.username}` } },
     });
     channel
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
-        console.log("this is state", state);
+        setPresence(state);
+        setLobby(getLobby(state));
       })
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
-        if (!lobby && !player1) {
-          setLobby(key);
-          setPlayer1(newPresence);
-        }
-        setLobby((current) => [...current, key.new]);
+        // if (!lobby && !player1) {
+        //   setLobby({ key });
+        //   setPlayer1(newPresence);
+        //   console.log("this is lobby in joinPaths", lobby);
+        //   console.log("this is set play in join presence", player1);
+        // }
+        console.log("this is lobby in new presence", lobby);
       })
       .on("presence", { event: "leave" }, ({ leftPresences }) => {
         console.log(leftPresences, "Has Left");
@@ -46,7 +50,19 @@ const GameRoom = ({ props }) => {
           await channel.untrack();
         }
       });
-  }, []);
+  }, ["presence"]);
+
+  const getLobby = (presence) => {
+    return Object.values(presence).map(
+      (userPresences) => userPresences[0].username
+    );
+  };
+
+  useEffect(() => {
+    if (presence && Object.values(presence).length > 0) {
+      setLobby(getLobby(presence));
+    }
+  }, [presence]);
 
   const leaveHandler = () => {
     supabase.removeAllChannels();
@@ -78,7 +94,7 @@ const GameRoom = ({ props }) => {
       <h1>GameRoom</h1>
       <button onClick={leaveHandler}>Leave Room</button>
       <h3>
-        Users In Lobby:{lobby}
+        Users In Lobby: {lobby.join(" , ")}
         {/* <ul>
           {lobby.map((user) => (
             <li key={user.id}>
@@ -102,6 +118,7 @@ const GameRoom = ({ props }) => {
       </div>
       <h1>CURRENT CARD: {game}</h1>
       <div>
+        <h4>Player 2: </h4>
         player 2 buttons
         <button onClick={clickHandler} value="1">
           1
