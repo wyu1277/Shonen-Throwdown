@@ -29,6 +29,7 @@ const Collection = () => {
 		} else {
 			const loadData = async () => {
 				const cardIds = await supabase.from('collections').select('*').eq('user_id', user.id);
+				// console.log('cardIds', cardIds);
 				// console.log('logged in collection', cardIds.data);
 				const cardIdArr = cardIds.data.map((card) => card.cards_id);
 				// console.log('cardIdArr', cardIdArr);
