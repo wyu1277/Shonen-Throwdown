@@ -77,7 +77,16 @@ const GameRoom = ({ props }) => {
     <div>
       <h1>GameRoom</h1>
       <button onClick={leaveHandler}>Leave Room</button>
-      <h3>Users In Lobby:{lobby}</h3>
+      <h3>
+        Users In Lobby:{lobby}
+        {/* <ul>
+          {lobby.map((user) => (
+            <li key={user.id}>
+              <p>{user.username}</p>
+            </li>
+          ))}
+        </ul> */}
+      </h3>
       <div>
         <h4>Player 1: </h4>
         player 1 buttons

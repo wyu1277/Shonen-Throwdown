@@ -41,10 +41,11 @@ const Messages = ({ props }) => {
 
   return (
     <div>
+      <h2>MESSAGES:</h2>
       <ul>
         {chat.map((message) => (
           <li key={message.id}>
-            <h2>{message.users.username}</h2>
+            <h3>{message.users.username}</h3>
             <h4>Message:</h4>
             <p>{message.content}</p>
           </li>
