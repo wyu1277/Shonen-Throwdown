@@ -13,11 +13,6 @@ const GameRoom = () => {
   const [player2, setPlayer2] = useState();
   const [username, setUsername] = useState();
 
-  console.log(
-    "this is user ####################### in gameroommmmmmmmm",
-    username
-  );
-
   useEffect(() => {
     const getUser = async () => {
       const { data } = await supabase
@@ -33,7 +28,7 @@ const GameRoom = () => {
   useEffect(() => {
     const channel = supabase.channel("test", {
       config: {
-        presence: { user: "" },
+        presence: { id: user.id },
       },
     });
     channel
@@ -51,10 +46,9 @@ const GameRoom = () => {
         if (status === "SUBSCRIBED") {
           const status = await channel.track({
             online_at: new Date().toISOString(),
-            user_id: user.id,
+            id: user.id,
           });
           await channel.untrack();
-          console.log("this is track", status);
         }
       });
   }, []);
@@ -66,13 +60,13 @@ const GameRoom = () => {
     router.push("http://localhost:3000/");
   };
 
-  console.log("this is state", presence);
+  console.log("this is presence state in game rooom##########", presence);
 
   return (
     <div>
       <h1>GameRoom</h1>
       <button onClick={leaveHandler}>Leave Room</button>
-      <h3>Users In Chat:</h3>
+      <h3>Users In Lobby:</h3>
     </div>
   );
 };
