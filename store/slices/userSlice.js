@@ -6,20 +6,9 @@ const initialState = {};
 export const searchUser = createAsyncThunk("search4user", async (hope) => {
   try {
     console.log(hope, "hope");
-    const user = await supabase.from("users").select().eq("auth_id", hope);
-    console.log(user);
-    // if (user.data.length === 0) {
-    //   const { data, error } = await supabase.from("users").insert([
-    //     {
-    //       auth_id: hope,
-    //     },
-    //   ]);
-    //   console.log("SEARCH USER ERROR", error);
-    // }
-
-    const data = user.data;
-    // console.log(data[0], "hope");
-    return data[0];
+    const user = await supabase.from("users").select().eq("id", hope).single();
+    console.log(user.data);
+    return user.data;
   } catch (error) {
     console.log(error);
   }

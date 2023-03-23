@@ -5,7 +5,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
 
-const GameRoom = ({ props }) => {
+const GameRoom = (props) => {
   const user = useUser();
   const router = useRouter();
   const [presence, setPresence] = useState();
