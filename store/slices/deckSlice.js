@@ -1,17 +1,25 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import supabase from '../../lib/supabase';
 
-export const fetchDeckCards = createAsyncThunk('fetchDeckCards', async () => {
+export const fetchDeckCards = createAsyncThunk('fetchDeckCards', async (userId) => {
 	try {
-		const deckRow = await supabase.from('decks').select('*').eq('user_id', user.id);
-		console.log('Row from deck table', deckRow.data[0].card_ids);
+		const deckRow = await supabase.from('decks').select('*').eq('user_id', userId);
+		// console.log('Row from deck table', deckRow.data[0].card_ids);
 		const cards = await supabase.from('cards').select('*').in('id', deckRow.data[0].card_ids);
-		console.log('cards', cards.data);
+		// console.log('cards', cards.data);
 		return cards.data;
 	} catch (error) {
 		console.log(error);
 	}
 });
+
+// export const removeDeckCard = createAsyncThunk('removeDeckCard', async (params) => {
+//   try {
+//     const
+//   } catch (error) {
+//     console.log(error);
+//   }
+// })
 
 const initialState = [];
 

@@ -1,27 +1,27 @@
-import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useUser } from '@supabase/auth-helpers-react';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import container from '../../styles/variants';
 import styles from './Deck.module.css';
 import DeckModal from '@/components/deck/deckModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllCards, fetchDeckCards } from '@/store/slices/deckSlice';
 
 const Deck = () => {
 	const user = useUser();
-	const [data, setData] = useState();
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [showModal, setShowModal] = useState(false);
-	const supabase = useSupabaseClient();
+	const [pageMessage, setPageMessage] = useState('Loading...');
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const getDeckCards = async () => {
-			const deckRow = await supabase.from('decks').select('*').eq('user_id', user.id);
-			console.log('Row from deck table', deckRow.data[0].card_ids);
-			const cards = await supabase.from('cards').select('*').in('id', deckRow.data[0].card_ids);
-			console.log('cards', cards.data);
-			setData(cards.data);
-		};
-		getDeckCards();
+		setTimeout(() => {
+			setPageMessage('There are no cards avalible');
+		}, 1000);
+		dispatch(fetchDeckCards(user.id));
 	}, []);
+
+	const cardsData = useSelector(selectAllCards);
 
 	const handleCardClick = (card) => {
 		setSelectedCard(card);
@@ -29,9 +29,10 @@ const Deck = () => {
 
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
+			<div>Prepare Your Team for Battle!</div>
 			<div className={styles.cardParent}>
-				{data !== undefined ? (
-					data.map((card) => (
+				{cardsData !== undefined ? (
+					cardsData.map((card) => (
 						<motion.div
 							whileHover={{ scale: 1.5 }}
 							key={card.id}
