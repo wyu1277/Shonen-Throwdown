@@ -19,3 +19,9 @@
 	background-color: white;
 	border-radius: 10px;
 }
+
+.deckButton {
+	height: 30px;
+	width: 100px;
+	border-radius: 10px;
+}
