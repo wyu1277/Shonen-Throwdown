@@ -6,26 +6,24 @@ import { useUser } from "@supabase/auth-helpers-react";
 
 const Game = () => {
   const user = useUser();
-  const [username, setUsername] = useState();
-
-  console.log("this is user ####################### in game", username);
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
-    const getUser = async () => {
+    const getCurrentUser = async () => {
       const { data } = await supabase
         .from("users")
         .select("*")
         .eq("id", user.id)
         .single();
-      setUsername(data);
+      setCurrentUser(data);
     };
-    getUser();
+    getCurrentUser();
   }, []);
 
   return (
     <div>
-      <GameRoom user={username} />
-      <Messages user={username} />
+      <GameRoom props={currentUser} />
+      <Messages props={currentUser} />
     </div>
   );
 };

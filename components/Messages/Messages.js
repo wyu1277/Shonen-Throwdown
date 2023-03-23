@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import supabase from "../../lib/supabase";
 
-const Messages = ({ user }) => {
+const Messages = ({ props }) => {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,6 @@ const Messages = ({ user }) => {
         { event: "*", schema: "public", table: "messages" },
         async (payload) => {
           await setChat((current) => [...current, payload.new]);
-          console.log("THIS IS THE MUTHAFUCKIN PAYLOAD", payload);
         }
       )
       .subscribe();
@@ -37,11 +36,7 @@ const Messages = ({ user }) => {
     form.reset();
     const { data } = await supabase
       .from("messages")
-      .insert({ content: content, user_id: user.id });
-    console.log(
-      "this is userid in submit handler################################################",
-      user
-    );
+      .insert({ content: content, user_id: props.id });
   };
 
   return (
