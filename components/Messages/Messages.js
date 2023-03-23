@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import supabase from "../../lib/supabase";
-import styles from './Messages.module.css'
+import styles from "./Messages.module.css";
 
 const Messages = ({ props }) => {
   const [chat, setChat] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -41,22 +42,26 @@ const Messages = ({ props }) => {
   };
 
   return (
-    <div className={styles.messagesContainer}>
-      <h2>MESSAGES:</h2>
-      <ul>
-        {chat.map((message) => (
-          <li key={message.id}>
-            <h3>{message.users.username}</h3>
-            <h4>Message:</h4>
-            <p>{message.content}</p>
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="content">Message</label>
-        <textarea name="content" type="text"></textarea>
-        <button>Send</button>
-      </form>
+    <div className={styles.wrapper}>
+      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>MESSAGES:</h2>
+      {isVisible && (
+        <>
+          <ul className={styles.messagesContainer}>
+            {chat.map((message) => (
+              <li key={message.id}>
+                <h3>{message.users.username}</h3>
+                <h4>Message:</h4>
+                <p>{message.content}</p>
+              </li>
+            ))}
+          </ul>
+          <form onSubmit={submitHandler}>
+            <label htmlFor="content">Message</label>
+            <textarea name="content" type="text"></textarea>
+            <button>Send</button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

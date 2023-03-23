@@ -1,4 +1,23 @@
 .messagesContainer{
     height: 50vh;
-    overflow: scroll;
+    overflow: auto;
+    width: 500px;
+}
+
+.messagesContainer::-webkit-scrollbar{
+    width: 1em;
+}
+
+.wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: gray;
+    width: 45%
+  }
+
+.h2{
+    color:black;
+    display: flex;
+    justify-content: center;
 }
