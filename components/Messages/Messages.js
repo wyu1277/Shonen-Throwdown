@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import supabase from "../../lib/supabase";
+import styles from './Messages.module.css'
 
 const Messages = ({ props }) => {
   const [chat, setChat] = useState([]);
@@ -40,7 +41,7 @@ const Messages = ({ props }) => {
   };
 
   return (
-    <div>
+    <div className={styles.messagesContainer}>
       <h2>MESSAGES:</h2>
       <ul>
         {chat.map((message) => (
