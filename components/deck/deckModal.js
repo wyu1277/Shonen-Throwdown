@@ -24,7 +24,7 @@ let DeckModal = (props) => {
 		<motion.div className="backdrop">
 			<div className={styles.card} onClick={() => props.setShowModal(!props.showModal)}>
 				{user ? (
-					<button className={styles.removeButton} onClick={() => addToDeck(card)}>
+					<button className={styles.removeButton} onClick={() => removeFromDeck(card)}>
 						Remove from Deck
 					</button>
 				) : null}

@@ -10,7 +10,6 @@ const Deck = () => {
 	const [data, setData] = useState();
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [showModal, setShowModal] = useState(false);
-	const [pageMessage, setPageMessage] = useState('Loading...');
 	const supabase = useSupabaseClient();
 
 	useEffect(() => {
