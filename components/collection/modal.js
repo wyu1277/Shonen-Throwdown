@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import styles from "./Modal.module.css";
-import ReactDom from "react-dom";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
+import styles from './Modal.module.css';
+import ReactDom from 'react-dom';
+import { motion } from 'framer-motion';
+import { useUser } from '@supabase/auth-helpers-react';
 
 let Modal = (props) => {
+
+	const user = useUser();
+
+
   console.log(props);
   //   if (!open) return null;
   //   return ReactDom.createPortal(
@@ -18,10 +23,12 @@ let Modal = (props) => {
   //     </motion.div>,
   //     document.getElementById("portal")
   //   );
-
   return (
-    <motion.div className="backdrop">
-      <div
+    <div className="backdrop">
+      <motion.div
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.2 }}
         className={styles.card}
         onClick={() => props.setShowModal(!props.showModal)}
       >
@@ -31,9 +38,23 @@ let Modal = (props) => {
           alt={props.card.name}
           className={styles.img}
         />
-      </div>
-    </motion.div>
+      </motion.div>
+
+      <motion.div
+        initial={{ x: 0, y: 0, opacity: 0, color: "#000000", scale: 0 }}
+        animate={{ x: -500, opacity: 1, scale: 1 }}
+        exit={{ x: -100 }}
+        transition={{ duration: 1 }}
+        className={styles.carddesc}
+      >
+        <div className={styles.description}>
+          <h1>{props.card.name}</h1>
+          <p>{props.card.description}</p>
+        </div>
+      </motion.div>
+    </div>
   );
+
 };
 
 export default Modal;

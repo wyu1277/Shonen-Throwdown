@@ -10,7 +10,7 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
     console.log(user.data);
     return user.data;
   } catch (error) {
-    console.log(error);
+    console.log(error, "Error Search");
   }
 });
 
@@ -39,12 +39,15 @@ const userSlice = createSlice({
         console.log("Fulfilled Search");
         // console.log(action.payload, "ACTION PAYLOAD");
         state.user = action.payload;
+        state.loading = false;
       })
       .addCase(updateUser.pending, (state, action) => {
         console.log("Initiating update user");
+        state.loading = true;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         console.log(" Update User fulfilled");
+        state.loading = false;
       });
   },
 });
