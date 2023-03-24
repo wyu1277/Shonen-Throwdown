@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import styles from "./Modal.module.css";
-import ReactDom from "react-dom";
-import { motion } from "framer-motion";
+import React, { useState } from 'react';
+import styles from './Modal.module.css';
+import ReactDom from 'react-dom';
+import { motion } from 'framer-motion';
+import { useUser } from '@supabase/auth-helpers-react';
 
 let Modal = (props) => {
+
   console.log(props);
   //   if (!open) return null;
   //   return ReactDom.createPortal(
@@ -50,6 +52,7 @@ let Modal = (props) => {
       </motion.div>
     </div>
   );
+
 };
 
 export default Modal;

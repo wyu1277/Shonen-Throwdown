@@ -34,3 +34,9 @@
   top: 10%;
   left: 50%;
 }
+
+.deckButton {
+	height: 30px;
+	width: 100px;
+	border-radius: 10px;
+}
