@@ -26,3 +26,18 @@
 	border-radius: 10px;
 	background-color: rgb(255, 93, 93);
 }
+
+.description {
+	color: white;
+	width: 250px;
+	text-align: center;
+	height: 500px;
+}
+
+.carddesc {
+	height: 800px;
+	z-index: 2;
+	position: fixed;
+	top: 10%;
+	left: 50%;
+}
