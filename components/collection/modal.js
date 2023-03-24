@@ -6,6 +6,9 @@ import { useUser } from '@supabase/auth-helpers-react';
 
 let Modal = (props) => {
 
+	const user = useUser();
+
+
   console.log(props);
   //   if (!open) return null;
   //   return ReactDom.createPortal(
