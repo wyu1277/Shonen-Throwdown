@@ -51,9 +51,6 @@ const GameRoom = ({ props }) => {
           await channel.untrack();
         }
       });
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, ["presence"]);
 
   const getLobby = (presence) => {
