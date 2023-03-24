@@ -40,6 +40,7 @@ let Modal = (props) => {
 		}
 	};
 
+
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>
 			{deckFull ? <p className={styles.message}>Deck is full!</p> : null}
@@ -59,7 +60,6 @@ let Modal = (props) => {
 				<button className={styles.close}>Close</button>
 				<img src={props.card.image} alt={props.card.name} className={styles.img} />
 			</motion.div>
-
 			<motion.div
 				initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
 				animate={{ x: -500, opacity: 1, scale: 1 }}
