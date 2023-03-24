@@ -21,8 +21,7 @@ let DeckModal = (props) => {
 		console.log('cardArr', cardArr);
 		console.log('updatedArr', updatedArr);
 		console.log('removeFromDeck userID', userId);
-		dispatch(updateDeck({ updatedArr, userId, cardId, returnArr }));
-		dispatch(fetchDeckCards(user.id));
+		dispatch(updateDeck({ updatedArr, userId, returnArr }));
 	};
 
 	return (
