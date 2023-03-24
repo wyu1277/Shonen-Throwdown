@@ -40,7 +40,6 @@ const GameRoom = ({ props }) => {
         //   console.log("this is lobby in joinPaths", lobby);
         //   console.log("this is set play in join presence", player1);
         // }
-        console.log("this is lobby in new presence", lobby);
       })
       .on("presence", { event: "leave" }, ({ leftPresences }) => {
         console.log(leftPresences, "Has Left");
@@ -52,6 +51,9 @@ const GameRoom = ({ props }) => {
           await channel.untrack();
         }
       });
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, ["presence"]);
 
   const getLobby = (presence) => {

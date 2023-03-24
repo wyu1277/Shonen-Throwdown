@@ -16,9 +16,9 @@ const Messages = ({ props }) => {
     };
     getData();
 
-    const channel = supabase.channel(`${gameId}`);
+    const channel = supabase.channel("chat");
     const messages = supabase
-      .channel("chat")
+      .channel()
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "messages" },
