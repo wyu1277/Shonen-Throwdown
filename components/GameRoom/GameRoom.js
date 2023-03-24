@@ -11,6 +11,7 @@ const GameRoom = ({ props }) => {
   const [player1, setPlayer1] = useState();
   const [player2, setPlayer2] = useState();
   const [game, setGame] = useState();
+  const [trackingStatus, setTrackingStatus] = useState("open");
   const {
     query: { gameId },
   } = router;
@@ -45,10 +46,16 @@ const GameRoom = ({ props }) => {
         console.log(leftPresences, "Has Left");
       })
       .subscribe(async (status) => {
+        if (trackingStatus === "closed") {
+          const untrackStatus = await channel.untrack();
+          // console.log(trackStatus, "TRACKSTATUS LINE 57");
+          console.log(untrackStatus, "STATUS/HAS LEFT");
+        }
+
         if (status === "SUBSCRIBED") {
-          const status = await channel.track(props);
-          console.log(status);
-          await channel.untrack();
+          const trackStatus = await channel.track(props);
+          console.log(trackStatus, "TRACKSTATUS");
+          // await channel.untrack();
         }
       });
   }, [player1, player2]);
@@ -65,10 +72,18 @@ const GameRoom = ({ props }) => {
     }
   }, [presence]);
 
-  const leaveHandler = () => {
+  const leaveHandler = async () => {
     supabase.removeAllChannels();
     console.log("removed all channels");
     router.push("http://localhost:3000/");
+    setTrackingStatus("closed");
+    // supabase.subscribe(async (status) => {
+    //   if (trackStatus === "ok") {
+    //     const untrackStatus = await channel.untrack();
+    //     console.log(trackStatus, "TRACKSTATUS LINE 57");
+    //     console.log(untrackStatus, "STATUS/HAS LEFT");
+    //   }
+    // });
   };
 
   const clickHandler = (e) => {
