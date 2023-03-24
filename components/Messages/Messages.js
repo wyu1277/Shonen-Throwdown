@@ -43,7 +43,7 @@ const Messages = ({ props }) => {
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>MESSAGES:</h2>
+      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>CHAT</h2>
       {isVisible && (
         <>
           <ul className={styles.messagesContainer}>
@@ -55,10 +55,10 @@ const Messages = ({ props }) => {
               </li>
             ))}
           </ul>
-          <form onSubmit={submitHandler}>
+          <form className={styles.form} onSubmit={submitHandler}>
             <label htmlFor="content">Message</label>
-            <textarea name="content" type="text"></textarea>
-            <button>Send</button>
+            <textarea className={styles.textarea} name="content" type="text"></textarea>
+            <button className={styles.button}>Send</button>
           </form>
         </>
       )}
