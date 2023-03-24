@@ -16,9 +16,12 @@ const Home = ({ user }) => {
   const userData = useSelector((state) => {
     return state.user.user;
   });
+
+  const loadState = useSelector((state) => {
+    return state.user.loading;
+  });
   useEffect(() => {
     // console.log("loading");
-    setIsLoading(true);
     if (user) {
       dispatch(searchUser(user.id));
     }
@@ -27,9 +30,8 @@ const Home = ({ user }) => {
       router.push("/login/setup-account");
     }
     // console.log(userData, "USERDATA");
-    setIsLoading(false);
-  });
-  console.log(userData, "Userdata");
+  }, [userInfo]);
+  console.log(loadState, "ME IS LOADIING");
   return (
     <motion.div
       variants={container}
@@ -37,7 +39,7 @@ const Home = ({ user }) => {
       animate="visible"
       exit="exit"
     >
-      {isLoading ? (
+      {loadState ? (
         <div>loading</div>
       ) : (
         <>

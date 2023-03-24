@@ -20,6 +20,8 @@ const Collection = () => {
 			setPageMessage('There are no cards avalible');
 		}, 1000);
 
+
+
 		if (!user) {
 			const loadData = async () => {
 				const { data } = await supabase.from('cards').select('*');
@@ -40,6 +42,7 @@ const Collection = () => {
 			loadData();
 		}
 	}, []);
+
 
 	const filteredData = data && data.filter((card) => card.name.toLowerCase().includes(searchInput.toLowerCase()));
 
