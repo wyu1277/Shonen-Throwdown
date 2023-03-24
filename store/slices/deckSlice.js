@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import supabase from '../../lib/supabase';
 
 export const fetchDeckCards = createAsyncThunk('fetchDeckCards', async (userId) => {
+	console.log('fetch', userId);
 	try {
 		const deckRow = await supabase.from('decks').select('*').eq('user_id', userId);
 		// console.log('Row from deck table', deckRow.data[0].card_ids);
@@ -13,13 +14,14 @@ export const fetchDeckCards = createAsyncThunk('fetchDeckCards', async (userId) 
 	}
 });
 
-// export const removeDeckCard = createAsyncThunk('removeDeckCard', async (params) => {
-//   try {
-//     const
-//   } catch (error) {
-//     console.log(error);
-//   }
-// })
+export const updateDeck = createAsyncThunk('removeDeckCard', async ({ updatedArr, userId }) => {
+	try {
+		const { data } = await supabase.from('decks').update({ card_ids: updatedArr }).eq('user_id', userId);
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
+});
 
 const initialState = [];
 
@@ -29,6 +31,11 @@ const DeckSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(fetchDeckCards.fulfilled, (state, action) => {
+			return action.payload;
+		});
+		builder.addCase(updateDeck.fulfilled, (state, action) => {
+			console.log('payload', action.payload);
+			//! WHY IS THIS NULL?
 			return action.payload;
 		});
 	}

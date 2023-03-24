@@ -14,24 +14,27 @@ const Deck = () => {
 	const [pageMessage, setPageMessage] = useState('Loading...');
 	const dispatch = useDispatch();
 
+	const cardsData = useSelector(selectAllCards);
+
 	useEffect(() => {
 		setTimeout(() => {
 			setPageMessage('There are no cards avalible');
 		}, 1000);
-		dispatch(fetchDeckCards(user.id));
-	}, []);
-
-	const cardsData = useSelector(selectAllCards);
+		const getCards = async () => {
+			dispatch(fetchDeckCards(user.id));
+		};
+		getCards();
+	}, [dispatch]);
 
 	const handleCardClick = (card) => {
 		setSelectedCard(card);
 	};
-
+	// !== undefined
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
 			<div>Prepare Your Team for Battle!</div>
 			<div className={styles.cardParent}>
-				{cardsData !== undefined ? (
+				{cardsData ? (
 					cardsData.map((card) => (
 						<motion.div
 							whileHover={{ scale: 1.5 }}
@@ -55,6 +58,7 @@ const Deck = () => {
 			<div className={styles.modalParent}>
 				{showModal && (
 					<DeckModal
+						userId={user.id}
 						showModal={showModal}
 						setShowModal={setShowModal}
 						card={selectedCard}
