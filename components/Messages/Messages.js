@@ -18,7 +18,7 @@ const Messages = ({ props }) => {
 
     const channel = supabase.channel("chat");
     const messages = supabase
-      .channel()
+      .channel("chat")
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "messages" },
