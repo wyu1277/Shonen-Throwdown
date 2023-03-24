@@ -4,7 +4,7 @@ import ReactDom from 'react-dom';
 import { motion } from 'framer-motion';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 
-let Modal = (props) => {
+let Modal = (props, { setDeckFull }) => {
 	const user = useUser();
 	const supabase = useSupabaseClient();
 
@@ -18,9 +18,13 @@ let Modal = (props) => {
 		// console.log('type of cardArr', typeof cardArr);
 		if (cardArr.length >= 12 || cardArr.includes(cardId)) {
 			if (cardArr.length >= 12) {
-				// console.log('set timeout deck is full');
+				// setDeckFull(true);
+				// setTimeout(() => {
+				// 	setDeckFull(true);
+				// }, 3000);
+				console.log('(set timeout) cannot have the more than 12 cards in your deck');
 			} else {
-				// console.log('set timeout cannot have the more than 1 of the same card in your deck');
+				console.log('(set timeout) cannot have the more than 1 of the same card in your deck');
 			}
 		} else {
 			cardArr.push(cardId);

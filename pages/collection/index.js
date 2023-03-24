@@ -14,6 +14,7 @@ const Collection = () => {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
 	const [showModal, setShowModal] = useState(false);
+	// const [deckFull, setDeckFull] = useState(false);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -48,50 +49,54 @@ const Collection = () => {
 	};
 
 	return (
-		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
-			<div className={styles.searchParent}>
-				<input
-					className={styles.searchBar}
-					type="text"
-					value={searchInput}
-					onChange={(e) => setSearchInput(e.target.value)}
-					placeholder="Search by name..."
-				/>
-			</div>
-			<div className={styles.cardParent}>
-				{filteredData !== undefined ? (
-					filteredData.map((card) => (
-						<motion.div
-							whileHover={{ scale: 1.5 }}
-							key={card.id}
-							onClick={() => {
-								setShowModal(!showModal);
-								handleCardClick(card);
-							}}
-							className={styles.card}
-							//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
-						>
-							<img src={card.image} alt={card.name} className={styles.img} />
-						</motion.div>
-					))
-				) : (
-					<div className={styles.loading}>
-						<h1>{pageMessage}</h1>
-					</div>
-				)}
-			</div>
-			<div className={styles.modalParent}>
-				{showModal && (
-					<Modal
-						userId={user.id}
-						showModal={showModal}
-						setShowModal={setShowModal}
-						card={selectedCard}
-						onClose={() => setSelectedCard(null)}
+		<div>
+			{/* {deckFull ? <p className={styles.message}>Deck is full!</p> : null} */}
+			<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
+				<div className={styles.searchParent}>
+					<input
+						className={styles.searchBar}
+						type="text"
+						value={searchInput}
+						onChange={(e) => setSearchInput(e.target.value)}
+						placeholder="Search by name..."
 					/>
-				)}
-			</div>
-		</motion.div>
+				</div>
+				<div className={styles.cardParent}>
+					{filteredData !== undefined ? (
+						filteredData.map((card) => (
+							<motion.div
+								whileHover={{ scale: 1.5 }}
+								key={card.id}
+								onClick={() => {
+									setShowModal(!showModal);
+									handleCardClick(card);
+								}}
+								className={styles.card}
+								//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
+							>
+								<img src={card.image} alt={card.name} className={styles.img} />
+							</motion.div>
+						))
+					) : (
+						<div className={styles.loading}>
+							<h1>{pageMessage}</h1>
+						</div>
+					)}
+				</div>
+				<div className={styles.modalParent}>
+					{showModal && (
+						<Modal
+							userId={user.id}
+							showModal={showModal}
+							setShowModal={setShowModal}
+							card={selectedCard}
+							onClose={() => setSelectedCard(null)}
+							// setDeckFull={setDeckFull}
+						/>
+					)}
+				</div>
+			</motion.div>
+		</div>
 	);
 };
 
