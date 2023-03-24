@@ -1,0 +1,28 @@
+.card {
+	height: 800px;
+	z-index: 3;
+	position: fixed;
+	top: 10%;
+	left: 50%;
+}
+
+.img {
+	object-fit: cover;
+	height: 80%;
+}
+
+.close {
+	height: 30px;
+	width: 70px;
+	position: fixed;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.removeButton {
+	height: 30px;
+	width: 145px;
+	border-radius: 10px;
+	background-color: rgb(255, 93, 93);
+}

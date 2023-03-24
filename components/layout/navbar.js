@@ -19,9 +19,8 @@ const Navbar = () => {
       <Link href="/about">About</Link>
       <Link href="/how-to-play">How to Play</Link>
       <Link href="/collection">Cards</Link>
-      <Link href="/lobby">Play!</Link>
       {!user && <Link href="/login">Login/Sign Up</Link>}
-
+      {user && <Link href="/deck">Deck</Link>}
       {user && <Link href="/user">Account</Link>}
       {user && <button onClick={() => signOutHandler()}>Sign Out</button>}
     </div>
