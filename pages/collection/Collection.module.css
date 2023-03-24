@@ -1,0 +1,42 @@
+.searchParent {
+	margin: 20px;
+	display: flex;
+	justify-content: center;
+}
+
+.searchBar {
+	height: 40px;
+	width: 50%;
+}
+
+.cardParent {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.card {
+	height: 300px;
+	margin: 20px;
+	box-sizing: border-box;
+}
+
+.card:hover {
+	transform: scale(1.2);
+}
+
+.img {
+	object-fit: cover;
+	height: 100%;
+}
+
+.modalParent {
+	display: flex;
+	justify-content: center;
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
