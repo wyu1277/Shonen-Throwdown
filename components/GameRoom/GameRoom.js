@@ -4,21 +4,23 @@ import supabase from "@/lib/supabase";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 
-const GameRoom = ({ props, gameId }) => {
+const GameRoom = ({ props }) => {
   const [lobby, setLobby] = useState();
   const [presence, setPresence] = useState();
   const router = useRouter();
   const [player1, setPlayer1] = useState();
   const [player2, setPlayer2] = useState();
   const [game, setGame] = useState();
-
+  const {
+    query: { gameId },
+  } = router;
   // Player1{
   //   username: props.username;
   //   HP: 15;
   //   Deck: props.deck;
 
   // }
-
+  console.log("PLS GOD PLS LET THIS AT LEAST CONSOLELOG", gameId);
   useEffect(() => {
     const channel = supabase.channel(`${gameId}`, {
       config: { presence: { key: `${props.username}` } },

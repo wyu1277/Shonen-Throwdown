@@ -1,8 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import supabase from "../../lib/supabase";
+import { useRouter } from "next/router";
 
 const Messages = ({ props }) => {
   const [chat, setChat] = useState([]);
+  const router = useRouter();
+  const {
+    query: { gameId },
+  } = router;
 
   useEffect(() => {
     const getData = async () => {
@@ -11,7 +16,7 @@ const Messages = ({ props }) => {
     };
     getData();
 
-    const channel = supabase.channel("chat");
+    const channel = supabase.channel(`${gameId}`);
     const messages = supabase
       .channel("chat")
       .on(

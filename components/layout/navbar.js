@@ -19,7 +19,7 @@ const Navbar = () => {
       <Link href="/about">About</Link>
       <Link href="/how-to-play">How to Play</Link>
       <Link href="/collection">Cards</Link>
-      <Link href="/game">Game</Link>
+      <Link href="/lobby">Play!</Link>
       {!user && <Link href="/login">Login/Sign Up</Link>}
 
       {user && <Link href="/user">Account</Link>}
