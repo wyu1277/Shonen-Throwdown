@@ -24,20 +24,34 @@ let DeckModal = (props) => {
 	};
 
 	return (
-		<motion.div className="backdrop">
-			<div className={styles.card} onClick={() => props.setShowModal(!props.showModal)}>
-				{user ? (
-					<button
-						className={styles.removeButton}
-						onClick={() => removeFromDeck(props.card.id, props.userId, props.cardsData)}
-					>
-						Remove from Deck
-					</button>
-				) : null}
-				<button className={styles.close}>Close</button>
-				<img src={props.card.image} alt={props.card.name} className={styles.img} />
-			</div>
-		</motion.div>
+		<div>
+			<motion.div className="backdrop">
+				<div className={styles.card} onClick={() => props.setShowModal(!props.showModal)}>
+					{user ? (
+						<button
+							className={styles.removeButton}
+							onClick={() => removeFromDeck(props.card.id, props.userId, props.cardsData)}
+						>
+							Remove from Deck
+						</button>
+					) : null}
+					<button className={styles.close}>Close</button>
+					<img src={props.card.image} alt={props.card.name} className={styles.img} />
+				</div>
+			</motion.div>
+			<motion.div
+				initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
+				animate={{ x: -500, opacity: 1, scale: 1 }}
+				exit={{ x: -100 }}
+				transition={{ duration: 1 }}
+				className={styles.carddesc}
+			>
+				<div className={styles.description}>
+					<h1>{props.card.name}</h1>
+					<p>{props.card.description}</p>
+				</div>
+			</motion.div>
+		</div>
 	);
 };
 

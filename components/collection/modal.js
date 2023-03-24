@@ -9,6 +9,7 @@ let Modal = (props) => {
 
 	const [deckFull, setDeckFull] = useState(false);
 	const [dupCard, setDupCard] = useState(false);
+	const [addSuccess, setAddSuccess] = useState(false);
 
 	const addToDeck = async (e, cardId, userId) => {
 		e.stopPropagation();
@@ -24,25 +25,30 @@ let Modal = (props) => {
 				setDeckFull(true);
 				setTimeout(() => {
 					setDeckFull(false);
-				}, 3000);
+				}, 2000);
 			} else {
 				setDupCard(true);
 				setTimeout(() => {
-					setDeckFull(false);
-				}, 3000);
+					setDupCard(false);
+				}, 2000);
 			}
 		} else {
 			cardArr.push(cardId);
 			// console.log('updated cardArr', cardArr);
 			const { data } = await supabase.from('decks').update({ card_ids: cardArr }).eq('user_id', userId);
+			setAddSuccess(true);
+			setTimeout(() => {
+				setAddSuccess(false);
+			}, 2000);
 			return data;
 		}
 	};
 
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>
-			{deckFull ? <p className={styles.message}>Deck is full!</p> : null}
+			{deckFull ? <p className={styles.message}>Your deck is full!</p> : null}
 			{dupCard ? <p className={styles.message}>Cannot have more than 1 of the same card in your deck!</p> : null}
+			{addSuccess ? <p className={styles.goodMessage}>Card added to deck!</p> : null}
 			<motion.div
 				initial={{ scale: 0 }}
 				animate={{ scale: 1 }}
@@ -67,8 +73,7 @@ let Modal = (props) => {
 			>
 				<div className={styles.description}>
 					<h1>{props.card.name}</h1>
-					<p>Enter Description here...</p>
-					<p>Please insert an even longer description here....</p>
+					<p>{props.card.description}</p>
 				</div>
 			</motion.div>
 		</div>
