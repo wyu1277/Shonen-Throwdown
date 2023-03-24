@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './DeckModal.module.css';
-import ReactDom from 'react-dom';
 import { motion } from 'framer-motion';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
-import { updateDeck, fetchDeckCards } from '@/store/slices/deckSlice';
+import { updateDeck } from '@/store/slices/deckSlice';
 import { useDispatch } from 'react-redux';
 
 let DeckModal = (props) => {
@@ -12,15 +11,15 @@ let DeckModal = (props) => {
 	const dispatch = useDispatch();
 
 	const removeFromDeck = async (cardId, userId, cardsData) => {
-		console.log('cardsData in removedeck func', cardsData);
+		// console.log('cardsData in removedeck func', cardsData);
 		const returnArr = cardsData.filter((card) => card.id !== cardId);
-		console.log('returnArr', returnArr);
+		// console.log('returnArr', returnArr);
 		const deckArr = await supabase.from('decks').select('*').eq('user_id', user.id);
 		const cardArr = deckArr.data[0].card_ids;
 		const updatedArr = cardArr.flat().filter((id) => id !== cardId);
-		console.log('cardArr', cardArr);
-		console.log('updatedArr', updatedArr);
-		console.log('removeFromDeck userID', userId);
+		// console.log('cardArr', cardArr);
+		// console.log('updatedArr', updatedArr);
+		// console.log('removeFromDeck userID', userId);
 		dispatch(updateDeck({ updatedArr, userId, returnArr }));
 	};
 
