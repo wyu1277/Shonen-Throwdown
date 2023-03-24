@@ -29,10 +29,10 @@ const Deck = () => {
 	const handleCardClick = (card) => {
 		setSelectedCard(card);
 	};
-	// !== undefined
+
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
-			<div>Prepare Your Team for Battle!</div>
+			<div>{cardsData.length === 0 ? 'Add cards to build your deck!' : 'Prepare your team for battle!'}</div>
 			<div className={styles.cardParent}>
 				{cardsData ? (
 					cardsData.map((card) => (
