@@ -1,16 +1,24 @@
 import classes from "./AccountDetails.module.css";
+import { useEffect } from "react";
 
-const AccountDetails = ({ user }) => {
-  console.log(user);
+const AccountDetails = (props) => {
   return (
     <div className={classes.container}>
       <h1> Account Details </h1>
       <p>
-        {user.fname} {user.lname}
+        {props.user.fname} {props.user.lname}
       </p>
-      <p>{user.username}</p>
-      <p>{user.email}</p>
-      <p>{user.phone}</p>
+      <p>Username: {props.user.username}</p>
+      <p>Email: {props.user.email}</p>
+      <p>Phone: {props.user.phone}</p>
+      <button
+        onClick={() => {
+          console.log(props.toggle);
+          props.setToggle(!props.toggle);
+        }}
+      >
+        Update Your Info!
+      </button>
     </div>
   );
 };

@@ -1,23 +1,38 @@
 .card {
-	height: 800px;
-	z-index: 3;
-	position: fixed;
-	top: 10%;
-	left: 50%;
+  height: 800px;
+  z-index: 3;
+  position: fixed;
+  top: 10%;
+  left: 40%;
 }
 
 .img {
-	object-fit: cover;
-	height: 80%;
+  object-fit: cover;
+  height: 80%;
 }
 
 .close {
-	height: 30px;
-	width: 70px;
-	position: fixed;
-	color: black;
-	background-color: white;
-	border-radius: 10px;
+  height: 30px;
+  width: 70px;
+  position: fixed;
+  color: black;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.description {
+  color: white;
+  width: 250px;
+  text-align: center;
+  height: 500px;
+}
+
+.carddesc {
+  height: 800px;
+  z-index: 2;
+  position: fixed;
+  top: 10%;
+  left: 50%;
 }
 
 .deckButton {
