@@ -9,18 +9,24 @@ let Modal = (props) => {
 	const supabase = useSupabaseClient();
 
 	const addToDeck = async (cardId, userId) => {
-		console.log('cardId', cardId);
-		console.log('userId', userId);
+		// console.log('cardId', cardId);
+		// console.log('userId', userId);
 		const deckArr = await supabase.from('decks').select('*').eq('user_id', userId);
-		console.log('deckArr', deckArr);
+		// console.log('deckArr', deckArr);
 		const cardArr = deckArr.data[0].card_ids;
-		console.log('cardArr', cardArr);
-		console.log('type of cardArr', typeof cardArr);
+		// console.log('cardArr', cardArr);
+		// console.log('type of cardArr', typeof cardArr);
 		if (cardArr.length >= 12 || cardArr.includes(cardId)) {
-			console.log('set timeout message here');
+			if (cardArr.length >= 12) {
+				// console.log('set timeout deck is full');
+			} else {
+				// console.log('set timeout cannot have the more than 1 of the same card in your deck');
+			}
 		} else {
-			const updatedArr = cardArr.push(cardId);
-			console.log('updatedArr', updatedArr);
+			cardArr.push(cardId);
+			// console.log('updated cardArr', cardArr);
+			const { data } = await supabase.from('decks').update({ card_ids: cardArr }).eq('user_id', userId);
+			return data;
 		}
 	};
 
