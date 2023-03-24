@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import styles from './Modal.module.css';
 import ReactDom from 'react-dom';
 import { motion } from 'framer-motion';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 
 let Modal = (props) => {
 	const user = useUser();
 	const supabase = useSupabaseClient();
 
 	const addToDeck = async (cardId, userId) => {
-		const deckArr = await supabase.from('decks').select('*').eq('user_id', userId);
-		const cardArr = deckArr.data[0].card_ids;
-		if (cardArr.length >= 12 || cardArr.includes(cardId)) {
-			setTimeout;
-		} else {
-			const updatedArr = cardArr;
-		}
-		console.log('cardArr', cardArr);
 		console.log('cardId', cardId);
 		console.log('userId', userId);
+		const deckArr = await supabase.from('decks').select('*').eq('user_id', userId);
+		console.log('deckArr', deckArr);
+		const cardArr = deckArr.data[0].card_ids;
+		console.log('cardArr', cardArr);
+		console.log('type of cardArr', typeof cardArr);
+		if (cardArr.length >= 12 || cardArr.includes(cardId)) {
+			console.log('set timeout message here');
+		} else {
+			const updatedArr = cardArr.push(cardId);
+			console.log('updatedArr', updatedArr);
+		}
 	};
 
 	return (
