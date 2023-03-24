@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './Modal.module.css';
-import ReactDom from 'react-dom';
 import { motion } from 'framer-motion';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 
@@ -39,7 +38,6 @@ let Modal = (props) => {
 			return data;
 		}
 	};
-
 
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>

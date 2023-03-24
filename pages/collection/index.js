@@ -89,7 +89,6 @@ const Collection = () => {
 							setShowModal={setShowModal}
 							card={selectedCard}
 							onClose={() => setSelectedCard(null)}
-							// setDeckFull={setDeckFull}
 						/>
 					)}
 				</div>
