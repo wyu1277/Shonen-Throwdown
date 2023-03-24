@@ -14,7 +14,6 @@ const Collection = () => {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
 	const [showModal, setShowModal] = useState(false);
-	// const [deckFull, setDeckFull] = useState(false);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -50,7 +49,6 @@ const Collection = () => {
 
 	return (
 		<div>
-			{/* {deckFull ? <p className={styles.message}>Deck is full!</p> : null} */}
 			<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
 				<div className={styles.searchParent}>
 					<input

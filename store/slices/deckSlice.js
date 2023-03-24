@@ -16,7 +16,7 @@ export const fetchDeckCards = createAsyncThunk('fetchDeckCards', async (userId) 
 
 export const updateDeck = createAsyncThunk('removeDeckCard', async ({ updatedArr, userId, returnArr }) => {
 	try {
-		await supabase.from('decks').update({ card_ids: updatedArr }).eq('user_id', userId);
+		await supabase.from('decks').update({ card_ids: updatedArr }).eq('user_id', userId).select();
 		return returnArr;
 	} catch (error) {
 		console.log(error);

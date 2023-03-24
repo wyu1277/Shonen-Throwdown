@@ -40,13 +40,3 @@
 	justify-content: center;
 	align-items: center;
 }
-
-.message {
-	background-color: green;
-	color: white;
-	position: fixed;
-	top: 0;
-	margin-top: 0px;
-	width: 50vw;
-	z-index: 1;
-}

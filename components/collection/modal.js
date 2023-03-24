@@ -4,11 +4,15 @@ import ReactDom from 'react-dom';
 import { motion } from 'framer-motion';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 
-let Modal = (props, { setDeckFull }) => {
+let Modal = (props) => {
 	const user = useUser();
 	const supabase = useSupabaseClient();
 
-	const addToDeck = async (cardId, userId) => {
+	const [deckFull, setDeckFull] = useState(false);
+	const [dupCard, setDupCard] = useState(false);
+
+	const addToDeck = async (e, cardId, userId) => {
+		e.stopPropagation();
 		// console.log('cardId', cardId);
 		// console.log('userId', userId);
 		const deckArr = await supabase.from('decks').select('*').eq('user_id', userId);
@@ -18,13 +22,15 @@ let Modal = (props, { setDeckFull }) => {
 		// console.log('type of cardArr', typeof cardArr);
 		if (cardArr.length >= 12 || cardArr.includes(cardId)) {
 			if (cardArr.length >= 12) {
-				// setDeckFull(true);
-				// setTimeout(() => {
-				// 	setDeckFull(true);
-				// }, 3000);
-				console.log('(set timeout) cannot have the more than 12 cards in your deck');
+				setDeckFull(true);
+				setTimeout(() => {
+					setDeckFull(false);
+				}, 3000);
 			} else {
-				console.log('(set timeout) cannot have the more than 1 of the same card in your deck');
+				setDupCard(true);
+				setTimeout(() => {
+					setDeckFull(false);
+				}, 3000);
 			}
 		} else {
 			cardArr.push(cardId);
@@ -35,7 +41,9 @@ let Modal = (props, { setDeckFull }) => {
 	};
 
 	return (
-		<div className="backdrop">
+		<div className={`backdrop ${styles.pageParent}`}>
+			{deckFull ? <p className={styles.message}>Deck is full!</p> : null}
+			{dupCard ? <p className={styles.message}>Cannot have more than 1 of the same card in your deck!</p> : null}
 			<motion.div
 				initial={{ scale: 0 }}
 				animate={{ scale: 1 }}
@@ -44,7 +52,7 @@ let Modal = (props, { setDeckFull }) => {
 				onClick={() => props.setShowModal(!props.showModal)}
 			>
 				{user ? (
-					<button className={styles.deckButton} onClick={() => addToDeck(props.card.id, props.userId)}>
+					<button className={styles.deckButton} onClick={(e) => addToDeck(e, props.card.id, props.userId)}>
 						Add To Deck
 					</button>
 				) : null}
