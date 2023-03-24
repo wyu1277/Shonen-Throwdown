@@ -30,8 +30,9 @@ const Collection = () => {
       const loadData = async () => {
         const cardIds = await supabase
           .from("collections")
-          .select("cards_id")
+          .select()
           .eq("user_id", user.id);
+        console.log(cardIds, "CARDIDS");
         const cardIdArr = cardIds.data.map((card) => card.cards_id);
         const cards = await supabase
           .from("cards")
