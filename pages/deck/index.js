@@ -57,6 +57,7 @@ const Deck = () => {
 			<div className={styles.modalParent}>
 				{showModal && (
 					<DeckModal
+						cardsData={cardsData}
 						userId={user.id}
 						showModal={showModal}
 						setShowModal={setShowModal}
