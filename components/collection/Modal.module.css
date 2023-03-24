@@ -1,42 +1,60 @@
 .card {
-  height: 800px;
-  z-index: 3;
-  position: fixed;
-  top: 10%;
-  left: 40%;
+	height: 800px;
+	z-index: 3;
+	position: fixed;
+	top: 10%;
+	left: 40%;
 }
 
 .img {
-  object-fit: cover;
-  height: 80%;
+	object-fit: cover;
+	height: 80%;
 }
 
 .close {
-  height: 30px;
-  width: 70px;
-  position: fixed;
-  color: black;
-  background-color: white;
-  border-radius: 10px;
+	height: 30px;
+	width: 70px;
+	position: fixed;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
 }
 
 .description {
-  color: white;
-  width: 250px;
-  text-align: center;
-  height: 500px;
+	color: white;
+	width: 250px;
+	text-align: center;
+	height: 500px;
 }
 
 .carddesc {
-  height: 800px;
-  z-index: 2;
-  position: fixed;
-  top: 10%;
-  left: 50%;
+	height: 800px;
+	z-index: 2;
+	position: fixed;
+	top: 10%;
+	left: 50%;
 }
 
 .deckButton {
 	height: 30px;
 	width: 100px;
 	border-radius: 10px;
+}
+
+.message {
+	background-color: rgb(229, 10, 57);
+	color: white;
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	top: 0;
+	margin-top: 0px;
+	width: 50vw;
+	z-index: 1;
+	border-radius: 5px;
+}
+
+.pageParent {
+	display: flex;
+	justify-content: center;
 }

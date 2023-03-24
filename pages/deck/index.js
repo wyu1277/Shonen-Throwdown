@@ -29,10 +29,9 @@ const Deck = () => {
 	const handleCardClick = (card) => {
 		setSelectedCard(card);
 	};
-	// !== undefined
+
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
-			<div>Prepare Your Team for Battle!</div>
 			<div className={styles.cardParent}>
 				{cardsData ? (
 					cardsData.map((card) => (
@@ -58,6 +57,7 @@ const Deck = () => {
 			<div className={styles.modalParent}>
 				{showModal && (
 					<DeckModal
+						cardsData={cardsData}
 						userId={user.id}
 						showModal={showModal}
 						setShowModal={setShowModal}
