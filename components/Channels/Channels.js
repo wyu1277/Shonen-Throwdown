@@ -20,6 +20,7 @@ const Channels = () => {
 
   const handleJoin = (e) => {
     console.log(e.target.value);
+    
     //set channel to e.target.value
     //ref to new game[id].js where channel = e.target.value
     const gameId = e.target.value;

@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import supabase from "../../lib/supabase";
 import { useRouter } from "next/router";
+import styles from './Messages.module.css'
 
 const Messages = ({ props }) => {
   const [chat, setChat] = useState([]);
   const router = useRouter();
+  const [isVisible, setIsVisible] = useState(false);
   const {
     query: { gameId },
   } = router;
@@ -45,24 +47,28 @@ const Messages = ({ props }) => {
   };
 
   return (
-    <div>
-      <h2>MESSAGES:</h2>
-      <ul>
-        {chat.map((message) => (
-          <li key={message.id}>
-            <h3>{message.users.username}</h3>
-            <h4>Message:</h4>
-            <p>{message.content}</p>
-          </li>
-        ))}
-      </ul>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="content">Message</label>
-        <textarea name="content" type="text"></textarea>
-        <button>Send</button>
-      </form>
-    </div>
-  );
+    <div className={styles.wrapper}>
+    <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>CHAT</h2>
+    {isVisible && (
+      <>
+        <ul className={styles.messagesContainer}>
+          {chat.map((message) => (
+            <li key={message.id}>
+              <h3>{message.users.username}</h3>
+              <h4>Message:</h4>
+              <p>{message.content}</p>
+            </li>
+          ))}
+        </ul>
+        <form className={styles.form} onSubmit={submitHandler}>
+          <label htmlFor="content">Message</label>
+          <textarea className={styles.textarea} name="content" type="text"></textarea>
+          <button className={styles.button}>Send</button>
+        </form>
+      </>
+    )}
+  </div>
+);
 };
 
 export default Messages;
