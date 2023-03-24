@@ -51,7 +51,7 @@ const GameRoom = ({ props }) => {
           await channel.untrack();
         }
       });
-  }, ["presence"]);
+  }, [player1, player2]);
 
   const getLobby = (presence) => {
     return Object.values(presence).map(

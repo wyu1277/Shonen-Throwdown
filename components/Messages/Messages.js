@@ -34,9 +34,9 @@ const Messages = ({ props }) => {
     return () => {
       supabase.removeChannel(channel);
       console.log("channel removed", channel);
-      console.log("whyre you doing this to me", { gameId });
+      console.log("whyre you doing this to me", gameId);
     };
-  }, [{ gameId }]);
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
