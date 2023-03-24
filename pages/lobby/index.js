@@ -30,6 +30,7 @@ const Lobby = () => {
 
   return (
     <div>
+      <Messages props={publicUser} />
       <Channels props={publicUser} />
     </div>
   );

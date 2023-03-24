@@ -1,0 +1,44 @@
+.messagesContainer{
+    height: 500px;
+    overflow: auto;
+    width: 500px;
+}
+
+.messagesContainer::-webkit-scrollbar{
+    width: 1em;
+}
+
+.wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: black;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+  }
+
+.h2{
+    display: flex;
+    justify-content: center;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.textarea{
+    resize: none;
+    width: 95%;
+    height: 50%;
+    overflow: visible;
+    background-color: gray;
+}
+
+.button{
+    width:95%;
+}
