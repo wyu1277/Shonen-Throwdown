@@ -84,7 +84,7 @@ const Collection = () => {
 				<div className={styles.modalParent}>
 					{showModal && (
 						<Modal
-							userId={user.id}
+							userId={user ? user.id : null}
 							showModal={showModal}
 							setShowModal={setShowModal}
 							card={selectedCard}
