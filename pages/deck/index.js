@@ -18,7 +18,7 @@ const Deck = () => {
 
 	useEffect(() => {
 		setTimeout(() => {
-			setPageMessage('There are no cards avalible');
+			setPageMessage('There are no cards in your deck');
 		}, 1000);
 		const getCards = async () => {
 			dispatch(fetchDeckCards(user.id));
@@ -33,7 +33,7 @@ const Deck = () => {
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
 			<div className={styles.cardParent}>
-				{cardsData ? (
+				{cardsData.length > 0 ? (
 					cardsData.map((card) => (
 						<motion.div
 							whileHover={{ scale: 1.5 }}

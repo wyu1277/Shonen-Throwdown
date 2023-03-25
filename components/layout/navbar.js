@@ -14,14 +14,36 @@ const Navbar = () => {
 	};
 	return (
 		<div className={styles.nav}>
-			<Link href="/">Home</Link>
-			<Link href="/news">News and Updates</Link>
-			<Link href="/about">About</Link>
-			<Link href="/how-to-play">How to Play</Link>
-			<Link href="/collection">Cards</Link>
-			{!user && <Link href="/login">Login/Sign Up</Link>}
-			{user && <Link href="/deck">Deck</Link>}
-			{user && <Link href="/user">Account</Link>}
+			<Link className={styles.link} href="/">
+				Home
+			</Link>
+			<Link className={styles.link} href="/news">
+				News and Updates
+			</Link>
+			<Link className={styles.link} href="/about">
+				About
+			</Link>
+			<Link className={styles.link} href="/how-to-play">
+				How to Play
+			</Link>
+			<Link className={styles.link} href="/collection">
+				Cards
+			</Link>
+			{!user && (
+				<Link className={styles.link} href="/login">
+					Login/Sign Up
+				</Link>
+			)}
+			{user && (
+				<Link className={styles.link} href="/deck">
+					Deck
+				</Link>
+			)}
+			{user && (
+				<Link className={styles.link} href="/user">
+					Account
+				</Link>
+			)}
 			{user && <button onClick={() => signOutHandler()}>Sign Out</button>}
 		</div>
 	);
