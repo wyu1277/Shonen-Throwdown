@@ -12,7 +12,7 @@ const Messages = ({ props }) => {
     query: { gameId },
   } = router;
 
-  const { conUser } = useContext(GlobalContext);
+  const conUser = useContext(GlobalContext);
 
   console.log("PLS WORK CON USER PLS", conUser);
 
