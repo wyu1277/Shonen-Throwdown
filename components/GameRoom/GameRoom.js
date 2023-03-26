@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import supabase from "@/lib/supabase";
-import { useUser } from "@supabase/auth-helpers-react";
+import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
 
-const GameRoom = ({ props }) => {
+const GameRoom = () => {
   const [lobby, setLobby] = useState();
   const [presence, setPresence] = useState();
   const router = useRouter();
@@ -21,7 +20,6 @@ const GameRoom = ({ props }) => {
   //   Deck: props.deck;
 
   // }
-  console.log("PLS GOD PLS LET THIS AT LEAST CONSOLELOG", gameId);
   useEffect(() => {
     const channel = supabase.channel(`${gameId}`, {
       config: { presence: { key: `${props.username}` } },
@@ -53,7 +51,7 @@ const GameRoom = ({ props }) => {
         }
 
         if (status === "SUBSCRIBED") {
-          const trackStatus = await channel.track(props);
+          const trackStatus = await channel.track();
           console.log(trackStatus, "TRACKSTATUS");
           // await channel.untrack();
         }

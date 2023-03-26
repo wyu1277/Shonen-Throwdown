@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Messages from "@/components/Messages/Messages";
-import supabase from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 import GameRoom from "@/components/GameRoom/GameRoom";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
