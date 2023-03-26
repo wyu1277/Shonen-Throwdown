@@ -14,10 +14,11 @@ const Collection = () => {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
 	const [showModal, setShowModal] = useState(false);
+	const [sortValue, setSortValue] = useState('series');
 
 	useEffect(() => {
 		setTimeout(() => {
-			setPageMessage('There are no cards avalible');
+			setPageMessage('There are no cards available!');
 		}, 1000);
 
 		if (!user) {
@@ -34,6 +35,7 @@ const Collection = () => {
 				const cardIdArr = cardIds.data.map((card) => card.cards_id);
 				// console.log('cardIdArr', cardIdArr);
 				const cards = await supabase.from('cards').select('*').in('id', cardIdArr);
+				console.log(cards.data)
 				// console.log('cards', cards.data);
 				setData(cards.data);
 			};
@@ -47,6 +49,25 @@ const Collection = () => {
 		setSelectedCard(card);
 	};
 
+	const handleSortChange = (e) => {
+		setSortValue(e.target.value);
+	  };
+	
+	  let sortedData;
+
+	  if (filteredData) {
+		  sortedData = [...filteredData];
+		  if (sortValue === 'name') {
+			  sortedData.sort((a, b) => a.name.localeCompare(b.name));
+		  } else if (sortValue === 'power') {
+			  sortedData.sort((a, b) => a.power - b.power);
+		  } else if (sortValue === 'element') {
+			  sortedData.sort((a, b) => a.element.localeCompare(b.element));
+		  } else if (sortValue === 'series') {
+			  sortedData.sort((a, b) => a.series.localeCompare(b.series));
+		  }
+	  }
+
 	return (
 		<div>
 			<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
@@ -58,10 +79,17 @@ const Collection = () => {
 						onChange={(e) => setSearchInput(e.target.value)}
 						placeholder="Search by name..."
 					/>
+					<label htmlFor="sort">Sort by:</label>
+					<select id="sort" value={sortValue} onChange={handleSortChange}>
+						<option value="name">Name</option>
+						<option value="power">Power</option>
+						<option value="element">Element</option>
+						<option value="series">Series</option>
+					</select>
 				</div>
 				<div className={styles.cardParent}>
-					{filteredData !== undefined ? (
-						filteredData.map((card) => (
+					{sortedData !== undefined ? (
+						sortedData.map((card) => (
 							<motion.div
 								whileHover={{ scale: 1.5 }}
 								key={card.id}
