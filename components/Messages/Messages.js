@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import styles from "./Messages.module.css";
 import GlobalContext from "@/lib/GlobalContext";
 
-const Messages = ({ props }) => {
+const Messages = (props) => {
   const [chat, setChat] = useState([]);
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);

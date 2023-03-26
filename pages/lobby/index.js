@@ -32,10 +32,11 @@ const Lobby = () => {
     fetchUser();
   }, []);
 
+  console.log("this is conUser in lobby", conUser);
+
   return (
     <div>
-      <GlobalContext.Provider value={{ conUser }}>
-        <Messages props={user} />
+      <GlobalContext.Provider value={conUser}>
         <Channels props={user} />
       </GlobalContext.Provider>
     </div>

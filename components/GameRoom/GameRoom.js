@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
 
-const GameRoom = () => {
+const GameRoom = (props) => {
   const [lobby, setLobby] = useState();
   const [presence, setPresence] = useState();
   const router = useRouter();

@@ -1,4 +1,4 @@
-import Game from "@/pages/[game]";
+import Game from "@/pages/game/[id]";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ const Channels = () => {
     //ref to new game[id].js where channel = e.target.value
     const gameId = e.target.value;
     supabase.removeAllChannels();
-    router.push({ pathname: `/${gameId}/`, query: { gameId } });
+    router.push({ pathname: `/game/${gameId}` });
   };
 
   return (
