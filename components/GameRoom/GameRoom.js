@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
+import GlobalContext from "@/lib/GlobalContext";
 
 const GameRoom = (props) => {
   const [lobby, setLobby] = useState();
@@ -11,18 +12,21 @@ const GameRoom = (props) => {
   const [player2, setPlayer2] = useState();
   const [game, setGame] = useState();
   const [trackingStatus, setTrackingStatus] = useState("open");
-  const {
-    query: { gameId },
-  } = router;
   // Player1{
   //   username: props.username;
   //   HP: 15;
   //   Deck: props.deck;
-
   // }
+
+  const conUser = useContext(GlobalContext);
+  console.log("this is conuser in gameroom line 22", conUser);
+
+  const gameId = router.query;
+  console.log("this is game id", gameId);
+
   useEffect(() => {
     const channel = supabase.channel(`${gameId}`, {
-      config: { presence: { key: `${props.username}` } },
+      config: { presence: { key: `${conUser.username}` } },
     });
     channel
       .on("presence", { event: "sync" }, () => {

@@ -25,7 +25,10 @@ const Channels = () => {
     //ref to new game[id].js where channel = e.target.value
     const gameId = e.target.value;
     supabase.removeAllChannels();
-    router.push({ pathname: `/game/${gameId}` });
+    router.push({
+      pathname: `/game/[id]`,
+      query: { id: `${gameId}` },
+    });
   };
 
   return (

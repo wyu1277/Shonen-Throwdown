@@ -8,9 +8,7 @@ const Messages = (props) => {
   const [chat, setChat] = useState([]);
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
-  const {
-    query: { gameId },
-  } = router;
+  const gameId = router.query;
 
   const conUser = useContext(GlobalContext);
 
