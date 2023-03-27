@@ -11,13 +11,15 @@ import GameRoom from "@/components/GameRoom/GameRoom";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 import Channels from "@/components/Channels/Channels";
-import { GlobalContext } from "@/lib/GlobalContext";
+import { Router } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const Lobby = () => {
   const authUser = useUser();
   const [user, setUser] = useState();
-  const [conUser, setConUser] = useState(null);
-  //const [conDeck, setConDeck] = useState(null)
+  const router = useRouter();
+  const route = router.pathname;
+  console.log("🚀 ~ file: index.js:22 ~ Lobby ~ route:", route);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,21 +28,15 @@ const Lobby = () => {
         .select("*")
         .eq("id", authUser.id)
         .single();
-      setConUser(data);
       setUser(data);
     };
     fetchUser();
   }, []);
 
-  const GlobalContextProvider = ({ children }) => (
-    <GlobalContext.Provider value={conUser}>{children}</GlobalContext.Provider>
-  );
-
   return (
     <div>
-      <GlobalContext.Provider value={conUser}>
-        <Channels props={user} />
-      </GlobalContext.Provider>
+      <Channels props={user} />
+      <Messages props={user} />
     </div>
   );
 };

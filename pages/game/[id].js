@@ -6,13 +6,12 @@ import GameRoom from "@/components/GameRoom/GameRoom";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 import Channels from "@/components/Channels/Channels";
-import { GlobalContext } from "@/lib/GlobalContext";
+import { useRouter } from "next/router";
 
 const Game = (props) => {
   const user = useUser();
   const publicUser = useSelector((state) => state.user.user);
-  //const [conDeck, setConDeck] = useState(null)
-  const conUser = useContext(GlobalContext);
+
   // useEffect(() => {
   //   const fetchUser = async () => {
   //     const { data } = await supabase
@@ -24,13 +23,15 @@ const Game = (props) => {
   //   };
   //   fetchUser();
   // }, []);
+  const router = useRouter();
+  const channel = router.query;
+
+  console.log("this is channel", channel);
 
   return (
     <div>
-      <GlobalContext.Provider value={conUser}>
-        <GameRoom props={{ publicUser, conUser }} />
-        <Messages props={publicUser} />
-      </GlobalContext.Provider>
+      <GameRoom props={publicUser} />
+      <Messages props={publicUser} />
     </div>
   );
 };

@@ -5,21 +5,20 @@ import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const Channels = (props) => {
-  const [channels, setChannels] = useState([]);
+const Channels = () => {
+  const [listChannels, setListChannels] = useState([]);
 
   //useeffect to fetch all game IDs aka channels and set game ID to channel ID
   useEffect(() => {
     const getChannels = async () => {
-      const { data } = await supabase.from("game").select("*");
-      setChannels(data);
+      const { data } = await supabase.from("game").select("id");
+      setListChannels(data);
       console.log("THIS IS DATA IN CHANNELS", data);
-      console.log("this is channels in channels", channels);
+      console.log("this is channels in channels", listChannels);
     };
     getChannels();
   }, []);
 
-  const user = props.props;
   // const handleJoin = (e) => {
   //   console.log(e.target.value);
 
@@ -38,8 +37,8 @@ const Channels = (props) => {
       Channels:
       <h4>
         <ul>
-          {channels.map((channel) => (
-            <li key={channel.id} props={user}>
+          {listChannels.map((channel) => (
+            <li key={channel.id}>
               <Link
                 href={{
                   pathname: "/game/[id]",

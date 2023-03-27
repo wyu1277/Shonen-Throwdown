@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
 
 const GameRoom = ({ props }) => {
+  const [channels, setChannels] = useState(null);
   const [presence, setPresence] = useState();
   const router = useRouter();
   const [trackingStatus, setTrackingStatus] = useState("open");
@@ -14,13 +15,15 @@ const GameRoom = ({ props }) => {
   //   Deck: props.deck;
   // }
 
-  //set player 1: if not player1 set conUser as player1
-
-  const gameId = router.query;
-  console.log("this is game id", gameId);
+  const getChannel = async () => {
+    const newChannel = await router.query;
+    console.log("this is new channel", newChannel);
+    setChannels(newChannel.id);
+  };
 
   useEffect(() => {
-    const channel = supabase.channel(`${gameId}`, {
+    getChannel();
+    const channel = supabase.channel(`${channels}`, {
       config: { presence: { key: `${props.username}` } },
     });
     channel
@@ -54,7 +57,7 @@ const GameRoom = ({ props }) => {
           // await channel.untrack();
         }
       });
-  }, []);
+  }, [channels]);
 
   useEffect(() => {
     if (presence && Object.values(presence).length > 0) {
