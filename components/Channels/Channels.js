@@ -13,14 +13,13 @@ const Channels = (props) => {
     const getChannels = async () => {
       const { data } = await supabase.from("game").select("*");
       setChannels(data);
-      console.log(data);
-      console.log("this is data in channels", channels);
+      console.log("THIS IS DATA IN CHANNELS", data);
+      console.log("this is channels in channels", channels);
     };
     getChannels();
   }, []);
 
   const user = props.props;
-  console.log("this is props in channels 21", user);
   // const handleJoin = (e) => {
   //   console.log(e.target.value);
 
@@ -40,7 +39,7 @@ const Channels = (props) => {
       <h4>
         <ul>
           {channels.map((channel) => (
-            <li key={channel.id}>
+            <li key={channel.id} props={user}>
               <Link
                 href={{
                   pathname: "/game/[id]",

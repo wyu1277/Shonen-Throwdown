@@ -32,7 +32,9 @@ const Lobby = () => {
     fetchUser();
   }, []);
 
-  console.log("this is conUser in lobby", conUser);
+  const GlobalContextProvider = ({ children }) => (
+    <GlobalContext.Provider value={conUser}>{children}</GlobalContext.Provider>
+  );
 
   return (
     <div>

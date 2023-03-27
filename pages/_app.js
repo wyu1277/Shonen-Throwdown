@@ -12,6 +12,7 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "@/store";
 import { AnimatePresence } from "framer-motion";
 import { setUseProxies } from "immer";
+
 export default function App({ Component, pageProps, router }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 

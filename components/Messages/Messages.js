@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import styles from "./Messages.module.css";
-import { GlobalContext } from "@/lib/GlobalContext";
 
 const Messages = (props) => {
   const [chat, setChat] = useState([]);
@@ -11,9 +10,7 @@ const Messages = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const gameId = router.query;
 
-  const conUser = useContext(GlobalContext);
-
-  console.log("PLS WORK CON USER PLS", conUser);
+  const user = props.props;
 
   useEffect(() => {
     const getData = async () => {
@@ -50,7 +47,7 @@ const Messages = (props) => {
     form.reset();
     const { data } = await supabase
       .from("messages")
-      .insert({ content: content, user_id: props.id });
+      .insert({ content: content, user_id: user.id, username: user.username });
   };
 
   return (
@@ -63,7 +60,7 @@ const Messages = (props) => {
           <ul className={styles.messagesContainer}>
             {chat.map((message) => (
               <li key={message.id}>
-                <h3>{message.users?.username}</h3>
+                <h3>{message.username}</h3>
                 <h4>Message:</h4>
                 <p>{message.content}</p>
               </li>
