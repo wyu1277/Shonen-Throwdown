@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './Collection.module.css';
 import { motion } from 'framer-motion';
 import container from '../../styles/variants';
+import Deck from '@/components/deck/Deck';
 
 const Collection = () => {
 	const supabase = useSupabaseClient();
@@ -70,6 +71,7 @@ const Collection = () => {
 
 	return (
 		<div>
+			<Deck/>
 			<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
 				<div className={styles.searchParent}>
 					<input

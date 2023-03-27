@@ -12,9 +12,11 @@ const Deck = () => {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [pageMessage, setPageMessage] = useState('Loading...');
+	const [isVisible, setIsVisible] = useState(false); // add state to control visibility
 	const dispatch = useDispatch();
 
 	const cardsData = useSelector(selectAllCards);
+	
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -30,30 +32,37 @@ const Deck = () => {
 		setSelectedCard(card);
 	};
 
+	const handleDeckClick = () => {
+		setIsVisible(!isVisible); // set visibility to true when clicked
+	}
+
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
-			<div className={styles.cardParent}>
-				{cardsData.length > 0 ? (
-					cardsData.map((card) => (
-						<motion.div
-							whileHover={{ scale: 1.5 }}
-							key={card.id}
-							onClick={() => {
-								setShowModal(!showModal);
-								handleCardClick(card);
-							}}
-							className={styles.card}
-							//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
-						>
-							<img src={card.image} alt={card.name} className={styles.img} />
-						</motion.div>
-					))
-				) : (
-					<div className={styles.loading}>
-						<h1>{pageMessage}</h1>
-					</div>
-				)}
-			</div>
+			<h1 className = {styles.h1} onClick={handleDeckClick}>{isVisible ? 'Your Deck' : 'View Deck'}</h1> {/* add onClick handler */}
+			{isVisible && /* use isVisible state to conditionally render content */
+				<div className={styles.cardParent}>
+					{cardsData.length > 0 ? (
+						cardsData.map((card) => (
+							<motion.div
+								whileHover={{ scale: 1.5 }}
+								key={card.id}
+								onClick={() => {
+									setShowModal(!showModal);
+									handleCardClick(card);
+								}}
+								className={styles.card}
+								//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
+							>
+								<img src={card.image} alt={card.name} className={styles.img} />
+							</motion.div>
+						))
+					) : (
+						<div className={styles.loading}>
+							<h1>{pageMessage}</h1>
+						</div>
+					)}
+				</div>
+			}
 			<div className={styles.modalParent}>
 				{showModal && (
 					<DeckModal

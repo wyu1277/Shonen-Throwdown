@@ -35,11 +35,6 @@ const Navbar = () => {
 				</Link>
 			)}
 			{user && (
-				<Link className={styles.link} href="/deck">
-					Deck
-				</Link>
-			)}
-			{user && (
 				<Link className={styles.link} href="/user">
 					Account
 				</Link>
