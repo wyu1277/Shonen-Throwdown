@@ -42,7 +42,7 @@ const Collection = () => {
 			};
 			loadData();
 		}
-	}, []);
+	}, [user]);
 
 	const filteredData = data && data.filter((card) => card.name.toLowerCase().includes(searchInput.toLowerCase()));
 
@@ -71,7 +71,7 @@ const Collection = () => {
 
 	return (
 		<div>
-			<Deck/>
+			{user && <Deck />}
 			<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
 				<div className={styles.searchParent}>
 					<input
