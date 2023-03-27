@@ -1,8 +1,9 @@
+"use client";
 import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
-import GlobalContext from "@/lib/GlobalContext";
+import { GlobalContext } from "@/lib/GlobalContext";
 
 const GameRoom = (props) => {
   const [lobby, setLobby] = useState();
@@ -32,7 +33,7 @@ const GameRoom = (props) => {
       .on("presence", { event: "sync" }, (object) => {
         const state = channel.presenceState();
         setPresence(state);
-        setLobby(getLobby(state));
+        setLobby(state);
       })
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
@@ -71,6 +72,7 @@ const GameRoom = (props) => {
   useEffect(() => {
     if (presence && Object.values(presence).length > 0) {
       setLobby(getLobby(presence));
+      console.log("PRESENCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", presence);
     }
   }, [presence]);
 
