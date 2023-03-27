@@ -1,8 +1,9 @@
+"use client";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import styles from "./Messages.module.css";
-import GlobalContext from "@/lib/GlobalContext";
+import { GlobalContext } from "@/lib/GlobalContext";
 
 const Messages = (props) => {
   const [chat, setChat] = useState([]);
