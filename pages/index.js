@@ -31,7 +31,6 @@ const Home = ({ user }) => {
     }
     // console.log(userData, "USERDATA");
   }, [userInfo]);
-  console.log(loadState, "ME IS LOADIING");
   return (
     <motion.div
       variants={container}
@@ -75,7 +74,7 @@ export const getServerSideProps = async (context) => {
   // 	};
   // }
 
-  console.log(session);
+  console.log(session, "getting session");
   return {
     props: {
       initialSession: session,
