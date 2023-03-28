@@ -1,10 +1,21 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { supabase } from "@/lib/supabase";
 
 const Card = (props) => {
+  const audioRef = useRef(null);
   const [tapCard, setTapCard] = useState(false);
   // console.log(props.card);
   // console.log(props.zIndex);
+  const cardHandler = () => {
+    setTapCard(!tapCard);
+    audioRef.current.play();
+    supabase.channel("game1").subscribe().send({
+      type: "broadcast",
+      event: "cardmove",
+      payload: props.index,
+    });
+  };
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0 }}
@@ -24,7 +35,7 @@ const Card = (props) => {
             }
       }
       //   whileHover={{ backgroundColor: "white" }}
-      onClick={() => setTapCard(!tapCard)}
+      onClick={cardHandler}
       className="user-container"
     >
       <img
@@ -32,6 +43,7 @@ const Card = (props) => {
         alt={props.card.title}
         className="gameplay-card"
       />
+      <audio src="/audio/Cut.wav" ref={audioRef} />
     </motion.div>
   );
 };

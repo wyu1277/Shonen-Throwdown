@@ -11,6 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useRef } from "react";
 
 const GameComponent = () => {
+  const [playAudio, setPlayAudio] = useState(true);
+  const cardRefs = useRef(new Array());
   const buttonRef = useRef();
   const divRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -21,9 +23,6 @@ const GameComponent = () => {
   const dispatch = useDispatch();
   const audioRef = useRef(null);
 
-  setInterval(() => {
-    divRef?.current?.click();
-  }, 5000);
   const user = useSelector((state) => {
     return state.user.user;
   });
@@ -41,7 +40,7 @@ const GameComponent = () => {
     setLoading(true);
     dispatch(fetchDeckCards(user.id));
     setLoading(false);
-  }, [loading]);
+  }, []);
 
   //establishes presence
   useEffect(() => {
@@ -51,12 +50,10 @@ const GameComponent = () => {
       .subscribe(async (status) => {
         if (status === "SUBSCRIBED") {
           const trackStatus = await channel.track();
-          // console.log(trackStatus, "TRACKSTATUS");
         }
       })
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
-        // console.log(state, "CHANNEL STATE");
         channel.send({
           type: "broadcast",
           event: "getUserDeck",
@@ -65,7 +62,6 @@ const GameComponent = () => {
       })
       .on("presence", { event: "join" }, (object) => {
         setPresences((presences) => [...presences, object]);
-        // console.log("User has joined");
       })
       .on("presence", { event: "leave" }, (object) => {});
   }, []);
@@ -76,42 +72,47 @@ const GameComponent = () => {
     supabase
       .channel("game1")
       .on("broadcast", { event: "getUserDeck" }, (payload) => {
-        console.log(payload, "payload");
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
         setOpponentInfo((opponentInfo) => payload.payload.data?.user);
         setLoading(false);
+      })
+      .on("broadcast", { event: "cardmove" }, (payload) => {
+        console.log(cardRefs?.current);
+        console.log(payload.payload);
+        cardRefs?.current[payload.payload - 1]?.click();
       });
-  }, [loading]);
+  }, [playAudio]);
 
   const receiveData = () => {
-    console.log(presences);
-    console.log(opponentDeck, "opp DECK");
-    console.log(opponentInfo, "OPP INFO");
-    setOpponentHP((opponentHP) => (opponentHP += 1));
+    cardRefs.current[1].click();
   };
 
   return (
     //window container
     <>
+      <button onClick={() => setPlayAudio(!playAudio)}>Music</button>
       <audio src="/audio/music.mp3" ref={audioRef} />
       <button onClick={receiveData} ref={buttonRef}>
         {opponentHP}
       </button>
       <GameContainer>
-        <div className="player-div" ref={divRef}></div>
-
         {userDeck &&
           userDeck.map((card, i) => {
-            return <Card key={uuidv4()} zIndex={i - 1} card={card} />;
+            return (
+              <Card key={uuidv4()} index={i + 1} zIndex={i - 1} card={card} />
+            );
           })}
         {opponentDeck &&
           opponentDeck.length > 0 &&
           opponentDeck.map((card, i) => {
             return (
-              <div key={uuidv4()} ref={divRef}>
-                <OpponentCard key={uuidv4()} zIndex={i - 1} card={card} />
-              </div>
+              <OpponentCard
+                key={uuidv4()}
+                zIndex={i + 1}
+                card={card}
+                ref={(el) => (cardRefs.current[i] = el)}
+              />
             );
           })}
 
