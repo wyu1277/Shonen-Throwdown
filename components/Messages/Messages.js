@@ -3,6 +3,12 @@ import React, { useEffect, useState, useRef, useContext } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useRouter } from 'next/router';
 import styles from './Messages.module.css';
+import { Noto_Serif } from 'next/font/google';
+
+const notoSerif = Noto_Serif({
+	subsets: ['latin'],
+	weight: '400'
+});
 
 const Messages = (props) => {
 	const [channels, setChannels] = useState(null);
@@ -84,11 +90,11 @@ const Messages = (props) => {
 				<>
 					<div className={`${styles.messagesContainer} messagesContainer`} ref={messagesUl}>
 						{filteredChat.map((message) => (
-							<div key={message.id}>
-								<h6>{message.created_at}</h6>
-								<h3>{message.username}</h3>
-								<h4>Says: </h4>
-								<p>{message.content}</p>
+							<div key={message.id} className={styles.singleMessage}>
+								<h6 className={`${notoSerif.className}`}>{message.created_at}</h6>
+								<h4 className={`${notoSerif.className}`}>
+									{message.username}: <span className={styles.messageContent}>{message.content}</span>
+								</h4>
 							</div>
 						))}
 					</div>
