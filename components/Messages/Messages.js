@@ -9,6 +9,7 @@ const Messages = (props) => {
   const [chat, setChat] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
+  let messagesUl = useRef();
 
   const getChannel = async () => {
     const newChannel = await router.query;
@@ -26,7 +27,6 @@ const Messages = (props) => {
       setChat(data);
     };
     getData();
-
     const channel = supabase.channel(`${channels}`);
 
     const messages = supabase
@@ -40,6 +40,7 @@ const Messages = (props) => {
       )
       .subscribe();
 
+    msgScroll();
     return () => {
       supabase.removeChannel(channel);
       console.log("channel removed", channel);
@@ -62,6 +63,15 @@ const Messages = (props) => {
   console.log("chat", chat);
   console.log("current channel", channels);
 
+  const msgScroll = () => {
+    console.log(
+      "🚀 ~ file: Messages.js:70 ~ msgScroll ~ height :",
+      messagesUl.current.children
+    );
+    // messagesUl.current.scrollTop = messagesUl.current.scrollHeight;
+    // current.scrollTop = current.scrollHeight;
+  };
+
   const filteredChat =
     channels !== undefined
       ? chat.filter((message) => message.channel_id === channels)
@@ -74,15 +84,16 @@ const Messages = (props) => {
       </h2>
       {isVisible && (
         <>
-          <ul className={styles.messagesContainer}>
+          <div className={`${styles.messagesContainer}`} ref={messagesUl}>
             {filteredChat.map((message) => (
-              <li key={message.id}>
+              <div key={message.id}>
+                <h6>{message.created_at}</h6>
                 <h3>{message.username}</h3>
-                <h4>Message:</h4>
+                <h4>Says: </h4>
                 <p>{message.content}</p>
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
           <form className={styles.form} onSubmit={submitHandler}>
             <label htmlFor="content">Message</label>
             <textarea
