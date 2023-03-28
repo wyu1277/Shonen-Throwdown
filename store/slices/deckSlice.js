@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
-import supabase from '../../lib/supabase';
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { supabase } from "../../lib/supabase";
 
 export const fetchDeckCards = createAsyncThunk('fetchDeckCards', async (userId) => {
 	console.log('fetch', userId);
@@ -52,7 +52,7 @@ const DeckSlice = createSlice({
 });
 
 export const selectAllCards = (state) => {
-	return state.deck;
+  return state.deck;
 };
 
 export default DeckSlice.reducer;
