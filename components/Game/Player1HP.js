@@ -7,7 +7,7 @@ const Player1HP = ({ user }) => {
       animate={{ scale: 1, opacity: 1 }}
       className="player1-hp"
     >
-      {user.username} HP
+      {user?.username} HP
     </motion.div>
   );
 };

@@ -12,7 +12,7 @@ const OpponentCard = (props) => {
           : { scale: 1, opacity: 0.6 }
       }
       className="opponent-container"
-      // onClick={() => setTapCard(!tapCard)}
+      onClick={() => setTapCard(!tapCard)}
     >
       <img
         src={props.card.image}
