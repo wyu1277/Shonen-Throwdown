@@ -1,17 +1,18 @@
-.card {
-	height: 800px;
-	z-index: 3;
-	position: fixed;
-	top: 10%;
-	left: 50%;
-}
-
 .img {
 	object-fit: cover;
 	height: 80%;
 }
 
+.card {
+	height: 800px;
+	z-index: 3;
+	position: relative;
+	top: 10%;
+	left: 50%;
+}
+
 .close {
+	margin-left: 350px;
 	height: 30px;
 	width: 70px;
 	position: fixed;
@@ -21,8 +22,25 @@
 }
 
 .removeButton {
+	margin-left: 10px;
+	position: fixed;
 	height: 30px;
 	width: 145px;
 	border-radius: 10px;
 	background-color: rgb(255, 93, 93);
+}
+
+.description {
+	color: white;
+	width: 250px;
+	text-align: center;
+	height: 500px;
+}
+
+.carddesc {
+	height: 800px;
+	z-index: 2;
+	position: fixed;
+	top: 10%;
+	left: 50%;
 }

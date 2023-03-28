@@ -2,10 +2,11 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	width: 60%;
 }
 
 .card {
-	height: 300px;
+	height: 200px;
 	margin: 20px;
 	box-sizing: border-box;
 }
@@ -33,4 +34,12 @@
 .pageParent {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.h1{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
