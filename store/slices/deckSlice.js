@@ -23,6 +23,15 @@ export const updateDeck = createAsyncThunk('removeDeckCard', async ({ updatedArr
 	}
 });
 
+export const addToDeckUpdate = createAsyncThunk('addToDeck', async({updatedArr, userId, newArr})=>{
+	try{
+		await supabase.from('decks').update({card_ids: updatedArr}).eq('user_id', userId);
+		return newArr
+	} catch(error){
+		console.log(error)
+	}
+})
+
 const initialState = [];
 
 const DeckSlice = createSlice({
@@ -34,9 +43,11 @@ const DeckSlice = createSlice({
 			return action.payload;
 		});
 		builder.addCase(updateDeck.fulfilled, (state, action) => {
-			console.log('payload', action.payload);
 			return action.payload;
 		});
+		builder.addCase(addToDeckUpdate.fulfilled, (state, action)=>{
+			return action.payload;
+		})
 	}
 });
 
