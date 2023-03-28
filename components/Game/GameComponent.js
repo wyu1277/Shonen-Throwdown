@@ -9,6 +9,12 @@ import { supabase } from "@/lib/supabase";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
 import { v4 as uuidv4 } from "uuid";
 import { useRef } from "react";
+import { gameActions } from "@/store/slices/gameSlice";
+
+let oppCard = null;
+let myCard = null;
+let myHP = 15;
+let oppHP = 15;
 
 const GameComponent = () => {
   const [playAudio, setPlayAudio] = useState(true);
@@ -17,11 +23,13 @@ const GameComponent = () => {
   const divRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [presences, setPresences] = useState([]);
-  const [opponentHP, setOpponentHP] = useState(15);
+  // const [opponentHP, setOpponentHP] = useState(15);
+  // const [myHP, setMyHP] = useState(15);
   const [opponentDeck, setOpponentDeck] = useState([]);
   const [opponentInfo, setOpponentInfo] = useState({});
   const dispatch = useDispatch();
   const audioRef = useRef(null);
+  const [round, setRound] = useState(15);
 
   const user = useSelector((state) => {
     return state.user.user;
@@ -67,7 +75,7 @@ const GameComponent = () => {
   }, []);
 
   useEffect(() => {
-    audioRef.current.play();
+    // audioRef.current.play();
 
     supabase
       .channel("game1")
@@ -80,27 +88,60 @@ const GameComponent = () => {
       .on("broadcast", { event: "cardmove" }, (payload) => {
         console.log(cardRefs?.current);
         console.log(payload.payload);
-        cardRefs?.current[payload.payload - 1]?.click();
+        cardRefs?.current[payload.payload.data.index - 1]?.click();
+        oppCard = payload.payload.data.cardInfo;
       });
-  }, [playAudio]);
+  }, [user]);
 
   const receiveData = () => {
-    cardRefs.current[1].click();
+    if (myCard && oppCard) {
+      if (myCard.power === oppCard.power) {
+        const damage = myCard.power - oppCard.power;
+      }
+
+      if (myCard.power > oppCard.power) {
+        const damage = myCard.power - oppCard.power;
+        oppHP = oppHP - damage;
+        dispatch(gameActions.decreasePlayer2HP(damage));
+        // console.log(damage);
+      }
+
+      if (myCard.power < oppCard.power) {
+        const damage = oppCard.power - myCard.power;
+        dispatch(gameActions.decreasePlayer1HP(damage));
+        myHP = myHP - damage;
+        // console.log(damage);
+      }
+    }
+    // dispatch(gameActions.decreasePlayer1HP(1));
+
+    console.log(myCard);
+    console.log(oppCard);
+  };
+
+  const setMyCard = (card) => {
+    myCard = card;
   };
 
   return (
     //window container
     <>
-      <button onClick={() => setPlayAudio(!playAudio)}>Music</button>
+      {/* <button onClick={}>Music</button> */}
       <audio src="/audio/music.mp3" ref={audioRef} />
       <button onClick={receiveData} ref={buttonRef}>
-        {opponentHP}
+        {oppHP}
       </button>
       <GameContainer>
         {userDeck &&
           userDeck.map((card, i) => {
             return (
-              <Card key={uuidv4()} index={i + 1} zIndex={i - 1} card={card} />
+              <Card
+                key={uuidv4()}
+                setMyCard={setMyCard}
+                index={i + 1}
+                zIndex={i - 1}
+                card={card}
+              />
             );
           })}
         {opponentDeck &&
@@ -116,9 +157,8 @@ const GameComponent = () => {
             );
           })}
 
-        <Player1HP user={user} />
-        <Player2HP opp={opponentInfo} />
-        <div className="click-ref">ClickRef</div>
+        <Player1HP user={user} myHP={myHP} />
+        <Player2HP opp={opponentInfo} opponentHP={oppHP} />
       </GameContainer>
     </>
   );

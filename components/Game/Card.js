@@ -1,20 +1,34 @@
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
+import { useEffect } from "react";
 
 const Card = (props) => {
   const audioRef = useRef(null);
-  const [tapCard, setTapCard] = useState(false);
-  // console.log(props.card);
-  // console.log(props.zIndex);
+  const [tapCard, setTapCard] = useState();
+  // setTapCard(false);
+  useEffect(() => {
+    setTapCard(true);
+    setTapCard(false);
+  }, []);
+
   const cardHandler = () => {
+    props.setMyCard(props.card);
     setTapCard(!tapCard);
-    audioRef.current.play();
-    supabase.channel("game1").subscribe().send({
-      type: "broadcast",
-      event: "cardmove",
-      payload: props.index,
-    });
+    // audioRef.current.play();
+    supabase
+      .channel("game1")
+      .subscribe()
+      .send({
+        type: "broadcast",
+        event: "cardmove",
+        payload: {
+          data: {
+            index: props.index,
+            cardInfo: props.card,
+          },
+        },
+      });
   };
   return (
     <motion.div

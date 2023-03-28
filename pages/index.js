@@ -6,6 +6,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
+import { fetchDeckCards } from "@/store/slices/deckSlice";
 
 const Home = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,7 @@ const Home = ({ user }) => {
     // console.log("loading");
     if (user) {
       dispatch(searchUser(user.id));
+      dispatch(fetchDeckCards(user.id));
     }
 
     if (user && userData?.username === null) {

@@ -8,12 +8,6 @@ const OpponentCard = (props, ref) => {
   const [tapCard, setTapCard] = useState(false);
   const opponentCardHandler = () => {
     setTapCard(!tapCard);
-    audioRef.current.play();
-    //   supabase.channel("game1").send({
-    //     type: "broadcast",
-    //     event: "opponentMove",
-    //     payload: props.card.id,
-    //   });
   };
 
   return (
