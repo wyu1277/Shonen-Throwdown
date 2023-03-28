@@ -6,6 +6,9 @@ import { useUser } from '@supabase/auth-helpers-react';
 
 let Modal = (props) => {
 
+	const user = useUser();
+
+
   console.log(props);
   //   if (!open) return null;
   //   return ReactDom.createPortal(
@@ -46,8 +49,7 @@ let Modal = (props) => {
       >
         <div className={styles.description}>
           <h1>{props.card.name}</h1>
-          <p>Enter Description here...</p>
-          <p>Please insert an even longer description here....</p>
+          <p>{props.card.description}</p>
         </div>
       </motion.div>
     </div>

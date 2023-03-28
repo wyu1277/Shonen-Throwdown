@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
-import supabase from "../../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 const initialState = {};
 
 export const searchUser = createAsyncThunk("search4user", async (hope) => {
   try {
-    // console.log(hope, "hope");
-    const user = await supabase.from("users").select().eq("id", hope);
-    // console.log(user);
-
-    const data = user.data;
-    // console.log(data);
-    return data[0];
+    console.log(hope, "hope");
+    const user = await supabase.from("users").select().eq("id", hope).single();
+    console.log(user.data);
+    return user.data;
   } catch (error) {
     console.log(error, "Error Search");
   }
