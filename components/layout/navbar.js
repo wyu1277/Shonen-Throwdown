@@ -1,8 +1,8 @@
-import React from "react";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import Link from "next/link";
-import styles from "./Navbar.module.css";
-import { useRouter } from "next/router";
+import React from 'react';
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
+import Link from 'next/link';
+import styles from './Navbar.module.css';
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
 	const router = useRouter();
@@ -29,7 +29,11 @@ const Navbar = () => {
 			<Link className={styles.link} href="/collection">
 				Cards
 			</Link>
-      {user && <Link href="/lobby">Play!</Link>}
+			{user && (
+				<Link className={styles.link} href="/lobby">
+					Play!
+				</Link>
+			)}
 			{!user && (
 				<Link className={styles.link} href="/login">
 					Login/Sign Up
