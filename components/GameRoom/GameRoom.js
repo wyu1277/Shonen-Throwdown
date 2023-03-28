@@ -1,33 +1,39 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
-import supabase from "@/lib/supabase";
-import { useUser } from "@supabase/auth-helpers-react";
+import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
+import { GlobalContext } from "@/lib/GlobalContext";
 
-const GameRoom = ({ props }) => {
+const GameRoom = (props) => {
   const [lobby, setLobby] = useState();
   const [presence, setPresence] = useState();
   const router = useRouter();
   const [player1, setPlayer1] = useState();
   const [player2, setPlayer2] = useState();
   const [game, setGame] = useState();
-
+  const [trackingStatus, setTrackingStatus] = useState("open");
   // Player1{
   //   username: props.username;
   //   HP: 15;
   //   Deck: props.deck;
-
   // }
 
+  const conUser = useContext(GlobalContext);
+  console.log("this is conuser in gameroom line 22", conUser);
+
+  const gameId = router.query;
+  console.log("this is game id", gameId);
+
   useEffect(() => {
-    const channel = supabase.channel("beta-test", {
-      config: { presence: { key: `${props.username}` } },
+    const channel = supabase.channel(`${gameId}`, {
+      config: { presence: { key: `${conUser.username}` } },
     });
     channel
-      .on("presence", { event: "sync" }, () => {
+      .on("presence", { event: "sync" }, (object) => {
         const state = channel.presenceState();
         setPresence(state);
-        setLobby(getLobby(state));
+        setLobby(state);
       })
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
@@ -38,19 +44,24 @@ const GameRoom = ({ props }) => {
         //   console.log("this is lobby in joinPaths", lobby);
         //   console.log("this is set play in join presence", player1);
         // }
-        console.log("this is lobby in new presence", lobby);
       })
       .on("presence", { event: "leave" }, ({ leftPresences }) => {
         console.log(leftPresences, "Has Left");
       })
       .subscribe(async (status) => {
+        if (trackingStatus === "closed") {
+          const untrackStatus = await channel.untrack();
+          // console.log(trackStatus, "TRACKSTATUS LINE 57");
+          console.log(untrackStatus, "STATUS/HAS LEFT");
+        }
+
         if (status === "SUBSCRIBED") {
-          const status = await channel.track(props);
-          console.log(status);
-          await channel.untrack();
+          const trackStatus = await channel.track();
+          console.log(trackStatus, "TRACKSTATUS");
+          // await channel.untrack();
         }
       });
-  }, ["presence"]);
+  }, [player1, player2]);
 
   const getLobby = (presence) => {
     return Object.values(presence).map(
@@ -61,13 +72,22 @@ const GameRoom = ({ props }) => {
   useEffect(() => {
     if (presence && Object.values(presence).length > 0) {
       setLobby(getLobby(presence));
+      console.log("PRESENCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", presence);
     }
   }, [presence]);
 
-  const leaveHandler = () => {
+  const leaveHandler = async () => {
     supabase.removeAllChannels();
     console.log("removed all channels");
     router.push("http://localhost:3000/");
+    setTrackingStatus("closed");
+    // supabase.subscribe(async (status) => {
+    //   if (trackStatus === "ok") {
+    //     const untrackStatus = await channel.untrack();
+    //     console.log(trackStatus, "TRACKSTATUS LINE 57");
+    //     console.log(untrackStatus, "STATUS/HAS LEFT");
+    //   }
+    // });
   };
 
   const clickHandler = (e) => {
@@ -106,7 +126,7 @@ const GameRoom = ({ props }) => {
       <div>
         <h4>Player 1: </h4>
         player 1 buttons
-        <button onClick={clickHandler} value={props.decks}>
+        <button onClick={clickHandler} value="1">
           1
         </button>
         <button onClick={clickHandler} value="2">

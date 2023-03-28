@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "@/store/slices/userSlice";
 import { useUser } from "@supabase/auth-helpers-react";
 
-const AccountSetupForm = () => {
+const AccountUpdateForm = (props) => {
   const dispatch = useDispatch();
   const user = useUser();
   const router = useRouter();
@@ -34,16 +34,14 @@ const AccountSetupForm = () => {
       fname,
       lname,
       phone,
-      email: user.email,
       username,
     };
     dispatch(updateUser(info));
-    router.push("/");
+    props.setToggle(!props.toggle);
   };
 
   return (
     <div className={classes.container}>
-      <h1>Finish Setting Up Your Account to Continue 😃</h1>
       <form onSubmit={submitHandler}>
         <div>
           <label htmlFor="fName">First Name:</label>
@@ -84,10 +82,10 @@ const AccountSetupForm = () => {
           />
         </div>
 
-        <button>Submit</button>
+        <button>Update</button>
       </form>
     </div>
   );
 };
 
-export default AccountSetupForm;
+export default AccountUpdateForm;
