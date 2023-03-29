@@ -1,17 +1,13 @@
 "use client";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "@/lib/supabase";
 import { useSelector } from "react-redux";
-import { GlobalContext } from "@/lib/GlobalContext";
 
-const GameRoom = (props) => {
-  const [lobby, setLobby] = useState();
+const GameRoom = ({ props }) => {
+  const [channels, setChannels] = useState(null);
   const [presence, setPresence] = useState();
   const router = useRouter();
-  const [player1, setPlayer1] = useState();
-  const [player2, setPlayer2] = useState();
-  const [game, setGame] = useState();
   const [trackingStatus, setTrackingStatus] = useState("open");
   // Player1{
   //   username: props.username;
@@ -19,21 +15,21 @@ const GameRoom = (props) => {
   //   Deck: props.deck;
   // }
 
-  const conUser = useContext(GlobalContext);
-  console.log("this is conuser in gameroom line 22", conUser);
-
-  const gameId = router.query;
-  console.log("this is game id", gameId);
+  const getChannel = async () => {
+    const newChannel = await router.query;
+    console.log("this is new channel", newChannel);
+    setChannels(newChannel.id);
+  };
 
   useEffect(() => {
-    const channel = supabase.channel(`${gameId}`, {
-      config: { presence: { key: `${conUser.username}` } },
+    getChannel();
+    const channel = supabase.channel(`${channels}`, {
+      config: { presence: { key: `${props.username}` } },
     });
     channel
       .on("presence", { event: "sync" }, (object) => {
         const state = channel.presenceState();
         setPresence(state);
-        setLobby(state);
       })
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
@@ -61,17 +57,10 @@ const GameRoom = (props) => {
           // await channel.untrack();
         }
       });
-  }, [player1, player2]);
-
-  const getLobby = (presence) => {
-    return Object.values(presence).map(
-      (userPresences) => userPresences[0].username
-    );
-  };
+  }, [channels]);
 
   useEffect(() => {
     if (presence && Object.values(presence).length > 0) {
-      setLobby(getLobby(presence));
       console.log("PRESENCEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", presence);
     }
   }, [presence]);
@@ -92,8 +81,6 @@ const GameRoom = (props) => {
 
   const clickHandler = (e) => {
     e.preventDefault();
-    setGame(e.target.value);
-    console.log(player1);
   };
 
   //join room(game.id) if a (roomVacant = true) else createNewRoom()
@@ -114,7 +101,7 @@ const GameRoom = (props) => {
       <h1>GameRoom</h1>
       <button onClick={leaveHandler}>Leave Room</button>
       <h3>
-        Users In Lobby: {lobby ? lobby.join(" , ") : "loading"}
+        Users In Lobby: {/*{lobby ? lobby.join(" , ") : "loading"} */}
         {/* <ul>
           {lobby.map((user) => (
             <li key={user.id}>
@@ -136,7 +123,7 @@ const GameRoom = (props) => {
           3
         </button>
       </div>
-      <h1>CURRENT CARD: {game}</h1>
+      <h1>CURRENT CARD: </h1>
       <div>
         <h4>Player 2: </h4>
         player 2 buttons

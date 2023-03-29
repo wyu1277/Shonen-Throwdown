@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Messages from "@/components/Messages/Messages";
 import { supabase } from "@/lib/supabase";
 import GameRoom from "@/components/GameRoom/GameRoom";
@@ -9,6 +9,7 @@ import Channels from "@/components/Channels/Channels";
 import { GlobalContext } from "@/lib/GlobalContext";
 import GameComponent from "@/components/Game/GameComponent";
 import Loading from "@/components/Game/Loading";
+import { useRouter } from "next/router";
 
 const Game = (props) => {
   const user = useUser();
@@ -19,22 +20,21 @@ const Game = (props) => {
     return state.load;
   });
 
-  console.log("this is props in game index 16", props);
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", user.id)
-        .single();
-      setConUser(data);
-    };
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const { data } = await supabase
+  //       .from("users")
+  //       .select("*")
+  //       .eq("id", user.id)
+  //       .single();
+  //     setConUser(data);
+  //   };
+  //   fetchUser();
+  // }, []);
+  const router = useRouter();
+  const channel = router.query;
 
-  console.log("pubic user", publicUser);
-  console.log("props in game[]", props);
-  console.log("user outside useE", conUser);
+  console.log("this is channel", channel);
 
   return (
     <div>

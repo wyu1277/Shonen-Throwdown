@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styles from './Modal.module.css';
 import { motion } from 'framer-motion';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useDispatch } from 'react-redux';
+import { addToDeckUpdate, selectAllCards } from '@/store/slices/deckSlice';
+import { useSelector } from 'react-redux';
 
 let Modal = (props) => {
 	const user = useUser();
@@ -10,9 +13,10 @@ let Modal = (props) => {
 	const [deckFull, setDeckFull] = useState(false);
 	const [dupCard, setDupCard] = useState(false);
 	const [addSuccess, setAddSuccess] = useState(false);
+	const dispatch = useDispatch();
+	const cardsData = useSelector(selectAllCards);
 
-	const addToDeck = async (e, cardId, userId) => {
-		e.stopPropagation();
+	const addToDeck = async (cardId, userId, cardsData, card) => {
 		// console.log('cardId', cardId);
 		// console.log('userId', userId);
 		const deckArr = await supabase.from('decks').select('*').eq('user_id', userId);
@@ -34,13 +38,15 @@ let Modal = (props) => {
 			}
 		} else {
 			cardArr.push(cardId);
-			// console.log('updated cardArr', cardArr);
-			const { data } = await supabase.from('decks').update({ card_ids: cardArr }).eq('user_id', userId);
+			const updatedArr = cardArr.flat()
+			const newArr = Array.from(cardsData)
+			newArr.push(card)
+			console.log('this is newArr2 in modal', newArr)
+			dispatch(addToDeckUpdate({updatedArr, userId, newArr}))
 			setAddSuccess(true);
 			setTimeout(() => {
 				setAddSuccess(false);
 			}, 2000);
-			return data;
 		}
 	};
 
@@ -57,7 +63,7 @@ let Modal = (props) => {
 				onClick={() => props.setShowModal(!props.showModal)}
 			>
 				{user ? (
-					<button className={styles.deckButton} onClick={(e) => addToDeck(e, props.card.id, props.userId)}>
+					<button className={styles.deckButton} onClick={(e) => {e.stopPropagation(); return(addToDeck(props.card.id, props.userId, cardsData, props.card))}}>
 						Add To Deck
 					</button>
 				) : null}

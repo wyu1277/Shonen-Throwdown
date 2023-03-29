@@ -3,26 +3,31 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import styles from "./Messages.module.css";
-import { GlobalContext } from "@/lib/GlobalContext";
 
 const Messages = (props) => {
+  const [channels, setChannels] = useState(null);
   const [chat, setChat] = useState([]);
-  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
-  const gameId = router.query;
+  const router = useRouter();
 
-  const conUser = useContext(GlobalContext);
+  const getChannel = async () => {
+    const newChannel = await router.query;
+    console.log("this is new channel", newChannel);
+    setChannels(newChannel.id);
+  };
 
-  console.log("PLS WORK CON USER PLS", conUser);
+  const user = props.props;
 
   useEffect(() => {
+    getChannel();
+
     const getData = async () => {
       const { data } = await supabase.from("messages").select("*, users(*)");
       setChat(data);
     };
     getData();
 
-    const channel = supabase.channel("chat");
+    const channel = supabase.channel(`${channels}`);
 
     const messages = supabase
       .channel("chat")
@@ -38,9 +43,8 @@ const Messages = (props) => {
     return () => {
       supabase.removeChannel(channel);
       console.log("channel removed", channel);
-      console.log("whyre you doing this to me", gameId);
     };
-  }, []);
+  }, [channels]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -48,10 +52,20 @@ const Messages = (props) => {
     const { content } = Object.fromEntries(new FormData(form));
 
     form.reset();
-    const { data } = await supabase
-      .from("messages")
-      .insert({ content: content, user_id: props.id });
+    const { data } = await supabase.from("messages").insert({
+      content: content,
+      user_id: user.id,
+      username: user.username,
+      channel_id: channels,
+    });
   };
+  console.log("chat", chat);
+  console.log("current channel", channels);
+
+  const filteredChat =
+    channels !== undefined
+      ? chat.filter((message) => message.channel_id === channels)
+      : chat.filter((message) => message.channel_id === null);
 
   return (
     <div className={styles.wrapper}>
@@ -61,9 +75,9 @@ const Messages = (props) => {
       {isVisible && (
         <>
           <ul className={styles.messagesContainer}>
-            {chat.map((message) => (
+            {filteredChat.map((message) => (
               <li key={message.id}>
-                <h3>{message.users?.username}</h3>
+                <h3>{message.username}</h3>
                 <h4>Message:</h4>
                 <p>{message.content}</p>
               </li>
