@@ -7,10 +7,12 @@ import { loadActions } from "@/store/slices/loadSlice";
 import { supabase } from "@/lib/supabase";
 import { searchUser } from "@/store/slices/userSlice";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 const Loading = () => {
   const [time, setTime] = useState(false);
+  const [channels, setChannels] = useState(null);
+
   const router = useRouter();
   const [oppDeck, setOppDeck] = useState();
   const user = useUser();
@@ -35,6 +37,12 @@ const Loading = () => {
     return state.load;
   });
 
+  const getChannel = async () => {
+    const newChannel = await Router.query;
+    console.log("this is new channel", newChannel);
+    setChannels(newChannel.id);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setTime(true);
@@ -42,7 +50,7 @@ const Loading = () => {
     if (!player) dispatch(searchUser(user.id));
     if (userDeck.length === 0) dispatch(fetchDeckCards(user.id));
 
-    const channel = supabase.channel("game1");
+    const channel = supabase.channel(`${channels}`);
 
     channel
       .subscribe(async (status) => {
