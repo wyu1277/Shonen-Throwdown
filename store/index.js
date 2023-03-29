@@ -4,14 +4,19 @@ import toggleReducer from "./slices/toggleSlice";
 import deckReducer from "./slices/deckSlice";
 import gameReducer from "./slices/gameSlice";
 import loadReducer from "./slices/loadSlice";
+import marketReducer from './slices/marketSlice'
+import collectionReducer from './slices/collectionSlice'
+
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     toggle: toggleReducer,
-    deck: deckReducer,
+    deck: deckReducer, 
     game: gameReducer,
     load: loadReducer,
+    market: marketReducer, 
+    collection: collectionReducer,
   },
 });
 
