@@ -23,37 +23,42 @@ export const fetchDeckCards = createAsyncThunk(
   }
 );
 
-export const updateDeck = createAsyncThunk(
-  "removeDeckCard",
-  async ({ updatedArr, userId }) => {
-    try {
-      const { data } = await supabase
-        .from("decks")
-        .update({ card_ids: updatedArr })
-        .eq("user_id", userId);
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
+export const updateDeck = createAsyncThunk('removeDeckCard', async ({ updatedArr, userId, returnArr }) => {
+	try {
+		await supabase.from('decks').update({ card_ids: updatedArr }).eq('user_id', userId).select();
+		return returnArr;
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+export const addToDeckUpdate = createAsyncThunk('addToDeck', async({updatedArr, userId, newArr})=>{
+	try{
+		await supabase.from('decks').update({card_ids: updatedArr}).eq('user_id', userId);
+		return newArr
+	} catch(error){
+		console.log(error)
+	}
+})
+
 
 const initialState = [];
 
 const DeckSlice = createSlice({
-  name: "deck",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchDeckCards.fulfilled, (state, action) => {
-      return action.payload;
-    });
-    builder.addCase(updateDeck.fulfilled, (state, action) => {
-      console.log("payload", action.payload);
-      //! WHY IS THIS NULL?
-      return action.payload;
-    });
-  },
+	name: 'deck',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(fetchDeckCards.fulfilled, (state, action) => {
+			return action.payload;
+		});
+		builder.addCase(updateDeck.fulfilled, (state, action) => {
+			return action.payload;
+		});
+		builder.addCase(addToDeckUpdate.fulfilled, (state, action)=>{
+			return action.payload;
+		})
+	}
 });
 
 export const selectAllCards = (state) => {
