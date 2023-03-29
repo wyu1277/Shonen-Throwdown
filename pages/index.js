@@ -6,6 +6,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
+import { fetchDeckCards } from "@/store/slices/deckSlice";
 
 const Home = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,7 @@ const Home = ({ user }) => {
     // console.log("loading");
     if (user) {
       dispatch(searchUser(user.id));
+      dispatch(fetchDeckCards(user.id));
     }
 
     if (user && userData?.username === null) {
@@ -31,7 +33,6 @@ const Home = ({ user }) => {
     }
     // console.log(userData, "USERDATA");
   }, [userInfo]);
-  console.log(loadState, "ME IS LOADIING");
   return (
     <motion.div
       variants={container}
@@ -75,7 +76,7 @@ export const getServerSideProps = async (context) => {
   // 	};
   // }
 
-  console.log(session);
+  console.log(session, "getting session");
   return {
     props: {
       initialSession: session,

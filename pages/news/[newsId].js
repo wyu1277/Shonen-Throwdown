@@ -1,5 +1,5 @@
 import NewsDisplay from "@/components/News/NewsDisplay";
-import supabase from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 const NewsDetails = ({ articleData }) => {
   return <NewsDisplay props={articleData} />;
