@@ -54,13 +54,13 @@ const Loading = () => {
           const trackStatus = await channel.track();
         }
       })
-      .on("presence", { event: "sync" }, () => {
-        channel.send({
-          type: "broadcast",
-          event: "getUserDeck/" + Router.query.id,
-          payload: { data: { player, userDeck } },
-        });
-      })
+      // .on("presence", { event: "sync" }, () => {
+      //   channel.send({
+      //     type: "broadcast",
+      //     event: "getUserDeck/" + Router.query.id,
+      //     payload: { data: { player, userDeck } },
+      //   });
+      // })
       .on(
         "broadcast",
         { event: "getUserDeck/" + Router.query.id },
