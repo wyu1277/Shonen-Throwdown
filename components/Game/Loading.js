@@ -13,7 +13,7 @@ const Loading = () => {
   const [time, setTime] = useState(false);
   const [channels, setChannels] = useState(null);
 
-  const router = useRouter();
+  // const router = useRouter();
   const [oppDeck, setOppDeck] = useState();
   const user = useUser();
   const dispatch = useDispatch();
@@ -44,6 +44,7 @@ const Loading = () => {
   };
 
   useEffect(() => {
+    getChannel();
     setTimeout(() => {
       setTime(true);
     }, 5000);
