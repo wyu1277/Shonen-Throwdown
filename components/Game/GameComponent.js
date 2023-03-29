@@ -100,12 +100,11 @@ const GameComponent = (props) => {
   // }, []);
 
   //establishes presence
+  const channel = supabase.channel(channels, {
+    config: { presence: { key: user.username } },
+  });
   useEffect(() => {
     // getChannel();
-    const channel = supabase.channel(channels, {
-      config: { presence: { key: user.username } },
-    });
-
     channel
       .subscribe(async (status) => {
         if (status === "SUBSCRIBED") {
@@ -125,10 +124,39 @@ const GameComponent = (props) => {
       })
       .on("presence", { event: "join" }, (object) => {
         setPresences((presences) => [...presences, object]);
-      })
-      .on("presence", { event: "leave" }, (object1234) => {
-        channel.unsubscribe();
-      })
+      });
+    // .on("presence", { event: "leave" }, (object1234) => {
+    //   channel.unsubscribe();
+    // })
+    // .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+    //   setLoading(true);
+    //   setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+    //   setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+    //   setLoading(false);
+    // })
+    // .on("broadcast", { event: "cardmove" }, (payload) => {
+    //   // console.log(cardRefs?.current);
+    //   // console.log(payload.payload);
+    //   cardRefs?.current[payload.payload.data.index - 1]?.click();
+    //   oppCard = payload.payload.data.cardInfo;
+    //   // checks();
+    // })
+    // .on("broadcast", { event: "cardmove" }, () => {
+    //   // checks();
+    // });
+
+    // supabase.removeAllChannels();
+    console.log(supabase, "SUPABASE STATUS");
+    // .on("presence", { event: "join" }, (object) => {
+    //   setPresences((presences) => [...presences, object]);
+    // });
+    // .on("presence", { event: "leave" }, (object) => {
+    //   channel.unsubscribe();
+    // });
+  }, []);
+
+  useEffect(() => {
+    channel
       .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
@@ -145,16 +173,7 @@ const GameComponent = (props) => {
       .on("broadcast", { event: "cardmove" }, () => {
         // checks();
       });
-
-    // supabase.removeAllChannels();
-    console.log(supabase, "SUPABASE STATUS");
-    // .on("presence", { event: "join" }, (object) => {
-    //   setPresences((presences) => [...presences, object]);
-    // });
-    // .on("presence", { event: "leave" }, (object) => {
-    //   channel.unsubscribe();
-    // });
-  }, []);
+  });
 
   // useEffect(() => {
   //   // const channel = supabase.channel(Router.query.id);
