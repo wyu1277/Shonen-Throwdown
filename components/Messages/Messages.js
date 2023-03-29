@@ -3,12 +3,23 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import styles from "./Messages.module.css";
+import { Noto_Serif } from "next/font/google";
+
+const notoSerif = Noto_Serif({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 const Messages = (props) => {
   const [channels, setChannels] = useState(null);
   const [chat, setChat] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
+
+  const filteredChat =
+    channels !== undefined
+      ? chat.filter((message) => message.channel_id === channels)
+      : chat.filter((message) => message.channel_id === null);
 
   const getChannel = async () => {
     const newChannel = await router.query;
@@ -19,32 +30,33 @@ const Messages = (props) => {
   const user = props.props;
 
   useEffect(() => {
-    getChannel();
-
     const getData = async () => {
       const { data } = await supabase.from("messages").select("*, users(*)");
       setChat(data);
     };
     getData();
-
-    const channel = supabase.channel(`${channels}`);
-
-    const messages = supabase
-      .channel("chat")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "messages" },
-        async (payload) => {
-          await setChat((current) => [...current, payload.new]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-      console.log("channel removed", channel);
-    };
   }, [channels]);
+
+  useEffect(() => {
+    const messages = async () => {
+      getChannel();
+      const channel = supabase.channel(`${channels}`);
+      await channel
+        .on(
+          "postgres_changes",
+          { event: "*", schema: "public", table: "messages" },
+          async (payload) => {
+            await setChat((current) => [...current, payload.new]);
+          }
+        )
+        .subscribe();
+      return () => {
+        supabase.removeChannel(channel);
+        console.log("channel removed", channel);
+      };
+    };
+    messages();
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -62,10 +74,17 @@ const Messages = (props) => {
   console.log("chat", chat);
   console.log("current channel", channels);
 
-  const filteredChat =
-    channels !== undefined
-      ? chat.filter((message) => message.channel_id === channels)
-      : chat.filter((message) => message.channel_id === null);
+  const messagesUl = useRef(null);
+  useEffect(() => {
+    msgScroll();
+  }, [filteredChat]);
+
+  const msgScroll = () => {
+    console.log("🚀 ~ file: Messages.js:70 ~ msgScroll ~ height :", messagesUl);
+    if (messagesUl.current) {
+      messagesUl.current.scrollTop = messagesUl.current.scrollHeight;
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -74,15 +93,24 @@ const Messages = (props) => {
       </h2>
       {isVisible && (
         <>
-          <ul className={styles.messagesContainer}>
+          <div
+            className={`${styles.messagesContainer} messagesContainer`}
+            ref={messagesUl}
+          >
             {filteredChat.map((message) => (
-              <li key={message.id}>
-                <h3>{message.username}</h3>
-                <h4>Message:</h4>
-                <p>{message.content}</p>
-              </li>
+              <div key={message.id} className={styles.singleMessage}>
+                <h6 className={`${notoSerif.className}`}>
+                  {message.created_at}
+                </h6>
+                <h4 className={`${notoSerif.className}`}>
+                  {message.username}:
+                  <span className={styles.messageContent}>
+                    {message.content}
+                  </span>
+                </h4>
+              </div>
             ))}
-          </ul>
+          </div>
           <form className={styles.form} onSubmit={submitHandler}>
             <label htmlFor="content">Message</label>
             <textarea
