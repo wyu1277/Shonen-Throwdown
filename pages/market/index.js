@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './market.module.css';
 import MarketModal from '@/components/market/marketModal';
+import Store from '@/components/store/store';
 
 const Market = () => {
 	const supabase = useSupabaseClient();
@@ -151,8 +152,11 @@ const Market = () => {
 	};
 
 	return (
-		<div>
-			<h1>Currency: {userData ? `${userData.wallet} tokens` : 'loading'}</h1>
+		<div className={styles.pageParent}>
+			<div className={styles.storeParent}>
+				<h1>Currency: {userData ? `${userData.wallet} tokens` : 'loading'}</h1>
+				<Store />
+			</div>
 			<h1>One Piece Booster Pack</h1>
 			<button onClick={() => getRandomCard(cardsBySeries['One Piece'])}>Pull One 10 tokens</button>
 			<button onClick={() => getThreeCards(cardsBySeries['One Piece'])}>Pull Three 25 tokens</button>
