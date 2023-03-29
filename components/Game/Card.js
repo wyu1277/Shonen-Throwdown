@@ -5,14 +5,14 @@ import { useEffect } from "react";
 
 const Card = (props) => {
   const audioRef = useRef(null);
-  const [tapCard, setTapCard] = useState();
+  const [tapCard, setTapCard] = useState(true);
   // setTapCard(false);
   useEffect(() => {
-    setTapCard(true);
-    setTapCard(false);
+    setTapCard(!tapCard);
   }, []);
 
   const cardHandler = () => {
+    props.setShowSet(true);
     props.setMyCard(props.card);
     setTapCard(!tapCard);
     // audioRef.current.play();
