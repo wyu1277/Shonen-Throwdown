@@ -36,7 +36,7 @@ const Collection = () => {
 				const cardIdArr = cardIds.data.map((card) => card.cards_id);
 				// console.log('cardIdArr', cardIdArr);
 				const cards = await supabase.from('cards').select('*').in('id', cardIdArr);
-				console.log(cards.data)
+				console.log(cards.data);
 				// console.log('cards', cards.data);
 				setData(cards.data);
 			};
@@ -52,22 +52,22 @@ const Collection = () => {
 
 	const handleSortChange = (e) => {
 		setSortValue(e.target.value);
-	  };
-	
-	  let sortedData;
+	};
 
-	  if (filteredData) {
-		  sortedData = [...filteredData];
-		  if (sortValue === 'name') {
-			  sortedData.sort((a, b) => a.name.localeCompare(b.name));
-		  } else if (sortValue === 'power') {
-			  sortedData.sort((a, b) => a.power - b.power);
-		  } else if (sortValue === 'element') {
-			  sortedData.sort((a, b) => a.element.localeCompare(b.element));
-		  } else if (sortValue === 'series') {
-			  sortedData.sort((a, b) => a.series.localeCompare(b.series));
-		  }
-	  }
+	let sortedData;
+
+	if (filteredData) {
+		sortedData = [...filteredData];
+		if (sortValue === 'name') {
+			sortedData.sort((a, b) => a.name.localeCompare(b.name));
+		} else if (sortValue === 'power') {
+			sortedData.sort((a, b) => a.power - b.power);
+		} else if (sortValue === 'element') {
+			sortedData.sort((a, b) => a.element.localeCompare(b.element));
+		} else if (sortValue === 'series') {
+			sortedData.sort((a, b) => a.series.localeCompare(b.series));
+		}
+	}
 
 	return (
 		<div>

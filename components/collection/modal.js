@@ -38,11 +38,11 @@ let Modal = (props) => {
 			}
 		} else {
 			cardArr.push(cardId);
-			const updatedArr = cardArr.flat()
-			const newArr = Array.from(cardsData)
-			newArr.push(card)
-			console.log('this is newArr2 in modal', newArr)
-			dispatch(addToDeckUpdate({updatedArr, userId, newArr}))
+			const updatedArr = cardArr.flat();
+			const newArr = Array.from(cardsData);
+			newArr.push(card);
+			console.log('this is newArr2 in modal', newArr);
+			dispatch(addToDeckUpdate({ updatedArr, userId, newArr }));
 			setAddSuccess(true);
 			setTimeout(() => {
 				setAddSuccess(false);
@@ -63,7 +63,13 @@ let Modal = (props) => {
 				onClick={() => props.setShowModal(!props.showModal)}
 			>
 				{user ? (
-					<button className={styles.deckButton} onClick={(e) => {e.stopPropagation(); return(addToDeck(props.card.id, props.userId, cardsData, props.card))}}>
+					<button
+						className={styles.deckButton}
+						onClick={(e) => {
+							e.stopPropagation();
+							return addToDeck(props.card.id, props.userId, cardsData, props.card);
+						}}
+					>
 						Add To Deck
 					</button>
 				) : null}
