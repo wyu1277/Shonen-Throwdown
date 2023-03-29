@@ -2,12 +2,22 @@ import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { useEffect } from "react";
+import Router from "next/router";
 
 const Card = (props) => {
   const audioRef = useRef(null);
   const [tapCard, setTapCard] = useState(true);
+  const [channels, setChannels] = useState();
   // setTapCard(false);
+
+  const getChannel = async () => {
+    const newChannel = await Router.query;
+    console.log("this is new channel", newChannel);
+    setChannels(newChannel.id);
+  };
+
   useEffect(() => {
+    getChannel();
     setTapCard(!tapCard);
   }, []);
 
@@ -17,7 +27,7 @@ const Card = (props) => {
     setTapCard(!tapCard);
     // audioRef.current.play();
     supabase
-      .channel("game1")
+      .channel(`${channels}`)
       .subscribe()
       .send({
         type: "broadcast",

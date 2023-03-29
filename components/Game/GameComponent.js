@@ -125,7 +125,7 @@ const GameComponent = (props) => {
     // audioRef.current.play();
 
     supabase
-      .channel("game1")
+      .channel(`${channels}`)
       .on("broadcast", { event: "getUserDeck" }, (payload) => {
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
