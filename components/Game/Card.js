@@ -31,7 +31,6 @@ const Card = (props) => {
       .channel(channels, {
         config: { presence: { key: props.user.username } },
       })
-      .subscribe()
       .send({
         type: "broadcast",
         event: "cardmove",

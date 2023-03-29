@@ -12,6 +12,7 @@ import Router from "next/router";
 const Loading = () => {
   const [time, setTime] = useState(false);
   const [localLoading, setLocalLoading] = useState(true);
+  const [presences, setPresences] = useState([]);
 
   // const router = useRouter();
   const [oppDeck, setOppDeck] = useState();
@@ -68,7 +69,11 @@ const Loading = () => {
           dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
           dispatch(gameActions.setPlayer2(payload.payload.data?.player));
         }
-      );
+      )
+      .on("presence", { event: "join" }, (object) => {
+        setPresences((presences) => [...presences, object]);
+        console.log(presences);
+      });
     setTimeout(() => {
       setLocalLoading(false);
     }, 2000);

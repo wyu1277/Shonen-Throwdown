@@ -20,6 +20,7 @@ const Lobby = () => {
   const router = useRouter();
   const route = router.pathname;
   console.log("🚀 ~ file: index.js:22 ~ Lobby ~ route:", route);
+  console.log(supabase, "SUPABASE CHILLIN IN LOBBY");
 
   useEffect(() => {
     const fetchUser = async () => {

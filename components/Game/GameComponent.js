@@ -109,42 +109,26 @@ const GameComponent = (props) => {
     channel
       .subscribe(async (status) => {
         if (status === "SUBSCRIBED") {
-          const trackStatus = await channel.track();
+          console.log(status, "CHANNEL STATUS ");
+          const trackStatus = await channel.track({ key: user.username });
+          console.log(trackStatus, "TRACK STATUS");
         }
       })
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
-        console.log(state);
+        console.log(state, "SYNC STATE");
         channel.send({
           type: "broadcast",
           event: "getUserDeck/" + channels,
           payload: { data: { user: props.user, userDeck: props.userDeck } },
         });
-      });
-    // .on("presence", { event: "join" }, (object) => {
-    //   setPresences((presences) => [...presences, object]);
-    // });
-    // .on("presence", { event: "leave" }, (object) => {
-    //   channel.unsubscribe();
-    // });
-  }, []);
-
-  useEffect(() => {
-    const channel = supabase.channel(Router.query.id);
-    channel
+      })
       .on("presence", { event: "join" }, (object) => {
         setPresences((presences) => [...presences, object]);
       })
-      .on("presence", { event: "leave" }, (object) => {
+      .on("presence", { event: "leave" }, (object1234) => {
         channel.unsubscribe();
-      });
-  }, [presences]);
-
-  useEffect(() => {
-    // audioRef.current.play();
-
-    supabase
-      .channel(channels)
+      })
       .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
@@ -161,7 +145,49 @@ const GameComponent = (props) => {
       .on("broadcast", { event: "cardmove" }, () => {
         // checks();
       });
+
+    // supabase.removeAllChannels();
+    console.log(supabase, "SUPABASE STATUS");
+    // .on("presence", { event: "join" }, (object) => {
+    //   setPresences((presences) => [...presences, object]);
+    // });
+    // .on("presence", { event: "leave" }, (object) => {
+    //   channel.unsubscribe();
+    // });
   }, []);
+
+  // useEffect(() => {
+  //   // const channel = supabase.channel(Router.query.id);
+  //   // channel
+  //     // .on("presence", { event: "join" }, (object) => {
+  //     //   setPresences((presences) => [...presences, object]);
+  //     // })
+  //     // .on("presence", { event: "leave" }, (object) => {
+  //     //   channel.unsubscribe();
+  //     // });
+  // }, [presences]);
+
+  // useEffect(() => {
+  //   // audioRef.current.play();
+
+  //   supabase
+  //     .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+  //       setLoading(true);
+  //       setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+  //       setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+  //       setLoading(false);
+  //     })
+  //     .on("broadcast", { event: "cardmove" }, (payload) => {
+  //       // console.log(cardRefs?.current);
+  //       // console.log(payload.payload);
+  //       cardRefs?.current[payload.payload.data.index - 1]?.click();
+  //       oppCard = payload.payload.data.cardInfo;
+  //       // checks();
+  //     })
+  //     .on("broadcast", { event: "cardmove" }, () => {
+  //       // checks();
+  //     });
+  // }, []);
 
   // const receiveData = () => {
   //   // if (myCard && oppCard) {
