@@ -25,6 +25,7 @@ const GameComponent = () => {
   const divRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [presences, setPresences] = useState([]);
+  const [channels, setChannels] = useState(null);
   // const [opponentHP, setOpponentHP] = useState(15);
   // const [myHP, setMyHP] = useState(15);
   const [opponentDeck, setOpponentDeck] = useState([]);
@@ -48,6 +49,12 @@ const GameComponent = () => {
   const userDeck = useSelector((state) => {
     return state.deck;
   });
+
+  const getChannel = async () => {
+    const newChannel = await router.query;
+    console.log("this is new channel", newChannel);
+    setChannels(newChannel.id);
+  };
 
   const checks = () => {
     if (myCard && oppCard) {
@@ -92,7 +99,8 @@ const GameComponent = () => {
 
   //establishes presence
   useEffect(() => {
-    const channel = supabase.channel("game1");
+    getChannel();
+    const channel = supabase.channel(`{channels}`);
 
     channel
       .subscribe(async (status) => {
