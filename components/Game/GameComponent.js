@@ -120,14 +120,25 @@ const GameComponent = (props) => {
           event: "getUserDeck/" + channels,
           payload: { data: { user: props.user, userDeck: props.userDeck } },
         });
-      })
+      });
+    // .on("presence", { event: "join" }, (object) => {
+    //   setPresences((presences) => [...presences, object]);
+    // });
+    // .on("presence", { event: "leave" }, (object) => {
+    //   channel.unsubscribe();
+    // });
+  }, []);
+
+  useEffect(() => {
+    const channel = supabase.channel(Router.query.id);
+    channel
       .on("presence", { event: "join" }, (object) => {
         setPresences((presences) => [...presences, object]);
       })
       .on("presence", { event: "leave" }, (object) => {
         channel.unsubscribe();
       });
-  }, []);
+  }, [presences]);
 
   useEffect(() => {
     // audioRef.current.play();
