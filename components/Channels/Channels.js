@@ -39,12 +39,13 @@ const Channels = () => {
         <ul>
           {listChannels.map((channel) => (
             <li key={channel.id}>
-              <Link
+              <Link href={`/game/${channel.id}`}>
+                {/* <Link
                 href={{
                   pathname: "/game/[id]",
                   query: { id: channel.id },
                 }}
-              >
+              > */}
                 {/* <button onClick={handleJoin} value={channel.id}> */}
                 Join: {channel.id}
                 {/* </button> */}

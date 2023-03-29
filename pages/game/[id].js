@@ -9,7 +9,7 @@ import Channels from "@/components/Channels/Channels";
 import { GlobalContext } from "@/lib/GlobalContext";
 import GameComponent from "@/components/Game/GameComponent";
 import Loading from "@/components/Game/Loading";
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 const Game = (props) => {
   const authUser = useUser();
@@ -39,10 +39,10 @@ const Game = (props) => {
   //   };
   //   fetchUser();
   // }, []);
-  const router = useRouter();
-  const channel = router.query;
 
-  console.log("this is channel", channel);
+  // const channel = Router.query;
+
+  // console.log("this is channel", channel);
 
   return (
     <div>
@@ -51,7 +51,7 @@ const Game = (props) => {
         {loading && <Loading />}
         {!loading && <GameComponent user={user} userDeck={userDeck} />}
 
-        <Messages props={publicUser} />
+        {/* <Messages props={publicUser} /> */}
       </GlobalContext.Provider>
     </div>
   );

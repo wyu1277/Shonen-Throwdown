@@ -11,7 +11,7 @@ import Router from "next/router";
 
 const Loading = () => {
   const [time, setTime] = useState(false);
-  const [channels, setChannels] = useState(null);
+  const [localLoading, setLocalLoading] = useState(true);
 
   // const router = useRouter();
   const [oppDeck, setOppDeck] = useState();
@@ -44,14 +44,12 @@ const Loading = () => {
   };
 
   useEffect(() => {
-    getChannel();
-    setTimeout(() => {
-      setTime(true);
-    }, 5000);
     if (!player) dispatch(searchUser(user.id));
     if (userDeck.length === 0) dispatch(fetchDeckCards(user.id));
+  }, []);
 
-    const channel = supabase.channel(`${channels}`);
+  useEffect(() => {
+    const channel = supabase.channel(Router.query.id);
 
     channel
       .subscribe(async (status) => {
@@ -62,22 +60,27 @@ const Loading = () => {
       .on("presence", { event: "sync" }, () => {
         channel.send({
           type: "broadcast",
-          event: "getUserDeck",
+          event: "getUserDeck/" + Router.query.id,
           payload: { data: { player, userDeck } },
         });
       })
-      .on("broadcast", { event: "getUserDeck" }, (payload) => {
-        console.log(payload, "LOADING PAYLOAD BROADCAST");
-        dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
-        dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-      });
+      .on(
+        "broadcast",
+        { event: "getUserDeck/" + Router.query.id },
+        (payload) => {
+          console.log(payload, "LOADING PAYLOAD BROADCAST");
+          dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+          dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+        }
+      );
+    setLocalLoading(false);
   }, []);
 
-  //   useEffect(() => {
-  //     if (player && player2 && userDeck && player2Deck) {
-  //       loadActions.setLoading(false);
-  //     }
-  //   }, []);
+  // useEffect(() => {
+  //   if (player && player2 && userDeck && player2Deck) {
+  //     loadActions.setLoading(false);
+  //   }
+  // }, []);
 
   const playGame = () => {
     console.log(player, "PLAYER");
@@ -93,8 +96,11 @@ const Loading = () => {
 
   return (
     <div>
-      <div>LOADING...</div>
-      <button onClick={playGame}>Click to Play!</button>
+      {localLoading ? (
+        <div>LOADING...</div>
+      ) : (
+        <button onClick={playGame}>Click to Play!</button>
+      )}
     </div>
   );
 };

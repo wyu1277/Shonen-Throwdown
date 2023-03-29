@@ -52,7 +52,7 @@ const Messages = (props) => {
         .subscribe();
       return () => {
         supabase.removeChannel(channel);
-        console.log("channel removed", channel);
+        // console.log("channel removed", channel);
       };
     };
     messages();
@@ -71,8 +71,8 @@ const Messages = (props) => {
       channel_id: channels,
     });
   };
-  console.log("chat", chat);
-  console.log("current channel", channels);
+  // console.log("chat", chat);
+  // console.log("current channel", channels);
 
   const messagesUl = useRef(null);
   useEffect(() => {

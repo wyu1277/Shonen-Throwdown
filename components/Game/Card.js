@@ -5,19 +5,20 @@ import { useEffect } from "react";
 import Router from "next/router";
 
 const Card = (props) => {
+  const channels = Router.query.id;
   const audioRef = useRef(null);
   const [tapCard, setTapCard] = useState(true);
-  const [channels, setChannels] = useState();
+  // const [channels, setChannels] = useState();
   // setTapCard(false);
 
-  const getChannel = async () => {
-    const newChannel = await Router.query;
-    console.log("this is new channel", newChannel);
-    setChannels(newChannel.id);
-  };
+  // const getChannel = async () => {
+  //   const channels = Router.query.id;
+  //   // console.log("this is new channel", newChannel);
+  //   setChannels(newChannel.id);
+  // };
 
   useEffect(() => {
-    getChannel();
+    // getChannel();
     setTapCard(!tapCard);
   }, []);
 
@@ -27,7 +28,7 @@ const Card = (props) => {
     setTapCard(!tapCard);
     // audioRef.current.play();
     supabase
-      .channel(`${channels}`)
+      .channel(channels)
       .subscribe()
       .send({
         type: "broadcast",

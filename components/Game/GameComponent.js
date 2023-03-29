@@ -24,7 +24,7 @@ const GameComponent = (props) => {
   const divRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [presences, setPresences] = useState([]);
-  const [channels, setChannels] = useState(null);
+  // const [channels, setChannels] = useState(null);
   // const [opponentHP, setOpponentHP] = useState(15);
   // const [myHP, setMyHP] = useState(15);
   const [opponentDeck, setOpponentDeck] = useState([]);
@@ -41,6 +41,9 @@ const GameComponent = (props) => {
   //   return state.deck;
   // });
 
+  const channels = Router.query.id;
+  // console.log(typeof channels);
+
   const user = useSelector((state) => {
     return state.user.user;
   });
@@ -49,11 +52,11 @@ const GameComponent = (props) => {
     return state.deck;
   });
 
-  const getChannel = async () => {
-    const newChannel = await Router.query;
-    console.log("this is new channel", newChannel);
-    setChannels(newChannel.id);
-  };
+  // const getChannel = async () => {
+  //   const newChannel = await Router.query;
+  //   console.log("this is new channel", newChannel);
+  //   setChannels(newChannel.id);
+  // };
 
   const checks = () => {
     if (myCard && oppCard) {
@@ -98,8 +101,8 @@ const GameComponent = (props) => {
 
   //establishes presence
   useEffect(() => {
-    getChannel();
-    const channel = supabase.channel(`${channels}`);
+    // getChannel();
+    const channel = supabase.channel(channels);
 
     channel
       .subscribe(async (status) => {
@@ -109,24 +112,27 @@ const GameComponent = (props) => {
       })
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
+        console.log(state);
         channel.send({
           type: "broadcast",
-          event: "getUserDeck",
+          event: "getUserDeck/" + channels,
           payload: { data: { user: props.user, userDeck: props.userDeck } },
         });
       })
       .on("presence", { event: "join" }, (object) => {
         setPresences((presences) => [...presences, object]);
       })
-      .on("presence", { event: "leave" }, (object) => {});
+      .on("presence", { event: "leave" }, (object) => {
+        channel.unsubscribe();
+      });
   }, []);
 
   useEffect(() => {
     // audioRef.current.play();
 
     supabase
-      .channel(`${channels}`)
-      .on("broadcast", { event: "getUserDeck" }, (payload) => {
+      .channel(channels)
+      .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
         setOpponentInfo((opponentInfo) => payload.payload.data?.user);
@@ -183,7 +189,7 @@ const GameComponent = (props) => {
   return (
     //window container
     <>
-      {/* <button onClick={}>Music</button> */}
+      <button onClick={() => console.log(presences)}>Music</button>
       <audio src="/audio/music.mp3" ref={audioRef} />
 
       <GameContainer>
