@@ -27,7 +27,7 @@ const GameRoom = ({ props }) => {
       config: { presence: { key: `${props.username}` } },
     });
     channel
-      .on("presence", { event: "sync" }, () => {
+      .on("presence", { event: "sync" }, (object) => {
         const state = channel.presenceState();
         setPresence(state);
       })
