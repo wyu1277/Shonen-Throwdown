@@ -7,12 +7,17 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 import Channels from "@/components/Channels/Channels";
 import { GlobalContext } from "@/lib/GlobalContext";
+import GameComponent from "@/components/Game/GameComponent";
+import Loading from "@/components/Game/Loading";
 
 const Game = (props) => {
   const user = useUser();
   const publicUser = useSelector((state) => state.user.user);
   const [conUser, setConUser] = useState(null);
   //const [conDeck, setConDeck] = useState(null)
+  const loading = useSelector((state) => {
+    return state.load;
+  });
 
   console.log("this is props in game index 16", props);
   useEffect(() => {
@@ -34,7 +39,10 @@ const Game = (props) => {
   return (
     <div>
       <GlobalContext.Provider value={publicUser}>
-        <GameRoom props={publicUser} />
+        {/* <GameRoom props={publicUser} /> */}
+        {loading && <Loading />}
+        {!loading && <GameComponent />}
+
         <Messages props={publicUser} />
       </GlobalContext.Provider>
     </div>
