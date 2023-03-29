@@ -9,12 +9,14 @@
 	width: 50%;
 	font-size: 20px;
 	border-radius: 10px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .cardParent {
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
+	align-items: center;
 }
 
 .card {
@@ -41,4 +43,16 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.sortLabel {
+	font-size: 20px;
+	margin: 10px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.sort {
+	border-radius: 10px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 20px;
 }

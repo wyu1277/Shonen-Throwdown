@@ -67,14 +67,15 @@ let Modal = (props) => {
 						className={styles.deckButton}
 						onClick={(e) => {
 							e.stopPropagation();
-							return addToDeck(props.card.id, props.userId, cardsData, props.card);
+							return addToDeck(props.card.cards.id, props.userId, cardsData, props.card);
 						}}
 					>
 						Add To Deck
 					</button>
 				) : null}
 				<button className={styles.close}>Close</button>
-				<img src={props.card.image} alt={props.card.name} className={styles.img} />
+				<h3 className={styles.quantity}>Quantity: x{props.card.quantity}</h3>
+				<img src={props.card.cards.image} alt={props.card.cards.name} className={styles.img} />
 			</motion.div>
 			<motion.div
 				initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
@@ -84,9 +85,8 @@ let Modal = (props) => {
 				className={styles.carddesc}
 			>
 				<div className={styles.description}>
-					<h1>{props.card.name}</h1>
-					<p>{props.card.description}</p>
-					<p>{props.card.quantity}</p>
+					<h1>{props.card.cards.name}</h1>
+					<p>{props.card.cards.description}</p>
 				</div>
 			</motion.div>
 		</div>

@@ -30,21 +30,15 @@ const Collection = () => {
 			loadData();
 		} else {
 			const loadData = async () => {
-				const cardIds = await supabase.from('collections').select('*').eq('user_id', user.id);
-				// console.log('cardIds', cardIds);
-				// console.log('logged in collection', cardIds.data);
-				const cardIdArr = cardIds.data.map((card) => card.cards_id);
-				// console.log('cardIdArr', cardIdArr);
-				const cards = await supabase.from('cards').select('*').in('id', cardIdArr);
-				console.log(cards.data);
-				// console.log('cards', cards.data);
-				setData(cards.data);
+				const { data } = await supabase.from('collections').select('*, cards(*)').eq('user_id', user.id);
+				console.log('cardIds', data);
+				setData(data);
 			};
 			loadData();
 		}
 	}, [user]);
 
-	const filteredData = data && data.filter((card) => card.name.toLowerCase().includes(searchInput.toLowerCase()));
+	const filteredData = data && data.filter((card) => card.cards.name.toLowerCase().includes(searchInput.toLowerCase()));
 
 	const handleCardClick = (card) => {
 		setSelectedCard(card);
@@ -59,13 +53,13 @@ const Collection = () => {
 	if (filteredData) {
 		sortedData = [...filteredData];
 		if (sortValue === 'name') {
-			sortedData.sort((a, b) => a.name.localeCompare(b.name));
+			sortedData.sort((a, b) => a.cards.name.localeCompare(b.name));
 		} else if (sortValue === 'power') {
-			sortedData.sort((a, b) => a.power - b.power);
+			sortedData.sort((a, b) => a.cards.power - b.cards.power);
 		} else if (sortValue === 'element') {
-			sortedData.sort((a, b) => a.element.localeCompare(b.element));
+			sortedData.sort((a, b) => a.cards.element.localeCompare(b.cards.element));
 		} else if (sortValue === 'series') {
-			sortedData.sort((a, b) => a.series.localeCompare(b.series));
+			sortedData.sort((a, b) => a.cards.series.localeCompare(b.cards.series));
 		}
 	}
 
@@ -81,8 +75,10 @@ const Collection = () => {
 						onChange={(e) => setSearchInput(e.target.value)}
 						placeholder="Search by name..."
 					/>
-					<label htmlFor="sort">Sort by:</label>
-					<select id="sort" value={sortValue} onChange={handleSortChange}>
+					<label className={styles.sortLabel} htmlFor="sort">
+						Sort by:
+					</label>
+					<select className={styles.sort} id="sort" value={sortValue} onChange={handleSortChange}>
 						<option value="name">Name</option>
 						<option value="power">Power</option>
 						<option value="element">Element</option>
@@ -102,7 +98,7 @@ const Collection = () => {
 								className={styles.card}
 								//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
 							>
-								<img src={card.image} alt={card.name} className={styles.img} />
+								<img src={card.cards.image} alt={card.cards.name} className={styles.img} />
 							</motion.div>
 						))
 					) : (

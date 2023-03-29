@@ -38,8 +38,12 @@
 	align-items: center;
 }
 
-.h1{
+.h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.h1:hover {
+	color: rgb(187, 42, 20);
 }
