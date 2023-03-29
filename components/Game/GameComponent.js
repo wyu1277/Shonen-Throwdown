@@ -102,7 +102,9 @@ const GameComponent = (props) => {
   //establishes presence
   useEffect(() => {
     // getChannel();
-    const channel = supabase.channel(channels);
+    const channel = supabase.channel(channels, {
+      config: { presence: { key: user.username } },
+    });
 
     channel
       .subscribe(async (status) => {
@@ -197,6 +199,7 @@ const GameComponent = (props) => {
           props.userDeck.map((card, i) => {
             return (
               <Card
+                user={user}
                 setShowSet={setShowSet}
                 checks={checks}
                 key={uuidv4()}

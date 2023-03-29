@@ -37,19 +37,15 @@ const Loading = () => {
     return state.load;
   });
 
-  const getChannel = async () => {
-    const newChannel = await Router.query;
-    console.log("this is new channel", newChannel);
-    setChannels(newChannel.id);
-  };
-
   useEffect(() => {
     if (!player) dispatch(searchUser(user.id));
     if (userDeck.length === 0) dispatch(fetchDeckCards(user.id));
   }, []);
 
   useEffect(() => {
-    const channel = supabase.channel(Router.query.id);
+    const channel = supabase.channel(Router.query.id, {
+      config: { presence: { key: player.username } },
+    });
 
     channel
       .subscribe(async (status) => {
@@ -73,7 +69,9 @@ const Loading = () => {
           dispatch(gameActions.setPlayer2(payload.payload.data?.player));
         }
       );
-    setLocalLoading(false);
+    setTimeout(() => {
+      setLocalLoading(false);
+    }, 2000);
   }, []);
 
   // useEffect(() => {

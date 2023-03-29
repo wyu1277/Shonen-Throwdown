@@ -28,7 +28,9 @@ const Card = (props) => {
     setTapCard(!tapCard);
     // audioRef.current.play();
     supabase
-      .channel(channels)
+      .channel(channels, {
+        config: { presence: { key: props.user.username } },
+      })
       .subscribe()
       .send({
         type: "broadcast",
