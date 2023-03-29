@@ -12,12 +12,20 @@ import Loading from "@/components/Game/Loading";
 import { useRouter } from "next/router";
 
 const Game = (props) => {
-  const user = useUser();
+  const authUser = useUser();
   const publicUser = useSelector((state) => state.user.user);
   const [conUser, setConUser] = useState(null);
   //const [conDeck, setConDeck] = useState(null)
   const loading = useSelector((state) => {
     return state.load;
+  });
+
+  const user = useSelector((state) => {
+    return state.user.user;
+  });
+
+  const userDeck = useSelector((state) => {
+    return state.deck;
   });
 
   // useEffect(() => {
@@ -41,7 +49,7 @@ const Game = (props) => {
       <GlobalContext.Provider value={publicUser}>
         {/* <GameRoom props={publicUser} /> */}
         {loading && <Loading />}
-        {!loading && <GameComponent />}
+        {!loading && <GameComponent user={user} userDeck={userDeck} />}
 
         <Messages props={publicUser} />
       </GlobalContext.Provider>

@@ -10,15 +10,14 @@ import { fetchDeckCards } from "@/store/slices/deckSlice";
 import { v4 as uuidv4 } from "uuid";
 import { useRef } from "react";
 import { gameActions } from "@/store/slices/gameSlice";
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 let oppCard = null;
 let myCard = null;
-let myHP = 15;
-let oppHP = 15;
+// let myHP = 15;
+// let oppHP = 15;
 
-const GameComponent = () => {
-  const router = useRouter();
+const GameComponent = (props) => {
   const [playAudio, setPlayAudio] = useState(true);
   const cardRefs = useRef(new Array());
   const buttonRef = useRef();
@@ -33,21 +32,13 @@ const GameComponent = () => {
   const audioRef = useRef(null);
   const [set, setShowSet] = useState(false);
 
-  // const player1HP = useSelector((state) => {
-  //   return state.game.player1HP;
+  // const user = useSelector((state) => {
+  //   return state.user.user;
   // });
 
-  // const player2HP = useSelector((state) => {
-  //   return state.game.player2HP;
+  // const userDeck = useSelector((state) => {
+  //   return state.deck;
   // });
-
-  const user = useSelector((state) => {
-    return state.user.user;
-  });
-
-  const userDeck = useSelector((state) => {
-    return state.deck;
-  });
 
   const checks = () => {
     if (myCard && oppCard) {
@@ -57,7 +48,7 @@ const GameComponent = () => {
         oppCard = null;
       } else if (myCard.power > oppCard.power) {
         const damage = myCard.power - oppCard.power;
-        oppHP = oppHP - damage;
+
         dispatch(gameActions.decreasePlayer2HP(damage));
         // console.log(damage);
         myCard = null;
@@ -65,7 +56,7 @@ const GameComponent = () => {
       } else if (myCard.power < oppCard.power) {
         const damage = oppCard.power - myCard.power;
         dispatch(gameActions.decreasePlayer1HP(damage));
-        myHP = myHP - damage;
+
         // console.log(damage);
         myCard = null;
         oppCard = null;
@@ -105,7 +96,7 @@ const GameComponent = () => {
         channel.send({
           type: "broadcast",
           event: "getUserDeck",
-          payload: { data: { user, userDeck } },
+          payload: { data: { user: props.user, userDeck: props.userDeck } },
         });
       })
       .on("presence", { event: "join" }, (object) => {
@@ -135,39 +126,39 @@ const GameComponent = () => {
       .on("broadcast", { event: "cardmove" }, () => {
         // checks();
       });
-  }, [user]);
+  }, []);
 
-  const receiveData = () => {
-    // if (myCard && oppCard) {
-    //   if (myCard.power === oppCard.power) {
-    //     const damage = myCard.power - oppCard.power;
-    //     myCard = null;
-    //     oppCard = null;
-    //   }
+  // const receiveData = () => {
+  //   // if (myCard && oppCard) {
+  //   //   if (myCard.power === oppCard.power) {
+  //   //     const damage = myCard.power - oppCard.power;
+  //   //     myCard = null;
+  //   //     oppCard = null;
+  //   //   }
 
-    //   if (myCard.power > oppCard.power) {
-    //     const damage = myCard.power - oppCard.power;
-    //     oppHP = oppHP - damage;
-    //     dispatch(gameActions.decreasePlayer2HP(damage));
-    //     // console.log(damage);
-    //     myCard = null;
-    //     oppCard = null;
-    //   }
+  //   //   if (myCard.power > oppCard.power) {
+  //   //     const damage = myCard.power - oppCard.power;
+  //   //     oppHP = oppHP - damage;
+  //   //     dispatch(gameActions.decreasePlayer2HP(damage));
+  //   //     // console.log(damage);
+  //   //     myCard = null;
+  //   //     oppCard = null;
+  //   //   }
 
-    //   if (myCard.power < oppCard.power) {
-    //     const damage = oppCard.power - myCard.power;
-    //     dispatch(gameActions.decreasePlayer1HP(damage));
-    //     myHP = myHP - damage;
-    //     // console.log(damage);
-    //     myCard = null;
-    //     oppCard = null;
-    //   }
-    // }
-    // dispatch(gameActions.decreasePlayer1HP(1));
-    setShowSet(!set);
-    console.log(myCard);
-    console.log(oppCard);
-  };
+  //   //   if (myCard.power < oppCard.power) {
+  //   //     const damage = oppCard.power - myCard.power;
+  //   //     dispatch(gameActions.decreasePlayer1HP(damage));
+  //   //     myHP = myHP - damage;
+  //   //     // console.log(damage);
+  //   //     myCard = null;
+  //   //     oppCard = null;
+  //   //   }
+  //   // }
+  //   // dispatch(gameActions.decreasePlayer1HP(1));
+  //   setShowSet(!set);
+  //   console.log(myCard);
+  //   console.log(oppCard);
+  // };
 
   const setMyCard = (card) => {
     myCard = card;
@@ -178,14 +169,10 @@ const GameComponent = () => {
     <>
       {/* <button onClick={}>Music</button> */}
       <audio src="/audio/music.mp3" ref={audioRef} />
-      {set && (
-        <button onClick={receiveData} ref={buttonRef}>
-          Set!
-        </button>
-      )}
+
       <GameContainer>
-        {userDeck &&
-          userDeck.map((card, i) => {
+        {props.userDeck &&
+          props.userDeck.map((card, i) => {
             return (
               <Card
                 setShowSet={setShowSet}
@@ -211,8 +198,8 @@ const GameComponent = () => {
             );
           })}
 
-        <Player1HP user={user} myHP={myHP} />
-        <Player2HP opp={opponentInfo} opponentHP={oppHP} />
+        <Player1HP user={props.user} />
+        <Player2HP opp={opponentInfo} />
       </GameContainer>
     </>
   );
