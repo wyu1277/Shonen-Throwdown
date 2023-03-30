@@ -15,7 +15,7 @@ const Collection = () => {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
 	const [showModal, setShowModal] = useState(false);
-	const [sortValue, setSortValue] = useState(user ? 'owned' : 'series');
+	const [sortValue, setSortValue] = useState('series');
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -57,15 +57,49 @@ const Collection = () => {
 		if (filteredData) {
 			sortedData = [...filteredData];
 			if (sortValue === 'name') {
-				sortedData.sort((a, b) => a.cards.name.localeCompare(b.name));
+				const nameSort = sortedData.sort((a, b) => a.cards.name.localeCompare(b.cards.name));
+				nameSort.sort((a, b) => {
+					if (a.quantity > 0 && b.quantity <= 0) {
+						return -1;
+					} else if (a.quantity <= 0 && b.quantity > 0) {
+						return 1;
+					} else {
+						return a.cards.name.localeCompare(b.cards.name);
+					}
+				});
 			} else if (sortValue === 'power') {
-				sortedData.sort((a, b) => a.cards.power - b.cards.power);
+				const powerSort = sortedData.sort((a, b) => b.cards.power - a.cards.power);
+				powerSort.sort((a, b) => {
+					if (a.quantity > 0 && b.quantity <= 0) {
+						return -1;
+					} else if (a.quantity <= 0 && b.quantity > 0) {
+						return 1;
+					} else {
+						return b.cards.power - a.cards.power;
+					}
+				});
 			} else if (sortValue === 'element') {
-				sortedData.sort((a, b) => a.cards.element.localeCompare(b.cards.element));
+				const elementSort = sortedData.sort((a, b) => a.cards.element.localeCompare(b.cards.element));
+				elementSort.sort((a, b) => {
+					if (a.quantity > 0 && b.quantity <= 0) {
+						return -1;
+					} else if (a.quantity <= 0 && b.quantity > 0) {
+						return 1;
+					} else {
+						return a.cards.element.localeCompare(b.cards.element);
+					}
+				});
 			} else if (sortValue === 'series') {
-				sortedData.sort((a, b) => a.cards.series.localeCompare(b.cards.series));
-			} else if (sortValue === 'owned') {
-				sortedData.sort((a, b) => a.cards.quantity - b.cards.quantity);
+				const seriesSort = sortedData.sort((a, b) => a.cards.series.localeCompare(b.cards.series));
+				seriesSort.sort((a, b) => {
+					if (a.quantity > 0 && b.quantity <= 0) {
+						return -1;
+					} else if (a.quantity <= 0 && b.quantity > 0) {
+						return 1;
+					} else {
+						return a.cards.series.localeCompare(b.cards.series);
+					}
+				});
 			}
 		}
 
@@ -89,7 +123,6 @@ const Collection = () => {
 							<option value="power">Power</option>
 							<option value="element">Element</option>
 							<option value="series">Series</option>
-							<option value="owned">Owned</option>
 						</select>
 					</div>
 					<div className={styles.cardParent}>

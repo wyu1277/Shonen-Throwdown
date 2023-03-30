@@ -40,7 +40,7 @@ let Modal = (props) => {
 			cardArr.push(cardId);
 			const updatedArr = cardArr.flat();
 			const newArr = Array.from(cardsData);
-			newArr.push(card);
+			newArr.push(card.cards);
 			console.log('this is newArr2 in modal', newArr);
 			dispatch(addToDeckUpdate({ updatedArr, userId, newArr }));
 			setAddSuccess(true);
