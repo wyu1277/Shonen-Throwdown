@@ -23,7 +23,7 @@ const Messages = (props) => {
 
   const getChannel = async () => {
     const newChannel = await router.query;
-    console.log("this is new channel", newChannel);
+    // console.log("this is new channel", newChannel);
     setChannels(newChannel.id);
   };
 
@@ -32,6 +32,7 @@ const Messages = (props) => {
   useEffect(() => {
     const getData = async () => {
       const { data } = await supabase.from("messages").select("*, users(*)");
+      console.log("messages data", data);
       setChat(data);
     };
     getData();
@@ -80,7 +81,6 @@ const Messages = (props) => {
   }, [filteredChat]);
 
   const msgScroll = () => {
-    console.log("🚀 ~ file: Messages.js:70 ~ msgScroll ~ height :", messagesUl);
     if (messagesUl.current) {
       messagesUl.current.scrollTop = messagesUl.current.scrollHeight;
     }

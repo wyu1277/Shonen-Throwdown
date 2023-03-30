@@ -16,7 +16,6 @@ const Deck = () => {
 	const dispatch = useDispatch();
 
 	const cardsData = useSelector(selectAllCards);
-	
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -33,13 +32,15 @@ const Deck = () => {
 	};
 
 	const handleDeckClick = () => {
-		setIsVisible(!isVisible); // set visibility to true when clicked
-	}
+		setIsVisible(!isVisible);
+	};
 
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
-			<h1 className = {styles.h1} onClick={handleDeckClick}>{isVisible ? 'Your Deck' : 'View Deck'}</h1> {/* add onClick handler */}
-			{isVisible && /* use isVisible state to conditionally render content */
+			<h1 className={styles.h1} onClick={handleDeckClick}>
+				{isVisible ? 'Close Deck View' : 'View Your Deck'}
+			</h1>
+			{isVisible && (
 				<div className={styles.cardParent}>
 					{cardsData.length > 0 ? (
 						cardsData.map((card) => (
@@ -51,7 +52,6 @@ const Deck = () => {
 									handleCardClick(card);
 								}}
 								className={styles.card}
-								//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
 							>
 								<img src={card.image} alt={card.name} className={styles.img} />
 							</motion.div>
@@ -62,7 +62,7 @@ const Deck = () => {
 						</div>
 					)}
 				</div>
-			}
+			)}
 			<div className={styles.modalParent}>
 				{showModal && (
 					<DeckModal
