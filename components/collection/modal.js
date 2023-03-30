@@ -38,11 +38,11 @@ let Modal = (props) => {
 			}
 		} else {
 			cardArr.push(cardId);
-			const updatedArr = cardArr.flat()
-			const newArr = Array.from(cardsData)
-			newArr.push(card)
-			console.log('this is newArr2 in modal', newArr)
-			dispatch(addToDeckUpdate({updatedArr, userId, newArr}))
+			const updatedArr = cardArr.flat();
+			const newArr = Array.from(cardsData);
+			newArr.push(card);
+			console.log('this is newArr2 in modal', newArr);
+			dispatch(addToDeckUpdate({ updatedArr, userId, newArr }));
 			setAddSuccess(true);
 			setTimeout(() => {
 				setAddSuccess(false);
@@ -50,41 +50,91 @@ let Modal = (props) => {
 		}
 	};
 
-	return (
-		<div className={`backdrop ${styles.pageParent}`}>
-			{deckFull ? <p className={styles.message}>Your deck is full!</p> : null}
-			{dupCard ? <p className={styles.message}>Cannot have more than 1 of the same card in your deck!</p> : null}
-			{addSuccess ? <p className={styles.goodMessage}>Card added to deck!</p> : null}
-			<motion.div
-				initial={{ scale: 0 }}
-				animate={{ scale: 1 }}
-				transition={{ duration: 0.2 }}
-				className={styles.card}
-				onClick={() => props.setShowModal(!props.showModal)}
-			>
-				{user ? (
-					<button className={styles.deckButton} onClick={(e) => {e.stopPropagation(); return(addToDeck(props.card.id, props.userId, cardsData, props.card))}}>
-						Add To Deck
-					</button>
-				) : null}
-				<button className={styles.close}>Close</button>
-				<img src={props.card.image} alt={props.card.name} className={styles.img} />
-			</motion.div>
-			<motion.div
-				initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
-				animate={{ x: -500, opacity: 1, scale: 1 }}
-				exit={{ x: -100 }}
-				transition={{ duration: 1 }}
-				className={styles.carddesc}
-			>
-				<div className={styles.description}>
-					<h1>{props.card.name}</h1>
-					<p>{props.card.description}</p>
-					<p>{props.card.quantity}</p>
-				</div>
-			</motion.div>
-		</div>
-	);
+	if (user) {
+		return (
+			<div className={`backdrop ${styles.pageParent}`}>
+				{deckFull ? <p className={styles.message}>Your deck is full!</p> : null}
+				{dupCard ? <p className={styles.message}>Cannot have more than 1 of the same card in your deck!</p> : null}
+				{addSuccess ? <p className={styles.goodMessage}>Card added to deck!</p> : null}
+				<motion.div
+					initial={{ scale: 0 }}
+					animate={{ scale: 1 }}
+					transition={{ duration: 0.2 }}
+					className={styles.card}
+					onClick={() => props.setShowModal(!props.showModal)}
+				>
+					{user && props.card.quantity > 0 ? (
+						<button
+							className={styles.deckButton}
+							onClick={(e) => {
+								e.stopPropagation();
+								return addToDeck(props.card.cards.id, props.userId, cardsData, props.card);
+							}}
+						>
+							Add To Deck
+						</button>
+					) : null}
+					<button className={styles.close}>Close</button>
+					<h3 className={styles.quantity}>Quantity: x{props.card.quantity}</h3>
+					<img src={props.card.cards.image} alt={props.card.cards.name} className={styles.img} />
+				</motion.div>
+				<motion.div
+					initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
+					animate={{ x: -500, opacity: 1, scale: 1 }}
+					exit={{ x: -100 }}
+					transition={{ duration: 1 }}
+					className={styles.carddesc}
+				>
+					<div className={styles.description}>
+						<h1>{props.card.cards.name}</h1>
+						<p>{props.card.cards.description}</p>
+					</div>
+				</motion.div>
+			</div>
+		);
+	} else {
+		return (
+			<div className={`backdrop ${styles.pageParent}`}>
+				{deckFull ? <p className={styles.message}>Your deck is full!</p> : null}
+				{dupCard ? <p className={styles.message}>Cannot have more than 1 of the same card in your deck!</p> : null}
+				{addSuccess ? <p className={styles.goodMessage}>Card added to deck!</p> : null}
+				<motion.div
+					initial={{ scale: 0 }}
+					animate={{ scale: 1 }}
+					transition={{ duration: 0.2 }}
+					className={styles.card}
+					onClick={() => props.setShowModal(!props.showModal)}
+				>
+					{user ? (
+						<button
+							className={styles.deckButton}
+							onClick={(e) => {
+								e.stopPropagation();
+								return addToDeck(props.card.id, props.userId, cardsData, props.card);
+							}}
+						>
+							Add To Deck
+						</button>
+					) : null}
+					<button className={styles.close}>Close</button>
+					<img src={props.card.image} alt={props.card.name} className={styles.img} />
+				</motion.div>
+				<motion.div
+					initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
+					animate={{ x: -500, opacity: 1, scale: 1 }}
+					exit={{ x: -100 }}
+					transition={{ duration: 1 }}
+					className={styles.carddesc}
+				>
+					<div className={styles.description}>
+						<h1>{props.card.name}</h1>
+						<p>{props.card.description}</p>
+						<p>{props.card.quantity}</p>
+					</div>
+				</motion.div>
+			</div>
+		);
+	}
 };
 
 export default Modal;

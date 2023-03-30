@@ -1,0 +1,32 @@
+.pageParent {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.close {
+	margin-top: 450px;
+	height: 30px;
+	width: 100px;
+	position: fixed;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.img {
+	object-fit: cover;
+	height: 80%;
+}
+
+.card {
+	height: 600px;
+	top: 10%;
+	left: 40%;
+	margin: 25px;
+}
+
+.marketModalMessage {
+	position: fixed;
+	margin-bottom: 650px;
+}
