@@ -29,11 +29,19 @@ const OpponentCard = (props, ref) => {
       onClick={() => opponentCardHandler()}
       ref={ref}
     >
-      <img
-        src={props.card.image}
-        alt={props.card.title}
-        className="gameplay-card"
-      />
+      {tapCard ? (
+        <img
+          src={props.card.image}
+          alt={props.card.title}
+          className="gameplay-card"
+        />
+      ) : (
+        <img
+          src="https://i.imgur.com/JBJoKPI.png"
+          alt={props.card.title}
+          className="gameplay-card"
+        />
+      )}
       <audio src="/audio/Cut.wav" ref={audioRef} />
     </motion.div>
   );

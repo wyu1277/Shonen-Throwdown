@@ -105,6 +105,7 @@ const Loading = () => {
       ) : (
         <button onClick={playGame}>Click to Play!</button>
       )}
+      <div></div>
     </div>
   );
 };
