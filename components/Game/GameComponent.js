@@ -104,6 +104,7 @@ const GameComponent = (props) => {
   const channel = supabase.channel(channels, {
     config: { presence: { key: user.username } },
   });
+
   useEffect(() => {
     // getChannel();
     channel
@@ -245,6 +246,19 @@ const GameComponent = (props) => {
     myCard = card;
   };
 
+  const leaveHandler = async () => {
+    supabase.removeAllChannels();
+    console.log("removed all channels");
+    Router.push("http://localhost:3000/lobby/");
+    // supabase.subscribe(async (status) => {
+    //   if (trackStatus === "ok") {
+    //     const untrackStatus = await channel.untrack();
+    //     console.log(trackStatus, "TRACKSTATUS LINE 57");
+    //     console.log(untrackStatus, "STATUS/HAS LEFT");
+    //   }
+    // });
+  };
+
   return (
     //window container
     <>
@@ -279,7 +293,7 @@ const GameComponent = (props) => {
               />
             );
           })}
-
+        <button onClick={leaveHandler}>Leave Room</button>
         <Player1HP user={props.user} />
         <Player2HP opp={opponentInfo} />
       </GameContainer>
