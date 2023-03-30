@@ -43,7 +43,7 @@ const Market = () => {
 		return acc;
 	}, {});
 
-	console.log(cardsBySeries['One Piece']);
+	console.log(cardsBySeries);
 
 	const getRandomCard = async (cards) => {
 		if (userData.wallet > singleCardPrice) {
@@ -56,9 +56,9 @@ const Market = () => {
 			let randomNumber = Math.random();
 			let randomCard;
 
-			if (randomNumber < 0.7) {
+			if (randomNumber < 0.8) {
 				randomCard = power3orLowerCards[Math.floor(Math.random() * power3orLowerCards.length)];
-			} else if (randomNumber < 0.9) {
+			} else if (randomNumber < 0.95) {
 				randomCard = power4Cards[Math.floor(Math.random() * power4Cards.length)];
 			} else {
 				randomCard = power5Cards[Math.floor(Math.random() * power5Cards.length)];
@@ -93,11 +93,11 @@ const Market = () => {
 				let randomNumber = Math.random();
 				let selectedCard;
 
-				if (randomNumber < 0.7) {
+				if (randomNumber < 0.8) {
                     let power3orLowerCards = copyOfCards.filter((card) => card.power <= 3);
                     selectedCard = power3orLowerCards[Math.floor(Math.random() * power3orLowerCards.length)];
                     copyOfCards = copyOfCards.filter((card) => card.id !== selectedCard.id);
-				} else if (randomNumber < 0.9) {
+				} else if (randomNumber < 0.95) {
 					let power4Cards = copyOfCards.filter((card) => card.power === 4);
                     selectedCard = power4Cards[Math.floor(Math.random() * power4Cards.length)];
                     copyOfCards = copyOfCards.filter((card) => card.id !== selectedCard.id);
@@ -129,6 +129,9 @@ const Market = () => {
             randomCardId = updatedRows[2].cards_id
             dispatch(updateCardQuantity({updatedQuantity, randomCardId, userId}))
             
+            SetNewCards(selectedCards);
+            setShowModal(true);
+            return selectedCards;
 
 		} else {
 			setNoMoney(true);
@@ -136,9 +139,6 @@ const Market = () => {
 				setNoMoney(false);
 			}, 2000);
 		}
-        SetNewCards(selectedCards);
-		setShowModal(true);
-		return selectedCards;
 	};
 
 	return (
@@ -150,6 +150,15 @@ const Market = () => {
 			<h1>One Piece Booster Pack</h1>
 			<button onClick={() => getRandomCard(cardsBySeries['One Piece'])}>Pull One 10 tokens</button>
 			<button onClick={() => getThreeCards(cardsBySeries['One Piece'])}>Pull Three 25 tokens</button>
+			<h1>Naruto Booster Pack</h1>
+			<button onClick={() => getRandomCard(cardsBySeries['Naruto'])}>Pull One 10 tokens</button>
+			<button onClick={() => getThreeCards(cardsBySeries['Naruto'])}>Pull Three 25 tokens</button>
+			<h1>Bleach Booster Pack</h1>
+			<button onClick={() => getRandomCard(cardsBySeries['Bleach'])}>Pull One 10 tokens</button>
+			<button onClick={() => getThreeCards(cardsBySeries['Bleach'])}>Pull Three 25 tokens</button>
+			<h1>Dragon Ball Z Pack</h1>
+			<button onClick={() => getRandomCard(cardsBySeries['DBZ'])}>Pull One 10 tokens</button>
+			<button onClick={() => getThreeCards(cardsBySeries['DBZ'])}>Pull Three 25 tokens</button>
 			{noMoney ? <p className={styles.error}>Not enough Currency!</p> : null}
 			<div className={styles.modalParent}>
 				{showModal && <MarketModal cardArr={newCards} showModal={showModal} setShowModal={setShowModal} />}
