@@ -50,7 +50,6 @@ const Market = () => {
   }, {});
 
 	console.log(cardsBySeries);
-	console.log(cardsBySeries);
 
   const getRandomCard = async (cards) => {
     if (userData.wallet > singleCardPrice) {
@@ -63,13 +62,6 @@ const Market = () => {
       let randomNumber = Math.random();
       let randomCard;
 
-			if (randomNumber < 0.8) {
-				randomCard = power3orLowerCards[Math.floor(Math.random() * power3orLowerCards.length)];
-			} else if (randomNumber < 0.95) {
-				randomCard = power4Cards[Math.floor(Math.random() * power4Cards.length)];
-			} else {
-				randomCard = power5Cards[Math.floor(Math.random() * power5Cards.length)];
-			}
 			if (randomNumber < 0.8) {
 				randomCard = power3orLowerCards[Math.floor(Math.random() * power3orLowerCards.length)];
 			} else if (randomNumber < 0.95) {
@@ -108,19 +100,6 @@ const Market = () => {
         let randomNumber = Math.random();
         let selectedCard;
 
-				if (randomNumber < 0.8) {
-                    let power3orLowerCards = copyOfCards.filter((card) => card.power <= 3);
-                    selectedCard = power3orLowerCards[Math.floor(Math.random() * power3orLowerCards.length)];
-                    copyOfCards = copyOfCards.filter((card) => card.id !== selectedCard.id);
-				} else if (randomNumber < 0.95) {
-					let power4Cards = copyOfCards.filter((card) => card.power === 4);
-                    selectedCard = power4Cards[Math.floor(Math.random() * power4Cards.length)];
-                    copyOfCards = copyOfCards.filter((card) => card.id !== selectedCard.id);
-				} else {
-					let power5Cards = copyOfCards.filter((card) => card.power === 5);
-                    selectedCard = power5Cards[Math.floor(Math.random() * power5Cards.length)];
-                    copyOfCards = copyOfCards.filter((card) => card.id !== selectedCard.id);
-				}
 				if (randomNumber < 0.8) {
                     let power3orLowerCards = copyOfCards.filter((card) => card.power <= 3);
                     selectedCard = power3orLowerCards[Math.floor(Math.random() * power3orLowerCards.length)];
