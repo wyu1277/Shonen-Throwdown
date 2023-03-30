@@ -63,7 +63,7 @@ let Modal = (props) => {
 					className={styles.card}
 					onClick={() => props.setShowModal(!props.showModal)}
 				>
-					{user ? (
+					{user && props.card.quantity > 0 ? (
 						<button
 							className={styles.deckButton}
 							onClick={(e) => {

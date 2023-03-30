@@ -15,7 +15,7 @@ const Collection = () => {
 	const [selectedCard, setSelectedCard] = useState(null);
 	const [pageMessage, setPageMessage] = useState('Loading...');
 	const [showModal, setShowModal] = useState(false);
-	const [sortValue, setSortValue] = useState('series');
+	const [sortValue, setSortValue] = useState(user ? 'owned' : 'series');
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -64,6 +64,8 @@ const Collection = () => {
 				sortedData.sort((a, b) => a.cards.element.localeCompare(b.cards.element));
 			} else if (sortValue === 'series') {
 				sortedData.sort((a, b) => a.cards.series.localeCompare(b.cards.series));
+			} else if (sortValue === 'owned') {
+				sortedData.sort((a, b) => a.cards.quantity - b.cards.quantity);
 			}
 		}
 
@@ -87,6 +89,7 @@ const Collection = () => {
 							<option value="power">Power</option>
 							<option value="element">Element</option>
 							<option value="series">Series</option>
+							<option value="owned">Owned</option>
 						</select>
 					</div>
 					<div className={styles.cardParent}>
@@ -100,9 +103,12 @@ const Collection = () => {
 										handleCardClick(card);
 									}}
 									className={styles.card}
-									//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
 								>
-									<img src={card.cards.image} alt={card.cards.name} className={styles.img} />
+									<img
+										src={card.cards.image}
+										alt={card.cards.name}
+										className={card.quantity > 0 ? styles.img : styles.gray}
+									/>
 								</motion.div>
 							))
 						) : (
@@ -184,7 +190,6 @@ const Collection = () => {
 										handleCardClick(card);
 									}}
 									className={styles.card}
-									//   whileTap={{ scale: 0.5, x: window.innerWidth / 2 }}
 								>
 									<img src={card.image} alt={card.name} className={styles.img} />
 								</motion.div>

@@ -20,7 +20,7 @@ const Store = () => {
 			</h1>
 			{isVisible && (
 				<div>
-					<h1>store</h1>
+					<h1>store!!</h1>
 				</div>
 			)}
 		</motion.div>

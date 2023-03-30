@@ -56,3 +56,9 @@
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 20px;
 }
+
+.gray {
+	filter: grayscale(100%);
+	object-fit: cover;
+	height: 100%;
+}
