@@ -28,9 +28,6 @@ export const addToCollection = createAsyncThunk('addToCollection', async({userId
 
 export const updateCardQuantity = createAsyncThunk('updateCardQuantity', async({updatedQuantity, randomCardId, userId})=>{
     try{
-        console.log('this is quantity', updatedQuantity)
-        console.log('this is cardId', randomCardId)
-        console.log('this is userId', userId)
         const {data} = await supabase.from('collections')
                 .update({ quantity: updatedQuantity })
                 .eq('cards_id', randomCardId)

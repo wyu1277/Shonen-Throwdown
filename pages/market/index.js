@@ -68,6 +68,8 @@ const Market = () => {
             const existingRow = collection.find(c => c.cards_id === randomCard.id && c.user_id === user.id);
             const updatedQuantity = existingRow.quantity + 1;
             dispatch(updateCardQuantity({updatedQuantity, randomCardId, userId}))
+            SetNewCards([randomCard]);
+			setShowModal(true);
             
             return [randomCard];
         }
@@ -117,13 +119,6 @@ const Market = () => {
                     }
             })
 
-            // const card1Quantity = updatedRows[0].quantity
-            // const card1Id = updatedRows[0].cards_id
-            // const card2Quantity = updatedRows[1].quantity
-            // const card2Id = updatedRows[1].cards_id
-            // const card3Quantity = updatedRows[2].quantity
-            // const card3Id = updatedRows[2].cards_id
-
             let updatedQuantity = updatedRows[0].quantity
             let randomCardId = updatedRows[0].cards_id
             dispatch(updateCardQuantity({updatedQuantity, randomCardId, userId}))
@@ -141,7 +136,8 @@ const Market = () => {
 				setNoMoney(false);
 			}, 2000);
 		}
-		console.log('this is my 3 cards',selectedCards);
+        SetNewCards(selectedCards);
+		setShowModal(true);
 		return selectedCards;
 	};
 
