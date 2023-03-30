@@ -63,10 +63,8 @@ const collectionSlice = createSlice({
 		builder.addCase(updateCardQuantity.fulfilled, (state, action) => {
 			const newState = state.map((item) => {
 				if (item.cards_id === action.payload.cards_id) {
-					console.log('item if', item);
 					return action.payload;
 				} else {
-					console.log('item else', item);
 					return item;
 				}
 			});
