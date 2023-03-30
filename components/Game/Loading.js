@@ -9,6 +9,7 @@ import { supabase } from "@/lib/supabase";
 import { searchUser } from "@/store/slices/userSlice";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
 import Router from "next/router";
+import { v4 as uuidv4 } from "uuid";
 
 const Loading = () => {
   const [time, setTime] = useState(false);
@@ -105,7 +106,6 @@ const Loading = () => {
       ) : (
         <button onClick={playGame}>Click to Play!</button>
       )}
-      <div></div>
     </div>
   );
 };

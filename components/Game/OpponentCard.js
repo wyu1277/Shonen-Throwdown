@@ -8,11 +8,12 @@ const OpponentCard = (props, ref) => {
   const [tapCard, setTapCard] = useState(false);
   const opponentCardHandler = () => {
     setTapCard(!tapCard);
+    props.setOppCardPos(props.index);
   };
 
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0 }}
+      initial={{ scale: 0, x: props.x }}
       animate={
         tapCard
           ? {
@@ -23,7 +24,7 @@ const OpponentCard = (props, ref) => {
               opacity: 1,
               zIndex: `${12 - props.zIndex}`,
             }
-          : { scale: 1, opacity: 0.6 }
+          : { scale: 1 }
       }
       className="opponent-container"
       onClick={() => opponentCardHandler()}
@@ -31,7 +32,7 @@ const OpponentCard = (props, ref) => {
     >
       {tapCard ? (
         <img
-          src={props.card.image}
+          src="https://i.imgur.com/JBJoKPI.png"
           alt={props.card.title}
           className="gameplay-card"
         />

@@ -11,12 +11,23 @@ import { useRef } from "react";
 import { gameActions } from "@/store/slices/gameSlice";
 import Router from "next/router";
 
-let oppCard = null;
+let oppCard = {
+  image: "https://i.imgur.com/RCATsQ2.png",
+  power: 1,
+  element: "Green",
+};
 let myCard = null;
+let myCardPos = null;
+let oppCardPos = 1;
+
+let taps = 0;
 
 const GameComponent = (props) => {
+  const myRef = useRef(null);
+  // const [taps, setTaps] = useState(0);
   const [playAudio, setPlayAudio] = useState(true);
   const cardRefs = useRef(new Array());
+  const myCardRefs = useRef(new Array());
   const buttonRef = useRef();
   const divRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -39,8 +50,22 @@ const GameComponent = (props) => {
   });
 
   const resetCard = () => {
-    myCard = null;
-    oppCard = null;
+    setTimeout(() => {
+      myCardRefs.current[myCardPos - 1].remove();
+      cardRefs.current[oppCardPos - 1].remove();
+      myCard = null;
+      // oppCard = null;
+      myCardPos = null;
+      // oppCardPos = null;
+    }, 3000);
+
+    setTimeout(() => {
+      if (myCard) {
+        myRef.current.className = "notouch-div";
+      } else {
+        myRef.current.className = "notouch-div";
+      }
+    }, 1000);
   };
 
   const checkCards = (player1Card, player2Card) => {
@@ -50,6 +75,9 @@ const GameComponent = (props) => {
 
     // Determine the winning element
     if (myCard && oppCard) {
+      cardRefs.current[
+        oppCardPos
+      ].innerHTML = `<img src=${oppCard.image} alt=${oppCard.title} class="gameplay-card" />`;
       if (player1Card.element === player2Card.element) {
         // If the two cards have the same element, use their power to determine the winner
         if (player1Card.power > player2Card.power) {
@@ -100,12 +128,13 @@ const GameComponent = (props) => {
 
       if (damagedPlayer === "player1") {
         dispatch(gameActions.decreasePlayer1HP(damage));
+        resetCard();
       } else if (damagedPlayer === "player2") {
         dispatch(gameActions.decreasePlayer2HP(damage));
+        resetCard();
       } else if (damagedPlayer === "none") {
-        return;
+        resetCard();
       }
-      resetCard();
     }
   };
 
@@ -136,7 +165,7 @@ const GameComponent = (props) => {
       })
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
-        console.log(state, "SYNC STATE");
+        // console.log(state, "SYNC STATE");
         channel.send({
           type: "broadcast",
           event: "getUserDeck/" + channels,
@@ -167,7 +196,7 @@ const GameComponent = (props) => {
       });
 
     // supabase.removeAllChannels();
-    console.log(supabase, "SUPABASE STATUS");
+    // console.log(supabase, "SUPABASE STATUS");
     // .on("presence", { event: "join" }, (object) => {
     //   setPresences((presences) => [...presences, object]);
     // });
@@ -209,14 +238,19 @@ const GameComponent = (props) => {
   //     });
   // }, []);
 
-  const setMyCard = (card) => {
+  const setMyCard = (card, index) => {
     myCard = card;
+    myCardPos = index;
+  };
+
+  const setOppCardPos = (index) => {
+    oppCardPos = index;
   };
 
   const leaveHandler = async () => {
-    supabase.removeAllChannels();
-    console.log("removed all channels");
-    Router.push("http://localhost:3000/lobby/");
+    // supabase.removeAllChannels();
+    // console.log("removed all channels");
+    // Router.push("http://localhost:3000/lobby/");
     // supabase.subscribe(async (status) => {
     //   if (trackStatus === "ok") {
     //     const untrackStatus = await channel.untrack();
@@ -224,6 +258,9 @@ const GameComponent = (props) => {
     //     console.log(untrackStatus, "STATUS/HAS LEFT");
     //   }
     // });
+    // console.log(myCardRefs.current[1].innerHTML);
+    console.log(myRef.current);
+    console.log(myCard);
   };
 
   return (
@@ -233,22 +270,33 @@ const GameComponent = (props) => {
       <audio src="/audio/music.mp3" ref={audioRef} />
 
       <GameContainer>
-        {props.userDeck &&
-          props.userDeck.map((card, i) => {
-            return (
-              <Card
-                user={user}
-                setShowSet={setShowSet}
-                // checks={checks}
-                key={uuidv4()}
-                setMyCard={setMyCard}
-                index={i + 1}
-                zIndex={i - 1}
-                card={card}
-              />
-            );
-          })}
-        <div className="player-div"></div>
+        <div
+          className={myCard ? "notouch-div" : "touch-div"}
+          onClick={(event) => {
+            event.preventDefault();
+            taps += 1;
+            // console.log(taps);
+          }}
+        >
+          {props.userDeck &&
+            props.userDeck.map((card, i) => {
+              return (
+                <Card
+                  user={user}
+                  setShowSet={setShowSet}
+                  // checks={checks}
+                  key={uuidv4()}
+                  setMyCard={setMyCard}
+                  index={i + 1}
+                  zIndex={taps}
+                  card={card}
+                  x={i * 150}
+                  ref={(el) => (myCardRefs.current[i] = el)}
+                />
+              );
+            })}
+        </div>
+        {/* <div className="no-touchy"> */}
         {opponentDeck &&
           opponentDeck.length > 0 &&
           opponentDeck.map((card, i) => {
@@ -258,9 +306,13 @@ const GameComponent = (props) => {
                 zIndex={i + 1}
                 card={card}
                 ref={(el) => (cardRefs.current[i] = el)}
+                x={i * -150}
+                index={i}
+                setOppCardPos={setOppCardPos}
               />
             );
           })}
+        {/* </div> */}
         <button onClick={leaveHandler}>Leave Room</button>
         <Player1HP user={props.user} />
         <Player2HP opp={opponentInfo} />
