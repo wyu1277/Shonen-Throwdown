@@ -1,3 +1,4 @@
+"use client";
 import { userActions } from "@/store/slices/userSlice";
 import { gameActions } from "@/store/slices/gameSlice";
 import { useUser } from "@supabase/auth-helpers-react";
