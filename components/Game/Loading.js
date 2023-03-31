@@ -131,7 +131,7 @@ const Loading = () => {
       });
     setTimeout(() => {
       setLocalLoading(false);
-    }, 2000);
+    }, 4000);
 
     // channel
     //   .subscribe(async (status) => {

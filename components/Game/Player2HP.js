@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { useEffect } from "react";
+import { gameActions } from "@/store/slices/gameSlice";
+import { loadActions } from "@/store/slices/loadSlice";
 
 const Player2HP = (props) => {
   const dispatch = useDispatch();
@@ -13,6 +15,7 @@ const Player2HP = (props) => {
 
   useEffect(() => {
     health <= 0 && dispatch(gameActions.endGame(true));
+    health <= 0 && dispatch(loadActions.setLoading(true));
   }, [health]);
 
   return (

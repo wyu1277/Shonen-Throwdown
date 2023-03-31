@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { gameActions } from "@/store/slices/gameSlice";
+import { loadActions } from "@/store/slices/loadSlice";
 
 const Card = (props, refs) => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const Card = (props, refs) => {
       if (counter > 11) {
         console.log("This game is ova");
         dispatch(gameActions.ended(true));
+        dispatch(loadActions.setLoading(true));
       }
     };
 

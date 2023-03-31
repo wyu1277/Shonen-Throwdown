@@ -7,7 +7,7 @@ const initialState = {
   player2: {},
   player1Deck: [],
   player2Deck: [],
-  winnder: null,
+  winner: null,
   loser: null,
   cardInPlay: false,
   counter: 0,
@@ -44,6 +44,12 @@ const gameSlice = createSlice({
     },
     endGame(state, action) {
       state.ended = action.payload;
+    },
+    setWinner(state, action) {
+      state.winner = action.payload;
+    },
+    setLoser(state, action) {
+      state.loser = action.payload;
     },
   },
   extraReducers: {},

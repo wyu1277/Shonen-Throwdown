@@ -55,9 +55,9 @@ const GameComponent = (props) => {
     return state.game.player2Deck;
   });
 
-  const ended = useSelector((state) => {
-    return state.game.ended;
-  });
+  // const ended = useSelector((state) => {
+  //   return state.game.ended;
+  // });
 
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
@@ -168,6 +168,8 @@ const GameComponent = (props) => {
   };
 
   useEffect(() => {
+    console.log("GAME HAS ENDDED NOT DOING ANYMORE CHECKS");
+    // if (!ended) {
     setInterval(() => {
       checkCards(myCard, oppCard);
     }, 1000);
