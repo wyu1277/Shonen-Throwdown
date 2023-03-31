@@ -22,7 +22,7 @@ const Player2HP = (props) => {
       animate={{ scale: 1, opacity: 1 }}
       className="player2-hp"
     >
-      {props?.opp?.username} HP: {health}
+      {props?.player2?.username} HP: {health}
     </motion.div>
   );
 };

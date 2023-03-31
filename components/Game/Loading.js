@@ -50,9 +50,15 @@ const Loading = () => {
     const channel = supabase.channel(Router.query.id, {
       config: { presence: { key: player.username } },
     });
+    channel;
+    // .subscribe(async (status) => {
+    //   if (status === "SUBSCRIBED") {channel.on("presence", { event: "sync" }, () => {
     channel
-      // .subscribe(async (status) => {
-      //   if (status === "SUBSCRIBED") {
+      .send({
+        type: "broadcast",
+        event: "getUserDeck/" + Router.query.id,
+        payload: { data: { player, userDeck } },
+      })
       //     const trackStatus = await channel.track();
       //   }
       // })
@@ -66,6 +72,13 @@ const Loading = () => {
       .on("presence", { event: "sync" }, (object) => {
         const state = channel.presenceState();
         setPresence(state);
+        if (presence) {
+          channel.send({
+            type: "broadcast",
+            event: "getUserDeck/" + Router.query.id,
+            payload: { data: { player, userDeck } },
+          });
+        }
       })
       // .on(
       //   "broadcast",
@@ -118,6 +131,16 @@ const Loading = () => {
     setTimeout(() => {
       setLocalLoading(false);
     }, 2000);
+
+    useEffect(() => {
+      channel.on("presence", { event: "sync" }, () => {
+        channel.send({
+          type: "broadcast",
+          event: "getUserDeck/" + Router.query.id,
+          payload: { data: { player, userDeck } },
+        });
+      });
+    }, [presence]);
 
     // channel
     //   .subscribe(async (status) => {
