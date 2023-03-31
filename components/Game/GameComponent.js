@@ -15,6 +15,7 @@ let oppCard = null;
 let myCard = null;
 let myCardPos = null;
 let oppCardPos = null;
+let oppImage = null;
 
 let taps = 0;
 
@@ -54,14 +55,22 @@ const GameComponent = (props) => {
     return state.game.player2Deck;
   });
 
+  // const ended = useSelector((state) => {
+  //   return state.game.ended;
+  // });
+
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
+      console.log(myCardRefs.current[myCardPos - 1]);
+
       myCardRefs.current[myCardPos - 1].remove();
       cardRefs.current[oppCardPos].remove();
-      myCard = null;
-      oppCard = null;
       myCardPos = null;
       oppCardPos = null;
+      myCard = null;
+      oppCard = null;
+      oppImage = null;
+
       dispatch(gameActions.setCardToPlay(false));
     }
   };
@@ -70,77 +79,97 @@ const GameComponent = (props) => {
     let damage;
     let winningElement;
     let damagedPlayer;
-    console.log(myCardPos, oppCardPos, "CARD POSITIONS");
+    // console.log(myCardPos, oppCardPos, "CARD POSITIONS");
+
+    if (myCard && oppImage) {
+      cardRefs.current[
+        oppCardPos
+      ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+    }
 
     if (myCard && oppCard) {
-      if (myCardPos && oppCardPos) {
-        cardRefs.current[
-          oppCardPos
-        ].innerHTML = `<img src=${oppCard.image} alt=${oppCard.title} class="gameplay-card" />`;
-      }
-      setTimeout(() => {
-        if (player1Card.element === player2Card.element) {
-          // If the two cards have the same element, use their power to determine the winner
-          if (player1Card.power > player2Card.power) {
-            winningElement = player1Card.element;
-            damage = player1Card.power - player2Card.power;
-            damagedPlayer = "player2";
-          } else if (player2Card.power > player1Card.power) {
-            winningElement = player2Card.element;
-            damage = player2Card.power - player1Card.power;
-            damagedPlayer = "player1";
-          } else {
-            // If the two cards have the same power, there is no damage
-            winningElement = null;
-            damage = 0;
-            damagedPlayer = "none";
-          }
+      // if (myCardPos && oppCardPos) {
+      //   cardRefs.current[
+      //     oppCardPos
+      //   ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+      // }
+      // setTimeout(() => {
+      if (player1Card.element === player2Card.element) {
+        // If the two cards have the same element, use their power to determine the winner
+        if (player1Card.power > player2Card.power) {
+          winningElement = player1Card.element;
+          damage = player1Card.power - player2Card.power;
+          damagedPlayer = "player2";
+        } else if (player2Card.power > player1Card.power) {
+          winningElement = player2Card.element;
+          damage = player2Card.power - player1Card.power;
+          damagedPlayer = "player1";
         } else {
-          // If the two cards have different elements, use the standard rules to determine the winner
-          if (player1Card.element === "Red") {
-            if (player2Card.element === "Green") {
-              winningElement = "Red";
-            } else if (player2Card.element === "Blue") {
-              winningElement = "Blue";
-            }
-          } else if (player1Card.element === "Green") {
-            if (player2Card.element === "Blue") {
-              winningElement = "Green"; // fire > grass
-              // grass > water
-              // water > fire) {
-              winningElement = "Blue";
-            } else if (player2Card.element === "Green") {
-              winningElement = "Green";
-            }
+          // If the two cards have the same power, there is no damage
+          winningElement = null;
+          damage = 0;
+          damagedPlayer = "none";
+        }
+      } else {
+        // If the two cards have different elements, use the standard rules to determine the winner
+        if (player1Card.element === "Red") {
+          if (player2Card.element === "Green") {
+            winningElement = "Red";
+          } else if (player2Card.element === "Blue") {
+            winningElement = "Blue";
           }
-
-          // Determine the damage
-          if (winningElement === player1Card.element) {
-            damage = Math.max(player1Card.power - player2Card.power, 0);
-            damagedPlayer = "player2";
-          } else if (winningElement === player2Card.element) {
-            damage = Math.max(player2Card.power - player1Card.power, 0);
-            damagedPlayer = "player1";
-          } else {
-            damage = 0;
-            damagedPlayer = "none";
+        } else if (player1Card.element === "Green") {
+          if (player2Card.element === "Blue") {
+            winningElement = "Green"; // fire > grass
+            // grass > water
+            // water > fire) {
+          } else if (player2Card.element === "Red") {
+            winningElement = "Red";
+          }
+        } else if (player1Card.element === "Blue") {
+          if (player2Card.element === "Green") {
+            winningElement = "Green"; // fire > grass
+            // grass > water
+            // water > fire) {
+          } else if (player2Card.element === "Red") {
+            winningElement = "Blue";
           }
         }
 
-        if (damagedPlayer === "player1") {
-          dispatch(gameActions.decreasePlayer1HP(damage));
-          resetCard();
-        } else if (damagedPlayer === "player2") {
-          dispatch(gameActions.decreasePlayer2HP(damage));
-          resetCard();
-        } else if (damagedPlayer === "none") {
-          resetCard();
+        // Determine the damage
+        if (winningElement === player1Card.element) {
+          damage = Math.max(player1Card.power - player2Card.power, 0);
+          damagedPlayer = "player2";
+        } else if (winningElement === player2Card.element) {
+          damage = Math.max(player2Card.power - player1Card.power, 0);
+          damagedPlayer = "player1";
+        } else {
+          damage = 0;
+          damagedPlayer = "none";
         }
-      }, 3000);
+      }
+
+      if (damagedPlayer === "player1") {
+        console.log(damage, "PLAYER1 DAMAGE");
+        dispatch(gameActions.decreasePlayer1HP(damage));
+        resetCard();
+      } else if (damagedPlayer === "player2") {
+        console.log(damage, "PLAYER2 DAMAGE");
+
+        dispatch(gameActions.decreasePlayer2HP(damage));
+        resetCard();
+      } else if (damagedPlayer === "none") {
+        console.log(damage, "NO PLAYER DAMAAGE");
+        resetCard();
+      }
+      console.log(winningElement);
+      // }, 3000);
     }
   };
 
   useEffect(() => {
+    console.log("GAME HAS ENDDED NOT DOING ANYMORE CHECKS");
+    // if (!ended) {
     setInterval(() => {
       checkCards(myCard, oppCard);
     }, 1000);
@@ -149,7 +178,7 @@ const GameComponent = (props) => {
       if (myCard) {
         dispatch(gameActions.setCardToPlay(true));
       }
-    }, 1000);
+    }, 100);
   }, []);
 
   //establishes presence
@@ -245,7 +274,11 @@ const GameComponent = (props) => {
         console.log(cardRefs?.current);
         console.log(payload.payload);
         cardRefs?.current[payload.payload.data.index - 1]?.click();
-        oppCard = payload.payload.data.cardInfo;
+        console.log(payload.payload.data.cardInfo.image);
+        oppImage = payload.payload.data.cardInfo.image;
+        setTimeout(() => {
+          oppCard = payload.payload.data.cardInfo;
+        }, 2000);
         // checks();
       })
       .on("broadcast", { event: "cardmove" }, () => {
@@ -256,6 +289,10 @@ const GameComponent = (props) => {
   const setMyCard = (card, index) => {
     myCard = card;
     myCardPos = index;
+  };
+
+  const showMyCard = (card, index) => {
+    return myCard;
   };
 
   const setOppCardPos = (index) => {
@@ -293,10 +330,7 @@ const GameComponent = (props) => {
   };
 
   const test = () => {
-    console.log(channels);
-    console.log(Router.query.id);
-    console.log(opponentDeck);
-    console.log(opponentInfo);
+    console.log(ended);
   };
 
   return (
@@ -323,23 +357,24 @@ const GameComponent = (props) => {
               />
             );
           })}
-        <div className="no-touchy">
-          {player2Deck &&
-            player2Deck.length > 0 &&
-            player2Deck.map((card, i) => {
-              return (
-                <OpponentCard
-                  key={uuidv4()}
-                  zIndex={i + 1}
-                  card={card}
-                  ref={(el) => (cardRefs.current[i] = el)}
-                  x={i * -150}
-                  index={i}
-                  setOppCardPos={setOppCardPos}
-                />
-              );
-            })}
-        </div>
+        {/* <div className="no-touchy"> */}
+        {player2Deck &&
+          player2Deck.length > 0 &&
+          player2Deck.map((card, i) => {
+            return (
+              <OpponentCard
+                showMyCard={showMyCard}
+                key={uuidv4()}
+                zIndex={i + 1}
+                card={card}
+                ref={(el) => (cardRefs.current[i] = el)}
+                x={i * -150}
+                index={i}
+                setOppCardPos={setOppCardPos}
+              />
+            );
+          })}
+        {/* </div> */}
 
         <Player1HP user={props.user} />
         <Player2HP opp={player2.username} />

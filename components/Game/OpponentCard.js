@@ -1,9 +1,15 @@
 import { forwardRef, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { useSelector } from "react-redux";
 
 const OpponentCard = (props, ref) => {
+  // const myCard = props.showMyCard();
   const audioRef = useRef(null);
+
+  // const myCard = useSelector((state) => {
+  //   return state.game.setCardToPlay;
+  // });
 
   const [tapCard, setTapCard] = useState(false);
   const opponentCardHandler = () => {
@@ -38,7 +44,7 @@ const OpponentCard = (props, ref) => {
         />
       ) : (
         <img
-          src="https://i.imgur.com/JBJoKPI.png"
+          src={"https://i.imgur.com/JBJoKPI.png"}
           alt={props.card.title}
           className="gameplay-card"
         />

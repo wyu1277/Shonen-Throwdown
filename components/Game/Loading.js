@@ -50,6 +50,17 @@ const Loading = () => {
     config: { presence: { key: player.username } },
   });
 
+  const player1id = async () => {
+    let { data } = await supabase
+      .from("game")
+      .select("player1")
+      .eq("id", Router.query.id)
+      .single();
+    console.log("player1id", data);
+    return data;
+  };
+  player1id();
+
   useEffect(() => {
     channel;
     // .subscribe(async (status) => {
@@ -90,6 +101,15 @@ const Loading = () => {
     // )
     channel
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
+        if (player1id && player1id !== user.id) {
+          const setPlayer2 = async () => {
+            await supabase
+              .from("game")
+              .update({ player2: user.id })
+              .eq("id", Router.query.id);
+          };
+          setPlayer2();
+        }
         let newPresence = newPresences[0];
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
         channel.on("presence", { event: "sync" }, () => {
@@ -131,7 +151,7 @@ const Loading = () => {
       });
     setTimeout(() => {
       setLocalLoading(false);
-    }, 2000);
+    }, 4000);
 
     // channel
     //   .subscribe(async (status) => {
@@ -231,6 +251,18 @@ const Loading = () => {
     //   setLocalLoading(false);
     // }, 2000);
   }, []);
+
+  useEffect(() => {
+    if (player2) {
+      const setPlayer2 = async () => {
+        await supabase
+          .from("game")
+          .update({ player2: player2.id })
+          .eq("id", Router.query.id);
+      };
+      setPlayer2();
+    }
+  }, [player2]);
 
   useEffect(() => {
     channel.on("presence", { event: "sync" }, () => {

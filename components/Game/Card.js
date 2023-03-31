@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { gameActions } from "@/store/slices/gameSlice";
+import { loadActions } from "@/store/slices/loadSlice";
 
 const Card = (props, refs) => {
   const dispatch = useDispatch();
@@ -45,6 +46,8 @@ const Card = (props, refs) => {
       // console.log(counter);
       if (counter > 11) {
         console.log("This game is ova");
+        dispatch(gameActions.ended(true));
+        dispatch(loadActions.setLoading(true));
       }
     };
 
@@ -61,6 +64,7 @@ const Card = (props, refs) => {
   }, []);
 
   const cardHandler = () => {
+    console.log(props.card);
     console.log(cardInPlay);
     if (!cardInPlay) {
       props.setMyCard(props.card, props.index);
@@ -68,7 +72,9 @@ const Card = (props, refs) => {
       // audioRef.current.play();
       supabase
         .channel(channels)
-        .subscribe()
+        .subscribe(async (status) => {
+          console.log(status);
+        })
         .send({
           type: "broadcast",
           event: "cardmove",
@@ -103,6 +109,7 @@ const Card = (props, refs) => {
               backgroundImage: `${props.card.image}`,
             }
       }
+      exit={{ x: -3000 }}
       //   whileHover={{ backgroundColor: "white" }}
       onClick={cardHandler}
       whileHover={{ scale: 2 }}

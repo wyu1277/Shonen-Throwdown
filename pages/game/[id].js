@@ -28,6 +28,10 @@ const Game = (props) => {
     return state.deck;
   });
 
+  const ended = useSelector((state) => {
+    return state.game.ended;
+  });
+
   // useEffect(() => {
   //   const fetchUser = async () => {
   //     const { data } = await supabase
@@ -48,8 +52,9 @@ const Game = (props) => {
     <div>
       <GlobalContext.Provider value={publicUser}>
         {/* <GameRoom props={publicUser} /> */}
-        {loading && <Loading />}
+        {loading && !ended && <Loading />}
         {!loading && <GameComponent user={user} userDeck={userDeck} />}
+        {ended && <div>GAME OVER</div>}
 
         {/* <Messages props={publicUser} /> */}
       </GlobalContext.Provider>
