@@ -50,7 +50,7 @@ const Card = (props, refs) => {
 
     const interval = setInterval(() => {
       counterCheck();
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [counter]);
@@ -61,6 +61,7 @@ const Card = (props, refs) => {
   }, []);
 
   const cardHandler = () => {
+    console.log(props.card);
     console.log(cardInPlay);
     if (!cardInPlay) {
       props.setMyCard(props.card, props.index);
@@ -68,7 +69,9 @@ const Card = (props, refs) => {
       // audioRef.current.play();
       supabase
         .channel(channels)
-        .subscribe()
+        .subscribe(async (status) => {
+          console.log(status);
+        })
         .send({
           type: "broadcast",
           event: "cardmove",
