@@ -14,7 +14,7 @@ import Router from "next/router";
 let oppCard = null;
 let myCard = null;
 let myCardPos = null;
-let oppCardPos = 1;
+let oppCardPos = null;
 
 let taps = 0;
 
@@ -29,8 +29,9 @@ const GameComponent = (props) => {
   const [loading, setLoading] = useState(false);
   const [presences, setPresences] = useState([]);
 
-  const [opponentDeck, setOpponentDeck] = useState([]);
-  const [opponentInfo, setOpponentInfo] = useState({});
+  // Determine the winning element
+  // const [opponentDeck, setOpponentDeck] = useState([]);
+  // const [opponentInfo, setOpponentInfo] = useState({});
   const dispatch = useDispatch();
   const audioRef = useRef(null);
   const [set, setShowSet] = useState(false);
@@ -55,13 +56,15 @@ const GameComponent = (props) => {
 
   const resetCard = () => {
     setTimeout(() => {
-      myCardRefs.current[myCardPos - 1].remove();
-      cardRefs.current[oppCardPos - 1].remove();
-      myCard = null;
-      // oppCard = null;
-      myCardPos = null;
-      // oppCardPos = null;
-      dispatch(gameActions.setCardToPlay(false));
+      if (myCardPos && oppCardPos) {
+        myCardRefs.current[myCardPos - 1].remove();
+        cardRefs.current[oppCardPos - 1].remove();
+        myCard = null;
+        // oppCard = null;
+        myCardPos = null;
+        // oppCardPos = null;
+        dispatch(gameActions.setCardToPlay(false));
+      }
     }, 3000);
   };
 
@@ -69,12 +72,14 @@ const GameComponent = (props) => {
     let damage;
     let winningElement;
     let damagedPlayer;
+    console.log(myCardPos, oppCardPos, "CARD POSITIONS");
 
-    // Determine the winning element
     if (myCard && oppCard) {
-      cardRefs.current[
-        oppCardPos
-      ].innerHTML = `<img src=${oppCard.image} alt=${oppCard.title} class="gameplay-card" />`;
+      if (myCardPos && oppCardPos) {
+        cardRefs.current[
+          oppCardPos
+        ].innerHTML = `<img src=${oppCard.image} alt=${oppCard.title} class="gameplay-card" />`;
+      }
       if (player1Card.element === player2Card.element) {
         // If the two cards have the same element, use their power to determine the winner
         if (player1Card.power > player2Card.power) {
@@ -323,7 +328,7 @@ const GameComponent = (props) => {
         {/* </div> */}
 
         <Player1HP user={props.user} />
-        <Player2HP opp={opponentInfo} />
+        <Player2HP opp={player2.username} />
       </GameContainer>
     </>
   );

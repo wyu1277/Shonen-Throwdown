@@ -66,16 +66,19 @@ const Card = (props, refs) => {
       props.setMyCard(props.card, props.index);
       setTapCard(!tapCard);
       // audioRef.current.play();
-      supabase.channel(channels).send({
-        type: "broadcast",
-        event: "cardmove",
-        payload: {
-          data: {
-            index: props.index,
-            cardInfo: props.card,
+      supabase
+        .channel(channels)
+        .subscribe()
+        .send({
+          type: "broadcast",
+          event: "cardmove",
+          payload: {
+            data: {
+              index: props.index,
+              cardInfo: props.card,
+            },
           },
-        },
-      });
+        });
 
       dispatch(gameActions.increaseCounter());
       // counterCheck();
