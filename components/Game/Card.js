@@ -106,6 +106,7 @@ const Card = (props, refs) => {
               backgroundImage: `${props.card.image}`,
             }
       }
+      exit={{ x: -3000 }}
       //   whileHover={{ backgroundColor: "white" }}
       onClick={cardHandler}
       whileHover={{ scale: 2 }}

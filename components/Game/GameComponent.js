@@ -15,6 +15,7 @@ let oppCard = null;
 let myCard = null;
 let myCardPos = null;
 let oppCardPos = null;
+let oppImage = null;
 
 let taps = 0;
 
@@ -56,14 +57,15 @@ const GameComponent = (props) => {
 
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
-      setTimeout(() => {
-        myCardRefs.current[myCardPos - 1].remove();
-        cardRefs.current[oppCardPos].remove();
-        myCardPos = null;
-        oppCardPos = null;
-        myCard = null;
-        oppCard = null;
-      }, 2000);
+      console.log(myCardRefs.current[myCardPos - 1]);
+
+      myCardRefs.current[myCardPos - 1].remove();
+      cardRefs.current[oppCardPos].remove();
+      myCardPos = null;
+      oppCardPos = null;
+      myCard = null;
+      oppCard = null;
+      oppImage = null;
 
       dispatch(gameActions.setCardToPlay(false));
     }
@@ -75,12 +77,18 @@ const GameComponent = (props) => {
     let damagedPlayer;
     // console.log(myCardPos, oppCardPos, "CARD POSITIONS");
 
+    if (myCard && oppImage) {
+      cardRefs.current[
+        oppCardPos
+      ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+    }
+
     if (myCard && oppCard) {
-      if (myCardPos && oppCardPos) {
-        cardRefs.current[
-          oppCardPos
-        ].innerHTML = `<img src=${oppCard.image} alt=${oppCard.title} class="gameplay-card" />`;
-      }
+      // if (myCardPos && oppCardPos) {
+      //   cardRefs.current[
+      //     oppCardPos
+      //   ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+      // }
       // setTimeout(() => {
       if (player1Card.element === player2Card.element) {
         // If the two cards have the same element, use their power to determine the winner
@@ -166,7 +174,7 @@ const GameComponent = (props) => {
       if (myCard) {
         dispatch(gameActions.setCardToPlay(true));
       }
-    }, 1000);
+    }, 100);
   }, []);
 
   //establishes presence
@@ -262,7 +270,11 @@ const GameComponent = (props) => {
         console.log(cardRefs?.current);
         console.log(payload.payload);
         cardRefs?.current[payload.payload.data.index - 1]?.click();
-        oppCard = payload.payload.data.cardInfo;
+        console.log(payload.payload.data.cardInfo.image);
+        oppImage = payload.payload.data.cardInfo.image;
+        setTimeout(() => {
+          oppCard = payload.payload.data.cardInfo;
+        }, 2000);
         // checks();
       })
       .on("broadcast", { event: "cardmove" }, () => {
@@ -273,6 +285,10 @@ const GameComponent = (props) => {
   const setMyCard = (card, index) => {
     myCard = card;
     myCardPos = index;
+  };
+
+  const showMyCard = (card, index) => {
+    return myCard;
   };
 
   const setOppCardPos = (index) => {
@@ -326,23 +342,24 @@ const GameComponent = (props) => {
               />
             );
           })}
-        <div className="no-touchy">
-          {player2Deck &&
-            player2Deck.length > 0 &&
-            player2Deck.map((card, i) => {
-              return (
-                <OpponentCard
-                  key={uuidv4()}
-                  zIndex={i + 1}
-                  card={card}
-                  ref={(el) => (cardRefs.current[i] = el)}
-                  x={i * -150}
-                  index={i}
-                  setOppCardPos={setOppCardPos}
-                />
-              );
-            })}
-        </div>
+        {/* <div className="no-touchy"> */}
+        {player2Deck &&
+          player2Deck.length > 0 &&
+          player2Deck.map((card, i) => {
+            return (
+              <OpponentCard
+                showMyCard={showMyCard}
+                key={uuidv4()}
+                zIndex={i + 1}
+                card={card}
+                ref={(el) => (cardRefs.current[i] = el)}
+                x={i * -150}
+                index={i}
+                setOppCardPos={setOppCardPos}
+              />
+            );
+          })}
+        {/* </div> */}
 
         <Player1HP user={props.user} />
         <Player2HP opp={player2.username} />
