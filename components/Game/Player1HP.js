@@ -10,14 +10,6 @@ const Player1HP = (props) => {
     return state.game.player1HP;
   });
 
-  useEffect(() => {
-    setInterval(() => {
-      if (health <= 0) {
-        Router.push("/");
-      }
-    }, 1000);
-  }, []);
-
   // useEffect(() => {
   //   setHealth(health);
   // }, [health]);

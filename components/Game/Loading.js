@@ -14,9 +14,9 @@ import { v4 as uuidv4 } from "uuid";
 const Loading = () => {
   const [time, setTime] = useState(false);
   const [localLoading, setLocalLoading] = useState(true);
-  const [presences, setPresences] = useState([]);
-  const [player3, setPlayer3] = useState([null]);
-  const [player4, setPlayer4] = useState([null]);
+  const [presence, setPresence] = useState([]);
+  const [trackingStatus, setTrackingStatus] = useState([]);
+
   // const router = useRouter();
 
   const user = useUser();
@@ -50,13 +50,12 @@ const Loading = () => {
     const channel = supabase.channel(Router.query.id, {
       config: { presence: { key: player.username } },
     });
-
     channel
-      .subscribe(async (status) => {
-        if (status === "SUBSCRIBED") {
-          const trackStatus = await channel.track();
-        }
-      })
+      // .subscribe(async (status) => {
+      //   if (status === "SUBSCRIBED") {
+      //     const trackStatus = await channel.track();
+      //   }
+      // })
       // .on("presence", { event: "sync" }, () => {
       //   channel.send({
       //     type: "broadcast",
@@ -64,28 +63,169 @@ const Loading = () => {
       //     payload: { data: { player, userDeck } },
       //   });
       // })
-      .on(
-        "broadcast",
-        { event: "getUserDeck/" + Router.query.id },
-        (payload) => {
-          console.log(payload, "LOADING PAYLOAD BROADCAST");
-          dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
-          dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+      .on("presence", { event: "sync" }, (object) => {
+        const state = channel.presenceState();
+        setPresence(state);
+      })
+      // .on(
+      //   "broadcast",
+      //   { event: "getUserDeck/" + Router.query.id },
+      //   (payload) => {
+      //     console.log(payload, "LOADING PAYLOAD BROADCAST");
+      //     dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+      //     dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+      //   }
+      // )
+      .on("presence", { event: "join" }, ({ key, newPresences }) => {
+        let newPresence = newPresences[0];
+        console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
+        channel.on("presence", { event: "sync" }, () => {
+          channel.send({
+            type: "broadcast",
+            event: "getUserDeck/" + Router.query.id,
+            payload: { data: { player, userDeck } },
+          });
+        });
+        channel.on(
+          "broadcast",
+          { event: "getUserDeck/" + Router.query.id },
+          (payload) => {
+            console.log(payload, "LOADING PAYLOAD BROADCAST");
+            dispatch(
+              gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
+            );
+            dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+          }
+        );
+      })
+      // .on("presence", { event: "join" }, (object) => {
+      //   setPresences((presences) => [...presences, object]);
+      //   console.log(presences);
+      // });
+      .subscribe(async (status) => {
+        if (trackingStatus === "closed") {
+          const untrackStatus = await channel.untrack();
+          // console.log(trackStatus, "TRACKSTATUS LINE 57");
+          console.log(untrackStatus, "STATUS/HAS LEFT");
         }
-      )
-      .on("presence", { event: "join" }, (object) => {
-        setPresences((presences) => [...presences, object]);
-        console.log(presences);
+
+        if (status === "SUBSCRIBED") {
+          const trackStatus = await channel.track();
+          console.log(trackStatus, "TRACKSTATUS");
+          // await channel.untrack();
+        }
       });
     setTimeout(() => {
       setLocalLoading(false);
     }, 2000);
+
+    // channel
+    //   .subscribe(async (status) => {
+    //     if (status === "SUBSCRIBED") {
+    //       channel
+    //         .on("presence", { event: "sync" }, (object) => {
+    //           const state = channel.presenceState();
+    //           console.log(state, "PRESENCE STATE");
+    //           setPresence(state);
+    //           channel.send({
+    //             type: "broadcast",
+    //             event: "getUserDeck/" + Router.query.id,
+    //             payload: { data: { player, userDeck } },
+    //           });
+    //         })
+    //         .on("presence", { event: "join" }, ({ key, newPresences }) => {
+    //           let newPresence = newPresences[0];
+    //           // setPresences((presences) => [...presences, newPresence]);
+    //           console.log(newPresence, "JOINED");
+    //           console.log(newPresence, "JOINED");
+    //           console.log(key, "JOINED");
+    //         });
+    //       channel.on(
+    //         "broadcast",
+    //         { event: "getUserDeck/" + Router.query.id },
+    //         (payload) => {
+    //           console.log(payload, "LOADING PAYLOAD BROADCAST");
+    //           dispatch(
+    //             gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
+    //           );
+    //           dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+    //           channel.on("presence", { event: "sync" }, () => {
+    //             channel.send({
+    //               type: "broadcast",
+    //               event: "getUserDeck/" + Router.query.id,
+    //               payload: { data: { player, userDeck } },
+    //             });
+    //             console.log(Router.query.id);
+    //           });
+    //         }
+    //       );
+    //     } else if (status !== "SUBSCRIBED") {
+    //       channel
+    //         .subscribe(async (status) => {
+    //           console.log(status, "SUBSCRIBED MF");
+    //         })
+    //         .on("presence", { event: "sync" }, (obj) => {
+    //           channel.send({
+    //             type: "broadcast",
+    //             event: "getUserDeck/" + Router.query.id,
+    //             payload: { data: { player, userDeck } },
+    //           });
+    //           console.log(obj);
+    //           console.log(Router.query.id);
+    //         })
+    //         .on("presence", { event: "join" }, (object) => {
+    //           setPresence((presences) => [...presences, object]);
+    //           console.log(presence, "JOINED");
+    //         })
+    //         .on(
+    //           "broadcast",
+    //           { event: "getUserDeck/" + Router.query.id },
+    //           (payload) => {
+    //             console.log(payload, "LOADING PAYLOAD BROADCAST");
+    //             dispatch(
+    //               gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
+    //             );
+    //             dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+    //           }
+    //         );
+    //     }
+    //   })
+    //   .on("presence", { event: "sync" }, (obj) => {
+    //     channel.send({
+    //       type: "broadcast",
+    //       event: "getUserDeck/" + Router.query.id,
+    //       payload: { data: { player, userDeck } },
+    //     });
+    //     console.log(obj);
+    //     console.log(Router.query.id);
+    //   })
+    //   .on("presence", { event: "join" }, (object) => {
+    //     setPresence((presences) => [...presences, object]);
+    //     console.log(presence, "JOINED");
+    //   })
+    //   .on(
+    //     "broadcast",
+    //     { event: "getUserDeck/" + Router.query.id },
+    //     (payload) => {
+    //       console.log(payload, "LOADING PAYLOAD BROADCAST");
+    //       dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+    //       dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+    //     }
+    //   );
+
+    // setTimeout(() => {
+    //   setLocalLoading(false);
+    // }, 2000);
   }, []);
 
   // useEffect(() => {
-  //   if (player && player2 && userDeck && player2Deck) {
-  //     loadActions.setLoading(false);
-  //   }
+  //   channel.subscribe();
+
+  //   channel.on("presence", { event: "sync" }, (object) => {
+  //     console.log();
+  //   });
+
+  //   channel.on();
   // }, []);
 
   const playGame = () => {

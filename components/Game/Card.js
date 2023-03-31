@@ -4,11 +4,34 @@ import { useState, useRef, forwardRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { useEffect } from "react";
 import Router from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { gameActions } from "@/store/slices/gameSlice";
 
 const Card = (props, refs) => {
+  const dispatch = useDispatch();
   const channels = Router.query.id;
   const audioRef = useRef(null);
   const [tapCard, setTapCard] = useState(true);
+
+  const health = useSelector((state) => {
+    return state.game.player1HP;
+  });
+
+  const cardInPlay = useSelector((state) => {
+    return state.game.cardInPlay;
+  });
+
+  const counter = useSelector((state) => {
+    return state.game.counter;
+  });
+
+  // const counterCheck = () => {
+  //   console.log(counter);
+  //   if (counter > 11) {
+  //     console.log("This game is ova");
+  //   }
+  // };
+
   // const [channels, setChannels] = useState();
   // setTapCard(false);
 
@@ -17,6 +40,20 @@ const Card = (props, refs) => {
   //   // console.log("this is new channel", newChannel);
   //   setChannels(newChannel.id);
   // };
+  useEffect(() => {
+    const counterCheck = () => {
+      // console.log(counter);
+      if (counter > 11) {
+        console.log("This game is ova");
+      }
+    };
+
+    const interval = setInterval(() => {
+      counterCheck();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [counter]);
 
   useEffect(() => {
     // getChannel();
@@ -24,24 +61,30 @@ const Card = (props, refs) => {
   }, []);
 
   const cardHandler = () => {
-    console.log(props.index);
-    props.setMyCard(props.card, props.index);
-    setTapCard(!tapCard);
-    // audioRef.current.play();
-    supabase
-      .channel(channels)
-      .subscribe()
-      .send({
-        type: "broadcast",
-        event: "cardmove",
-        payload: {
-          data: {
-            index: props.index,
-            cardInfo: props.card,
+    console.log(cardInPlay);
+    if (!cardInPlay) {
+      props.setMyCard(props.card, props.index);
+      setTapCard(!tapCard);
+      // audioRef.current.play();
+      supabase
+        .channel(channels)
+        .subscribe()
+        .send({
+          type: "broadcast",
+          event: "cardmove",
+          payload: {
+            data: {
+              index: props.index,
+              cardInfo: props.card,
+            },
           },
-        },
-      });
+        });
+
+      dispatch(gameActions.increaseCounter());
+      // counterCheck();
+    }
   };
+
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0, x: props.x }}
