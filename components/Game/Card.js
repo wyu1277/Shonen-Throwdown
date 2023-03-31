@@ -45,6 +45,7 @@ const Card = (props, refs) => {
       // console.log(counter);
       if (counter > 11) {
         console.log("This game is ova");
+        dispatch(gameActions.ended(true));
       }
     };
 
