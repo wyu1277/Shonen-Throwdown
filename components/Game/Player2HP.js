@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import Router from "next/router";
 import { useEffect } from "react";
 const Player2HP = (props) => {
+  console.log(props, "PLAYER2 PROPS");
   // const router = useRouter();
   const health = useSelector((state) => {
     return state.game.player2HP;
@@ -22,7 +23,7 @@ const Player2HP = (props) => {
       animate={{ scale: 1, opacity: 1 }}
       className="player2-hp"
     >
-      {props?.player2?.username} HP: {health}
+      {props?.opp} HP: {health}
     </motion.div>
   );
 };
