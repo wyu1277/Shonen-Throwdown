@@ -60,9 +60,9 @@ const GameComponent = (props) => {
         myCardRefs.current[myCardPos - 1].remove();
         cardRefs.current[oppCardPos - 1].remove();
         myCard = null;
-        // oppCard = null;
+        oppCard = null;
         myCardPos = null;
-        // oppCardPos = null;
+        oppCardPos = null;
         dispatch(gameActions.setCardToPlay(false));
       }
     }, 3000);
