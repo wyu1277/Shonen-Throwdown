@@ -49,72 +49,39 @@ const Loading = () => {
   const channel = supabase.channel(Router.query.id, {
     config: { presence: { key: player.username } },
   });
+  console.log("pls be a string", Router.query.id);
 
   useEffect(() => {
-    const state = channel.presenceState();
     channel
+      .subscribe(async (status) => {
+        if (status === "SUBSCRIBED") {
+          console.log(status, "CHANNEL STATUS ");
+          const trackStatus = await channel.track({ key: user.username });
+          console.log(trackStatus, "TRACK STATUS");
+        }
+      })
+      .on(
+        "broadcast",
+        { event: "getUserDeck/" + Router.query.id },
+        (payload) => {
+          console.log(payload, "LOADING PAYLOAD BROADCAST");
+          dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+          dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+        }
+      )
       .on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState();
         setPresence(state);
-        channel.send({
-          type: "broadcast",
-          event: "getUserDeck/" + Router.query.id,
-          payload: { data: { player, userDeck } },
-        });
+        console.log("presence state", state);
       })
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
-        channel
-          .on(
-            "presence",
-            { event: "getUserDeck/" + Router.query.id },
-            (payload) => {
-              console.log(payload, "LOADING PAYLOAD BROADCAST");
-              dispatch(
-                gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
-              );
-              dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-            }
-          )
-          .on(
-            "broadcast",
-            { event: "getUserDeck/" + Router.query.id },
-            (payload) => {
-              console.log(payload, "LOADING PAYLOAD BROADCAST");
-              dispatch(
-                gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
-              );
-              dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-            }
-          );
-      })
-      .subscribe(async (status) => {
-        if (trackingStatus === "closed") {
-          const untrackStatus = await channel.untrack();
-          // console.log(trackStatus, "TRACKSTATUS LINE 57");
-          console.log(untrackStatus, "STATUS/HAS LEFT");
-        }
-
-        if (status === "SUBSCRIBED") {
-          const trackStatus = await channel.track();
-          console.log(trackStatus, "TRACKSTATUS");
-          // await channel.untrack();
-        }
       });
     setTimeout(() => {
       setLocalLoading(false);
     }, 2000);
   }, []);
-
-  // useEffect(() => {
-  //   channel.on("presence", { event: "sync" }, () => {
-  //     channel.send({
-  //       type: "broadcast",
-  //       event: "getUserDeck/" + Router.query.id,
-  //       payload: { data: { player, userDeck } },
-  //     });
-  //   });
-  // }, [presence]);
 
   const playGame = () => {
     console.log(player, "PLAYER");
