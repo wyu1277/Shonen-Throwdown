@@ -15,9 +15,10 @@ const Loading = () => {
   const [time, setTime] = useState(false);
   const [localLoading, setLocalLoading] = useState(true);
   const [presences, setPresences] = useState([]);
-
+  const [player3, setPlayer3] = useState([null]);
+  const [player4, setPlayer4] = useState([null]);
   // const router = useRouter();
-  const [oppDeck, setOppDeck] = useState();
+
   const user = useUser();
   const dispatch = useDispatch();
 

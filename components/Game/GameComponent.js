@@ -248,19 +248,33 @@ const GameComponent = (props) => {
   };
 
   const leaveHandler = async () => {
-    supabase.removeAllChannels();
-    console.log("removed all channels");
-    Router.push("http://localhost:3000/lobby/");
-    supabase.subscribe(async (status) => {
-      if (trackStatus === "ok") {
-        const untrackStatus = await channel.untrack();
-        console.log(trackStatus, "TRACKSTATUS LINE 57");
-        console.log(untrackStatus, "STATUS/HAS LEFT");
+    const DeleteCurrentGame = async () => {
+      let { data } = await supabase
+        .from("game")
+        .select("*")
+        .eq("id", channels)
+        .single();
+      // console.log(
+      //   "🚀 ~ file: GameComponent.js:257 ~ DeleteCurrentGame ~ channel.id:",
+      //   channels
+      // );
+      // console.log("CURRENT GAME", data);
+      let currentGame = data;
+      if (currentGame.isDraw === false && !currentGame.winner) {
+        supabase.removeAllChannels();
+        console.log("removed all channels");
+        Router.push("http://localhost:3000/lobby/");
+        // supabase.subscribe(async (status) => {
+        //   if (trackStatus === "ok") {
+        //     const untrackStatus = await channel.untrack();
+        //     console.log(trackStatus, "TRACKSTATUS LINE 57");
+        //     console.log(untrackStatus, "STATUS/HAS LEFT");
+        //   }
+        // });
+        await supabase.from("game").delete().eq("id", channels);
       }
-    });
-    console.log(myCardRefs.current[1].innerHTML);
-    // console.log(myRef.current);
-    // console.log(myCard);
+    };
+    DeleteCurrentGame();
   };
 
   return (
