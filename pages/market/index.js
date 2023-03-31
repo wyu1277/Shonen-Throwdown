@@ -27,9 +27,10 @@ const Market = () => {
 
   console.log("this is my collection:", collection);
 
-  const [noMoney, setNoMoney] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [newCards, SetNewCards] = useState([]);
+	const [noMoney, setNoMoney] = useState(false);
+	const [showModal, setShowModal] = useState(false);
+	const [newCards, SetNewCards] = useState([]);
+    const [currentBanner, setCurrentBanner] = useState(1);
 
   useEffect(() => {
     dispatch(fetchAllCards());
@@ -147,24 +148,58 @@ const Market = () => {
 		}
 	};
 
+    const handleBannerClick = (bannerNumber) => {
+        setCurrentBanner(bannerNumber);
+      };
+
 	return (
 		<div className={styles.pageParent}>
 			<div className={styles.storeParent}>
 				<h1>Currency: {userData ? `${userData.wallet} tokens` : 'loading'}</h1>
 				<Store />
 			</div>
-			<h1>One Piece Booster Pack</h1>
-			<button onClick={() => getRandomCard(cardsBySeries['One Piece'])}>Pull One 10 tokens</button>
-			<button onClick={() => getThreeCards(cardsBySeries['One Piece'])}>Pull Three 25 tokens</button>
-			<h1>Naruto Booster Pack</h1>
-			<button onClick={() => getRandomCard(cardsBySeries['Naruto'])}>Pull One 10 tokens</button>
-			<button onClick={() => getThreeCards(cardsBySeries['Naruto'])}>Pull Three 25 tokens</button>
-			<h1>Bleach Booster Pack</h1>
-			<button onClick={() => getRandomCard(cardsBySeries['Bleach'])}>Pull One 10 tokens</button>
-			<button onClick={() => getThreeCards(cardsBySeries['Bleach'])}>Pull Three 25 tokens</button>
-			<h1>Dragon Ball Z Pack</h1>
-			<button onClick={() => getRandomCard(cardsBySeries['DBZ'])}>Pull One 10 tokens</button>
-			<button onClick={() => getThreeCards(cardsBySeries['DBZ'])}>Pull Three 25 tokens</button>
+            <nav className={styles.nav}>
+                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(1)}>One Piece</h1>
+                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(2)}>Naruto</h1>
+                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(3)}>Bleach</h1>
+                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(4)}>DBZ</h1>
+            </nav>
+           { currentBanner === 1 && (
+            <div className={styles.banner}>
+                <img className={styles.img} src="https://i.imgur.com/zKeGQID.png"/>
+                <div>
+                    <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['One Piece'])}>Pull One 10 tokens</button>
+                    <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['One Piece'])}>Pull Three 25 tokens</button>
+                </div>
+            </div> )
+            }
+           { currentBanner === 2 && (
+            <div className={styles.banner}>
+                <img className={styles.img} src="https://i.imgur.com/HhwbDvp.png"/>
+                <div>
+                <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['Naruto'])}>Pull One 10 tokens</button>
+                    <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['Naruto'])}>Pull Three 25 tokens</button>
+                </div>
+            </div> )
+            }
+           { currentBanner === 3 && (
+            <div className={styles.banner}>
+                <img className={styles.img} src="https://i.imgur.com/Gnfe44n.png"/>
+                <div>
+                <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['Bleach'])}>Pull One 10 tokens</button>
+			        <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['Bleach'])}>Pull Three 25 tokens</button>
+                </div>
+            </div> )
+            }
+           { currentBanner === 4 && (
+            <div className={styles.banner}>
+                <img className={styles.img} src="https://i.imgur.com/eiqVfQA.png"/>
+                <div>
+                <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['DBZ'])}>Pull One 10 tokens</button>
+			        <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['DBZ'])}>Pull Three 25 tokens</button>
+                </div>
+            </div> )
+            }
 			{noMoney ? <p className={styles.error}>Not enough Currency!</p> : null}
 			<div className={styles.modalParent}>
 				{showModal && <MarketModal cardArr={newCards} showModal={showModal} setShowModal={setShowModal} />}
