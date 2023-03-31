@@ -93,7 +93,8 @@ const Loading = () => {
         let newPresence = newPresences[0];
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
         channel.on("presence", { event: "sync" }, () => {
-          channel.send({
+          console.log("PRESNECE SYNC WHATEVE THE FUCK 1");
+          channel.subscribe().send({
             type: "broadcast",
             event: "getUserDeck/" + Router.query.id,
             payload: { data: { player, userDeck } },
