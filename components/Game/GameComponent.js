@@ -55,17 +55,15 @@ const GameComponent = (props) => {
   });
 
   const resetCard = () => {
-    setTimeout(() => {
-      if (myCardPos && oppCardPos) {
-        myCardRefs.current[myCardPos - 1].remove();
-        cardRefs.current[oppCardPos - 1].remove();
-        myCard = null;
-        oppCard = null;
-        myCardPos = null;
-        oppCardPos = null;
-        dispatch(gameActions.setCardToPlay(false));
-      }
-    }, 3000);
+    if (myCardPos !== null && oppCardPos !== null) {
+      myCardRefs.current[myCardPos - 1].remove();
+      cardRefs.current[oppCardPos].remove();
+      myCard = null;
+      oppCard = null;
+      myCardPos = null;
+      oppCardPos = null;
+      dispatch(gameActions.setCardToPlay(false));
+    }
   };
 
   const checkCards = (player1Card, player2Card) => {
