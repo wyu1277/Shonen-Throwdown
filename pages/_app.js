@@ -12,17 +12,18 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "@/store";
 import { AnimatePresence } from "framer-motion";
 import { setUseProxies } from "immer";
+import Router from "next/router";
 
 export default function App({ Component, pageProps, router }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
-
+  const showHeader = router.pathname === "/game/[id]" ? false : true;
   return (
     <Provider store={store}>
       <SessionContextProvider
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
-        <Navbar />
+        {showHeader && <Navbar />}
         <AnimatePresence node="wait">
           <Component key={router.route} {...pageProps} />
         </AnimatePresence>
