@@ -49,7 +49,6 @@ const Loading = () => {
   const channel = supabase.channel(Router.query.id, {
     config: { presence: { key: player.username } },
   });
-  console.log("pls be a string", Router.query.id);
 
   useEffect(() => {
     channel
@@ -58,17 +57,14 @@ const Loading = () => {
           console.log(status, "CHANNEL STATUS ");
           const trackStatus = await channel.track({ key: user.username });
           console.log(trackStatus, "TRACK STATUS");
+          console.log("sending data1");
+          channel.send({
+            type: "broadcast",
+            event: Router.query.id,
+            payload: { data: { player, userDeck } },
+          });
         }
       })
-      .on(
-        "broadcast",
-        { event: "getUserDeck/" + Router.query.id },
-        (payload) => {
-          console.log(payload, "LOADING PAYLOAD BROADCAST");
-          dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
-          dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-        }
-      )
       .on("presence", { event: "sync" }, () => {
         const state = channel.presenceState();
         setPresence(state);
@@ -77,10 +73,28 @@ const Loading = () => {
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
+        channel.send({
+          type: "broadcast",
+          event: Router.query.id,
+          payload: { data: { player, userDeck } },
+        });
       });
     setTimeout(() => {
       setLocalLoading(false);
     }, 2000);
+
+    return () => {
+      supabase.removeAllChannels();
+    };
+  }, []);
+
+  useEffect(() => {
+    channel.on("broadcast", { event: Router.query.id }, (payload) => {
+      console.log("set player 2");
+      console.log(payload, "LOADING PAYLOAD BROADCAST");
+      dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+      dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+    });
   }, []);
 
   const playGame = () => {
