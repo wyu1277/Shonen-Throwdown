@@ -5,9 +5,9 @@ const initialState = {};
 
 export const searchUser = createAsyncThunk("search4user", async (hope) => {
   try {
-    console.log(hope, "hope");
+    // console.log(hope, "hope");
     const user = await supabase.from("users").select().eq("id", hope).single();
-    console.log(user.data);
+    // console.log(user.data);
     return user.data;
   } catch (error) {
     console.log(error, "Error Search");
@@ -26,21 +26,24 @@ export const updateUser = createAsyncThunk("updateUser", async (hope) => {
   }
 });
 
-export const updateWallet = createAsyncThunk('updateWallet', async({updatedWallet, userId})=>{
-  try{
-    console.log(updatedWallet)
-    console.log(userId)
-    const {data} = await supabase
-    .from("users")
-    .update({wallet: updatedWallet})
-    .eq('id', userId)
-    .select()
-    .single();
-    return data
-  } catch(err){
-    console.log(err)
+export const updateWallet = createAsyncThunk(
+  "updateWallet",
+  async ({ updatedWallet, userId }) => {
+    try {
+      console.log(updatedWallet);
+      console.log(userId);
+      const { data } = await supabase
+        .from("users")
+        .update({ wallet: updatedWallet })
+        .eq("id", userId)
+        .select()
+        .single();
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
   }
-})
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -65,9 +68,9 @@ const userSlice = createSlice({
         console.log(" Update User fulfilled");
         state.loading = false;
       })
-      .addCase(updateWallet.fulfilled, (state,action)=>{
-        state.user = action.payload
-        return state
+      .addCase(updateWallet.fulfilled, (state, action) => {
+        state.user = action.payload;
+        return state;
       });
   },
 });

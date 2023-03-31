@@ -57,15 +57,8 @@ const GameComponent = (props) => {
       // oppCard = null;
       myCardPos = null;
       // oppCardPos = null;
+      dispatch(gameActions.setCardToPlay(false));
     }, 3000);
-
-    setTimeout(() => {
-      if (myCard) {
-        myRef.current.className = "notouch-div";
-      } else {
-        myRef.current.className = "notouch-div";
-      }
-    }, 1000);
   };
 
   const checkCards = (player1Card, player2Card) => {
@@ -142,18 +135,20 @@ const GameComponent = (props) => {
     setInterval(() => {
       checkCards(myCard, oppCard);
     }, 1000);
+
+    setInterval(() => {
+      if (myCard) {
+        dispatch(gameActions.setCardToPlay(true));
+      }
+    }, 1000);
   }, []);
 
   //establishes presence
-  const channel = supabase.channel(channels, {
-    config: { presence: { key: user.username } },
-  });
+  const channel = supabase.channel(channels);
 
   useEffect(() => {
     // getChannel();
-    const channel = supabase.channel(channels, {
-      config: { presence: { key: user.username } },
-    });
+    // const channel = supabase.channel(channels);
 
     channel
       .subscribe(async (status) => {
@@ -163,10 +158,10 @@ const GameComponent = (props) => {
           console.log(trackStatus, "TRACK STATUS");
         }
       })
-      .on("presence", { event: "sync" }, () => {
+      .on("presence", { event: "sync" }, async () => {
         const state = channel.presenceState();
         // console.log(state, "SYNC STATE");
-        channel.send({
+        await channel.send({
           type: "broadcast",
           event: "getUserDeck/" + channels,
           payload: { data: { user: props.user, userDeck: props.userDeck } },
@@ -175,19 +170,19 @@ const GameComponent = (props) => {
       .on("presence", { event: "join" }, (object) => {
         setPresences((presences) => [...presences, object]);
       })
-      .on("presence", { event: "leave" }, (object1234) => {
-        channel.unsubscribe();
+      .on("presence", { event: "leave" }, async (object1234) => {
+        await channel.unsubscribe();
       })
-      .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+      .on("broadcast", { event: "getUserDeck/" + channel }, async (payload) => {
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
         setOpponentInfo((opponentInfo) => payload.payload.data?.user);
         setLoading(false);
       })
-      .on("broadcast", { event: "cardmove" }, (payload) => {
+      .on("broadcast", { event: "cardmove" }, async (payload) => {
         // console.log(cardRefs?.current);
         console.log(payload.payload, "CARD MOVE PAYLOAD");
-        cardRefs?.current[payload.payload.data.index - 1]?.click();
+        await cardRefs?.current[payload.payload.data.index - 1]?.click();
         oppCard = payload.payload.data.cardInfo;
         // checks();
       })
@@ -270,32 +265,23 @@ const GameComponent = (props) => {
       <audio src="/audio/music.mp3" ref={audioRef} />
 
       <GameContainer>
-        <div
-          className={myCard ? "notouch-div" : "touch-div"}
-          onClick={(event) => {
-            event.preventDefault();
-            taps += 1;
-            // console.log(taps);
-          }}
-        >
-          {props.userDeck &&
-            props.userDeck.map((card, i) => {
-              return (
-                <Card
-                  user={user}
-                  setShowSet={setShowSet}
-                  // checks={checks}
-                  key={uuidv4()}
-                  setMyCard={setMyCard}
-                  index={i + 1}
-                  zIndex={taps}
-                  card={card}
-                  x={i * 150}
-                  ref={(el) => (myCardRefs.current[i] = el)}
-                />
-              );
-            })}
-        </div>
+        {props.userDeck &&
+          props.userDeck.map((card, i) => {
+            return (
+              <Card
+                user={user}
+                setShowSet={setShowSet}
+                // checks={checks}
+                key={uuidv4()}
+                setMyCard={setMyCard}
+                index={i + 1}
+                zIndex={taps}
+                card={card}
+                x={i * 150}
+                ref={(el) => (myCardRefs.current[i] = el)}
+              />
+            );
+          })}
         {/* <div className="no-touchy"> */}
         {opponentDeck &&
           opponentDeck.length > 0 &&

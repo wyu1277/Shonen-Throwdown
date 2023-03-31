@@ -9,6 +9,8 @@ const initialState = {
   player2Deck: [],
   winnder: null,
   loser: null,
+  cardInPlay: false,
+  counter: 0,
 };
 
 const gameSlice = createSlice({
@@ -32,6 +34,12 @@ const gameSlice = createSlice({
     },
     decreasePlayer2HP(state, action) {
       state.player2HP -= action.payload;
+    },
+    setCardToPlay(state, action) {
+      state.cardInPlay = action.payload;
+    },
+    increaseCounter(state, action) {
+      state.counter++;
     },
   },
   extraReducers: {},
