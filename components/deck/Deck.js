@@ -37,7 +37,7 @@ const Deck = () => {
 
 	return (
 		<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={styles.pageParent}>
-			<h1 className={styles.h1} onClick={handleDeckClick}>
+			<h1 style={{ cursor: 'pointer' }} className={styles.h1} onClick={handleDeckClick}>
 				{isVisible ? 'Close Deck View' : 'View Your Deck'}
 			</h1>
 			{isVisible && (
