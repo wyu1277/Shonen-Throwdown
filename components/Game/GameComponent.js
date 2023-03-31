@@ -55,6 +55,10 @@ const GameComponent = (props) => {
     return state.game.player2Deck;
   });
 
+  const ended = useSelector((state) => {
+    return state.game.ended;
+  });
+
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
       console.log(myCardRefs.current[myCardPos - 1]);
@@ -153,9 +157,7 @@ const GameComponent = (props) => {
         console.log(damage, "PLAYER2 DAMAGE");
 
         dispatch(gameActions.decreasePlayer2HP(damage));
-        setTimeout(() => {
-          resetCard();
-        }, 1000);
+        resetCard();
       } else if (damagedPlayer === "none") {
         console.log(damage, "NO PLAYER DAMAAGE");
         resetCard();
@@ -312,10 +314,7 @@ const GameComponent = (props) => {
   };
 
   const test = () => {
-    console.log(channels);
-    console.log(Router.query.id);
-    console.log(opponentDeck);
-    console.log(opponentInfo);
+    console.log(ended);
   };
 
   return (

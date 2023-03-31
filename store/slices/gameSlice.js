@@ -11,6 +11,7 @@ const initialState = {
   loser: null,
   cardInPlay: false,
   counter: 0,
+  ended: false,
 };
 
 const gameSlice = createSlice({
@@ -40,6 +41,9 @@ const gameSlice = createSlice({
     },
     increaseCounter(state, action) {
       state.counter++;
+    },
+    endGame(state, action) {
+      state.ended = action.payload;
     },
   },
   extraReducers: {},
