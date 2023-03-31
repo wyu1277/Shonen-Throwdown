@@ -50,6 +50,13 @@ const Loading = () => {
 		config: { presence: { key: player.username } }
 	});
 
+	const player1id = async () => {
+		let { data } = await supabase.from('game').select('player1').eq('id', Router.query.id);
+		console.log('player1id', data);
+		return data;
+	};
+	player1id();
+
 	useEffect(() => {
 		channel;
 		// .subscribe(async (status) => {
@@ -90,7 +97,7 @@ const Loading = () => {
 		// )
 		channel
 			.on('presence', { event: 'join' }, ({ key, newPresences }) => {
-				if (player) {
+				if (player1id && player1id !== user.id) {
 					const setPlayer2 = async () => {
 						await supabase.from('game').update({ player2: user.id }).eq('id', Router.query.id);
 					};
