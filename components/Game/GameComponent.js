@@ -11,11 +11,7 @@ import { useRef } from "react";
 import { gameActions } from "@/store/slices/gameSlice";
 import Router from "next/router";
 
-let oppCard = {
-  image: "https://i.imgur.com/RCATsQ2.png",
-  power: 1,
-  element: "Green",
-};
+let oppCard = null;
 let myCard = null;
 let myCardPos = null;
 let oppCardPos = 1;
@@ -47,6 +43,14 @@ const GameComponent = (props) => {
 
   const userDeck = useSelector((state) => {
     return state.deck;
+  });
+
+  const player2 = useSelector((state) => {
+    return state.game.player2;
+  });
+
+  const player2Deck = useSelector((state) => {
+    return state.game.player2Deck;
   });
 
   const resetCard = () => {
@@ -228,13 +232,13 @@ const GameComponent = (props) => {
       .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
         console.log(payload, "Broadcast GETUSERDECK TO SAVE IN GAME COMPONENT");
         setLoading(true);
-        setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-        setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+        // setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+        // setOpponentInfo((opponentInfo) => payload.payload.data?.user);
         setLoading(false);
       })
       .on("broadcast", { event: "cardmove" }, (payload) => {
-        // console.log(cardRefs?.current);
-        // console.log(payload.payload);
+        console.log(cardRefs?.current);
+        console.log(payload.payload);
         cardRefs?.current[payload.payload.data.index - 1]?.click();
         oppCard = payload.payload.data.cardInfo;
         // checks();
@@ -301,9 +305,9 @@ const GameComponent = (props) => {
             );
           })}
         {/* <div className="no-touchy"> */}
-        {opponentDeck &&
-          opponentDeck.length > 0 &&
-          opponentDeck.map((card, i) => {
+        {player2Deck &&
+          player2Deck.length > 0 &&
+          player2Deck.map((card, i) => {
             return (
               <OpponentCard
                 key={uuidv4()}
