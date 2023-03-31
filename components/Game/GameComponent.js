@@ -147,76 +147,68 @@ const GameComponent = (props) => {
   const channel = supabase.channel(channels);
 
   useEffect(() => {
-    // getChannel();
-    // const channel = supabase.channel(channels, {
-    //   config: { presence: { key: user.username } },
-    // });
+    channel.on("presence", { event: "sync" }, () => {
+      console.log("ACTIVE USERS", channel.presenceState());
+    });
 
-    channel
-      .subscribe(async (status) => {
-        if (status === "SUBSCRIBED") {
-          console.log(status, "CHANNEL STATUS ");
-          const trackStatus = await channel.track({ key: user.username });
-          console.log(trackStatus, "TRACK STATUS");
-        }
-      })
-      .on("presence", { event: "sync" }, async () => {
-        const state = channel.presenceState();
-        // console.log(state, "SYNC STATE");
-        await channel.send({
-          type: "broadcast",
-          event: "getUserDeck/" + channels,
-          payload: { data: { user: props.user, userDeck: props.userDeck } },
-        });
-      })
-      .on("presence", { event: "join" }, (object) => {
-        setPresences((presences) => [...presences, object]);
-      })
-      .on("presence", { event: "leave" }, async (object1234) => {
-        await channel.unsubscribe();
-      })
-      .on("broadcast", { event: "getUserDeck/" + channel }, async (payload) => {
-        setLoading(true);
-        setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-        setOpponentInfo((opponentInfo) => payload.payload.data?.user);
-        setLoading(false);
-      })
-      .on("broadcast", { event: "cardmove" }, async (payload) => {
-        // console.log(cardRefs?.current);
-        console.log(payload.payload, "CARD MOVE PAYLOAD");
-        await cardRefs?.current[payload.payload.data.index - 1]?.click();
-        oppCard = payload.payload.data.cardInfo;
-        // checks();
-      })
-      .on("broadcast", { event: "cardmove" }, () => {
-        // checks();
-      });
-    // .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
-    //   setLoading(true);
-    //   setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-    //   setOpponentInfo((opponentInfo) => payload.payload.data?.user);
-    //   setLoading(false);
-    // })
-    // .on("broadcast", { event: "cardmove" }, (payload) => {
-    //   // console.log(cardRefs?.current);
-    //   console.log(payload.payload, "CARD MOVE PAYLOAD");
-    //   cardRefs?.current[payload.payload.data.index - 1]?.click();
-    //   oppCard = payload.payload.data.cardInfo;
-    //   // checks();
-    // })
-    // .on("broadcast", { event: "cardmove" }, () => {
-    //   // checks();
-    // });
+    // channel
+    //   .on("presence", { event: "getUserDeck/" + channel }, (status) => {
+    //   })
+    //   .subscribe();
+  });
 
-    // supabase.removeAllChannels();
-    // console.log(supabase, "SUPABASE STATUS");
-    // .on("presence", { event: "join" }, (object) => {
-    //   setPresences((presences) => [...presences, object]);
-    // });
-    // .on("presence", { event: "leave" }, (object) => {
-    //   channel.unsubscribe();
-    // });
-  }, []);
+  // useEffect(() => {
+  //   // getChannel();
+  //   // const channel = supabase.channel(channels, {
+  //   //   config: { presence: { key: user.username } },
+  //   // });
+
+  //   channel
+  //     // .on("presence", { event: "sync" }, async () => {
+  //     //   const state = channel.presenceState();
+  //     //   console.log(state, "SYNC STATE");
+  //     //   channel.send({
+  //     //     type: "broadcast",
+  //     //     event: "getUserDeck/" + channels,
+  //     //     payload: { data: { user: props.user, userDeck: props.userDeck } },
+  //     //   });
+  //     // })
+  //     .on("presence", { event: "join" }, (object) => {
+  //       setPresences((presences) => [...presences, object]);
+  //     })
+  //     .on("presence", { event: "leave" }, async (object1234) => {
+  //       await channel.unsubscribe();
+  //     })
+  //     .on("broadcast", { event: "getUserDeck/" + channel }, async (payload) => {
+  //       setLoading(true);
+  //       setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+  //       setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+  //       setLoading(false);
+  //     })
+  //     .on("broadcast", { event: "cardmove" }, (payload) => {
+  //       console.log(cardRefs?.current, "CARDMOVE BROADCAST");
+  //       console.log(payload.payload, "CARD MOVE PAYLOAD");
+  // cardRefs?.current[payload.payload.data.index - 1]?.click();
+  //       oppCard = payload.payload.data.cardInfo;
+  //       // checks();
+  //     })
+  //     .on("broadcast", { event: "cardmove" }, () => {});
+  //   // checks();
+  //   // }).subscribe(async (status) => {
+  //   //   if (status === "SUBSCRIBED") {
+  //   //     console.log(status, "CHANNEL STATUS ");
+  //   //     const trackStatus = await channel.track({ key: user.username });
+  //   //     console.log(trackStatus, "TRACK STATUS");
+  //   //   }
+  //   // })
+  //   // .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+  //   //   setLoading(true);
+  //   //   setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+  //   //   setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+  //   //   setLoading(false);
+  //   // })
+  //   //
+  // }, []);
 
   // useEffect(() => {
   //   // const channel = supabase.channel(Router.query.id);
@@ -234,6 +226,7 @@ const GameComponent = (props) => {
 
     channel
       .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+        console.log(payload, "Broadcast GETUSERDECK TO SAVE IN GAME COMPONENT");
         setLoading(true);
         setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
         setOpponentInfo((opponentInfo) => payload.payload.data?.user);
@@ -276,10 +269,17 @@ const GameComponent = (props) => {
     // console.log(myCard);
   };
 
+  const test = () => {
+    console.log(channels);
+    console.log(Router.query.id);
+    console.log(opponentDeck);
+    console.log(opponentInfo);
+  };
+
   return (
     //window container
     <>
-      <button onClick={() => console.log(presences)}>Music</button>
+      <button onClick={test}>Music</button>
       <audio src="/audio/music.mp3" ref={audioRef} />
       <button onClick={leaveHandler}>Leave Room</button>
       <GameContainer>
