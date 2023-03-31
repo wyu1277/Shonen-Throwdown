@@ -50,7 +50,7 @@ const Card = (props, refs) => {
 
     const interval = setInterval(() => {
       counterCheck();
-    }, 100);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [counter]);

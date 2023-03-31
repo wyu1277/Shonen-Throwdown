@@ -56,12 +56,15 @@ const GameComponent = (props) => {
 
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
-      myCardRefs.current[myCardPos - 1].remove();
-      cardRefs.current[oppCardPos].remove();
-      myCard = null;
-      oppCard = null;
-      myCardPos = null;
-      oppCardPos = null;
+      setTimeout(() => {
+        myCardRefs.current[myCardPos - 1].remove();
+        cardRefs.current[oppCardPos].remove();
+        myCardPos = null;
+        oppCardPos = null;
+        myCard = null;
+        oppCard = null;
+      }, 2000);
+
       dispatch(gameActions.setCardToPlay(false));
     }
   };
@@ -142,7 +145,9 @@ const GameComponent = (props) => {
         console.log(damage, "PLAYER2 DAMAGE");
 
         dispatch(gameActions.decreasePlayer2HP(damage));
-        resetCard();
+        setTimeout(() => {
+          resetCard();
+        }, 1000);
       } else if (damagedPlayer === "none") {
         console.log(damage, "NO PLAYER DAMAAGE");
         resetCard();
