@@ -148,7 +148,9 @@ const GameComponent = (props) => {
 
   useEffect(() => {
     // getChannel();
-    // const channel = supabase.channel(channels);
+    // const channel = supabase.channel(channels, {
+    //   config: { presence: { key: user.username } },
+    // });
 
     channel
       .subscribe(async (status) => {
@@ -189,6 +191,22 @@ const GameComponent = (props) => {
       .on("broadcast", { event: "cardmove" }, () => {
         // checks();
       });
+    // .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+    //   setLoading(true);
+    //   setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+    //   setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+    //   setLoading(false);
+    // })
+    // .on("broadcast", { event: "cardmove" }, (payload) => {
+    //   // console.log(cardRefs?.current);
+    //   console.log(payload.payload, "CARD MOVE PAYLOAD");
+    //   cardRefs?.current[payload.payload.data.index - 1]?.click();
+    //   oppCard = payload.payload.data.cardInfo;
+    //   // checks();
+    // })
+    // .on("broadcast", { event: "cardmove" }, () => {
+    //   // checks();
+    // });
 
     // supabase.removeAllChannels();
     // console.log(supabase, "SUPABASE STATUS");
@@ -211,27 +229,27 @@ const GameComponent = (props) => {
   //     // });
   // }, [presences]);
 
-  // useEffect(() => {
-  //   // audioRef.current.play();
+  useEffect(() => {
+    // audioRef.current.play();
 
-  //   supabase
-  //     .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
-  //       setLoading(true);
-  //       setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-  //       setOpponentInfo((opponentInfo) => payload.payload.data?.user);
-  //       setLoading(false);
-  //     })
-  //     .on("broadcast", { event: "cardmove" }, (payload) => {
-  //       // console.log(cardRefs?.current);
-  //       // console.log(payload.payload);
-  //       cardRefs?.current[payload.payload.data.index - 1]?.click();
-  //       oppCard = payload.payload.data.cardInfo;
-  //       // checks();
-  //     })
-  //     .on("broadcast", { event: "cardmove" }, () => {
-  //       // checks();
-  //     });
-  // }, []);
+    channel
+      .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
+        setLoading(true);
+        setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
+        setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+        setLoading(false);
+      })
+      .on("broadcast", { event: "cardmove" }, (payload) => {
+        // console.log(cardRefs?.current);
+        // console.log(payload.payload);
+        cardRefs?.current[payload.payload.data.index - 1]?.click();
+        oppCard = payload.payload.data.cardInfo;
+        // checks();
+      })
+      .on("broadcast", { event: "cardmove" }, () => {
+        // checks();
+      });
+  }, []);
 
   const setMyCard = (card, index) => {
     myCard = card;
@@ -243,19 +261,19 @@ const GameComponent = (props) => {
   };
 
   const leaveHandler = async () => {
-    // supabase.removeAllChannels();
-    // console.log("removed all channels");
-    // Router.push("http://localhost:3000/lobby/");
-    // supabase.subscribe(async (status) => {
-    //   if (trackStatus === "ok") {
-    //     const untrackStatus = await channel.untrack();
-    //     console.log(trackStatus, "TRACKSTATUS LINE 57");
-    //     console.log(untrackStatus, "STATUS/HAS LEFT");
-    //   }
-    // });
-    // console.log(myCardRefs.current[1].innerHTML);
-    console.log(myRef.current);
-    console.log(myCard);
+    supabase.removeAllChannels();
+    console.log("removed all channels");
+    Router.push("http://localhost:3000/lobby/");
+    supabase.subscribe(async (status) => {
+      if (trackStatus === "ok") {
+        const untrackStatus = await channel.untrack();
+        console.log(trackStatus, "TRACKSTATUS LINE 57");
+        console.log(untrackStatus, "STATUS/HAS LEFT");
+      }
+    });
+    console.log(myCardRefs.current[1].innerHTML);
+    // console.log(myRef.current);
+    // console.log(myCard);
   };
 
   return (
@@ -263,7 +281,7 @@ const GameComponent = (props) => {
     <>
       <button onClick={() => console.log(presences)}>Music</button>
       <audio src="/audio/music.mp3" ref={audioRef} />
-
+      <button onClick={leaveHandler}>Leave Room</button>
       <GameContainer>
         {props.userDeck &&
           props.userDeck.map((card, i) => {
@@ -299,7 +317,7 @@ const GameComponent = (props) => {
             );
           })}
         {/* </div> */}
-        <button onClick={leaveHandler}>Leave Room</button>
+
         <Player1HP user={props.user} />
         <Player2HP opp={opponentInfo} />
       </GameContainer>
