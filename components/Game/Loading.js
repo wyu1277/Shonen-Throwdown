@@ -72,13 +72,12 @@ const Loading = () => {
       .on("presence", { event: "sync" }, (object) => {
         const state = channel.presenceState();
         setPresence(state);
-        if (presence) {
-          channel.send({
-            type: "broadcast",
-            event: "getUserDeck/" + Router.query.id,
-            payload: { data: { player, userDeck } },
-          });
-        }
+
+        channel.send({
+          type: "broadcast",
+          event: "getUserDeck/" + Router.query.id,
+          payload: { data: { player, userDeck } },
+        });
       })
       // .on(
       //   "broadcast",
