@@ -30,7 +30,6 @@ const GameComponent = (props) => {
 	const divRef = useRef(null);
 	const [loading, setLoading] = useState(false);
 	const [presences, setPresences] = useState([]);
-	const [endModal, setEndModal] = useState(false);
 
 	// Determine the winning element
 	// const [opponentDeck, setOpponentDeck] = useState([]);
@@ -371,7 +370,7 @@ const GameComponent = (props) => {
 							);
 						})}
 				</div>
-				<Player1HP user={props.user} setEndModal={setEndModal} />
+				<Player1HP user={props.user} />
 				<Player2HP opp={player2.username} />
 			</GameContainer>
 		</>
