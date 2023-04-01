@@ -43,6 +43,7 @@ const gameSlice = createSlice({
 			state.counter++;
 		},
 		endGame(state, action) {
+			console.log('endgame action', state);
 			state.ended = action.payload;
 		},
 		setWinner(state, action) {
@@ -50,6 +51,12 @@ const gameSlice = createSlice({
 		},
 		setLoser(state, action) {
 			state.loser = action.payload;
+		},
+		setPlayer1hp(state, action) {
+			state.player1HP = action.payload;
+		},
+		setPlayer2HP(state, action) {
+			state.player2HP = action.payload;
 		}
 	},
 	extraReducers: {}

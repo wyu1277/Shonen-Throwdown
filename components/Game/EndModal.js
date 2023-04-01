@@ -14,6 +14,8 @@ let EndModal = () => {
 	const handleEndGame = (e) => {
 		e.preventDefault();
 		dispatch(gameActions.endGame(false));
+		dispatch(gameActions.setPlayer1hp(15));
+		dispatch(gameActions.setPlayer2hp(15));
 		Router.push('/lobby');
 	};
 
