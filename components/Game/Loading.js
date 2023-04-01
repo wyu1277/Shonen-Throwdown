@@ -64,7 +64,14 @@ const Loading = () => {
       await channel.track();
     });
 
-    channel.on("presence", { event: "sync" }, (status) => {});
+    channel.on("presence", { event: "sync" }, (status) => {
+      console.log("sync");
+      channel.send({
+        type: "broadcast",
+        event: "getUserInfo/" + Router.query.id,
+        payload: { player, userDeck },
+      });
+    });
 
     channel.on("presence", { event: "join" }, ({ newPresences }) => {
       console.log("joined");

@@ -6,9 +6,18 @@ const OpponentInfo = () => {
   });
 
   return (
-    <div>
-      <h1> Motherfuckin {oppInfo?.username} </h1>
-    </div>
+    <>
+      <div>
+        <h1> Motherfuckin {oppInfo?.username} </h1>
+      </div>
+      <button
+        onClick={() => {
+          console.log(oppInfo);
+        }}
+      >
+        TEST sTATE
+      </button>
+    </>
   );
 };
 
