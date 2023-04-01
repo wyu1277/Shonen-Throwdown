@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRef } from 'react';
 import { gameActions } from '@/store/slices/gameSlice';
 import Router from 'next/router';
-import EndModal from './EndModal';
 
 let oppCard = null;
 let myCard = null;
@@ -30,7 +29,6 @@ const GameComponent = (props) => {
 	const divRef = useRef(null);
 	const [loading, setLoading] = useState(false);
 	const [presences, setPresences] = useState([]);
-	const [endModal, setEndModal] = useState(false);
 
 	// Determine the winning element
 	// const [opponentDeck, setOpponentDeck] = useState([]);
@@ -57,9 +55,9 @@ const GameComponent = (props) => {
 		return state.game.player2Deck;
 	});
 
-	// const ended = useSelector((state) => {
-	//   return state.game.ended;
-	// });
+	const ended = useSelector((state) => {
+		return state.game.ended;
+	});
 
 	const resetCard = () => {
 		if (myCardPos !== null && oppCardPos !== null) {
@@ -371,9 +369,7 @@ const GameComponent = (props) => {
 							);
 						})}
 				</div>
-
-				<EndModal />
-				<Player1HP user={props.user} setEndModal={setEndModal} />
+				<Player1HP user={props.user} />
 				<Player2HP opp={player2.username} />
 			</GameContainer>
 		</>
