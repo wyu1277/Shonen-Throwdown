@@ -32,22 +32,6 @@ const Game = (props) => {
     return state.game.ended;
   });
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const { data } = await supabase
-  //       .from("users")
-  //       .select("*")
-  //       .eq("id", user.id)
-  //       .single();
-  //     setConUser(data);
-  //   };
-  //   fetchUser();
-  // }, []);
-
-  // const channel = Router.query;
-
-  // console.log("this is channel", channel);
-
   return (
     <div>
       <GlobalContext.Provider value={publicUser}>
