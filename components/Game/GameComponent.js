@@ -57,9 +57,9 @@ const GameComponent = (props) => {
 		return state.game.player2Deck;
 	});
 
-	// const ended = useSelector((state) => {
-	//   return state.game.ended;
-	// });
+	const ended = useSelector((state) => {
+		return state.game.ended;
+	});
 
 	const resetCard = () => {
 		if (myCardPos !== null && oppCardPos !== null) {
@@ -371,7 +371,7 @@ const GameComponent = (props) => {
 							);
 						})}
 				</div>
-				{EndModal && <EndModal />}
+				{endModal && <EndModal />}
 				<Player1HP user={props.user} setEndModal={setEndModal} />
 				<Player2HP opp={player2.username} />
 			</GameContainer>
