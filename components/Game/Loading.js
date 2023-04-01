@@ -62,7 +62,6 @@ const Loading = () => {
   player1id();
 
   useEffect(() => {
-    channel;
     // .subscribe(async (status) => {
     //   if (status === "SUBSCRIBED") {channel.on("presence", { event: "sync" }, () => {
     channel.send({
@@ -114,11 +113,21 @@ const Loading = () => {
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
         channel.on("presence", { event: "sync" }, () => {
           console.log("PRESNECE SYNC WHATEVE THE FUCK 1");
-          channel.subscribe().send({
-            type: "broadcast",
-            event: "getUserDeck/" + Router.query.id,
-            payload: { data: { player, userDeck } },
-          });
+          channel
+            .subscribe(async (status) => {
+              if (status === "SUBSCRIBED") {
+                const presenceTrackStatus = await channel.track({
+                  player: player,
+                  userDeck: userDeck,
+                });
+                console.log(presenceTrackStatus);
+              }
+            })
+            .send({
+              type: "broadcast",
+              event: "getUserDeck/" + Router.query.id,
+              payload: { data: { player, userDeck } },
+            });
         });
         channel.on(
           "broadcast",
@@ -153,103 +162,9 @@ const Loading = () => {
       setLocalLoading(false);
     }, 4000);
 
-    // channel
-    //   .subscribe(async (status) => {
-    //     if (status === "SUBSCRIBED") {
-    //       channel
-    //         .on("presence", { event: "sync" }, (object) => {
-    //           const state = channel.presenceState();
-    //           console.log(state, "PRESENCE STATE");
-    //           setPresence(state);
-    //           channel.send({
-    //             type: "broadcast",
-    //             event: "getUserDeck/" + Router.query.id,
-    //             payload: { data: { player, userDeck } },
-    //           });
-    //         })
-    //         .on("presence", { event: "join" }, ({ key, newPresences }) => {
-    //           let newPresence = newPresences[0];
-    //           // setPresences((presences) => [...presences, newPresence]);
-    //           console.log(newPresence, "JOINED");
-    //           console.log(newPresence, "JOINED");
-    //           console.log(key, "JOINED");
-    //         });
-    //       channel.on(
-    //         "broadcast",
-    //         { event: "getUserDeck/" + Router.query.id },
-    //         (payload) => {
-    //           console.log(payload, "LOADING PAYLOAD BROADCAST");
-    //           dispatch(
-    //             gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
-    //           );
-    //           dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-    //           channel.on("presence", { event: "sync" }, () => {
-    //             channel.send({
-    //               type: "broadcast",
-    //               event: "getUserDeck/" + Router.query.id,
-    //               payload: { data: { player, userDeck } },
-    //             });
-    //             console.log(Router.query.id);
-    //           });
-    //         }
-    //       );
-    //     } else if (status !== "SUBSCRIBED") {
-    //       channel
-    //         .subscribe(async (status) => {
-    //           console.log(status, "SUBSCRIBED MF");
-    //         })
-    //         .on("presence", { event: "sync" }, (obj) => {
-    //           channel.send({
-    //             type: "broadcast",
-    //             event: "getUserDeck/" + Router.query.id,
-    //             payload: { data: { player, userDeck } },
-    //           });
-    //           console.log(obj);
-    //           console.log(Router.query.id);
-    //         })
-    //         .on("presence", { event: "join" }, (object) => {
-    //           setPresence((presences) => [...presences, object]);
-    //           console.log(presence, "JOINED");
-    //         })
-    //         .on(
-    //           "broadcast",
-    //           { event: "getUserDeck/" + Router.query.id },
-    //           (payload) => {
-    //             console.log(payload, "LOADING PAYLOAD BROADCAST");
-    //             dispatch(
-    //               gameActions.setPlayer2Deck(payload.payload.data?.userDeck)
-    //             );
-    //             dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-    //           }
-    //         );
-    //     }
-    //   })
-    //   .on("presence", { event: "sync" }, (obj) => {
-    //     channel.send({
-    //       type: "broadcast",
-    //       event: "getUserDeck/" + Router.query.id,
-    //       payload: { data: { player, userDeck } },
-    //     });
-    //     console.log(obj);
-    //     console.log(Router.query.id);
-    //   })
-    //   .on("presence", { event: "join" }, (object) => {
-    //     setPresence((presences) => [...presences, object]);
-    //     console.log(presence, "JOINED");
-    //   })
-    //   .on(
-    //     "broadcast",
-    //     { event: "getUserDeck/" + Router.query.id },
-    //     (payload) => {
-    //       console.log(payload, "LOADING PAYLOAD BROADCAST");
-    //       dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
-    //       dispatch(gameActions.setPlayer2(payload.payload.data?.player));
-    //     }
-    //   );
-
-    // setTimeout(() => {
-    //   setLocalLoading(false);
-    // }, 2000);
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   useEffect(() => {
