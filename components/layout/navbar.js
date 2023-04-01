@@ -29,6 +29,9 @@ const Navbar = () => {
 			<Link className={styles.link} href="/collection">
 				Cards
 			</Link>
+			<Link className={styles.link} href="/chat">
+				Chat
+			</Link>
 			{user && (
 				<Link className={styles.link} href="/market">
 					Market

@@ -65,11 +65,6 @@ const Loading = () => {
           });
         }
       })
-      .on("presence", { event: "sync" }, () => {
-        const state = channel.presenceState();
-        setPresence(state);
-        console.log("presence state", state);
-      })
       .on("presence", { event: "join" }, ({ key, newPresences }) => {
         let newPresence = newPresences[0];
         console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
@@ -77,8 +72,14 @@ const Loading = () => {
           type: "broadcast",
           event: Router.query.id,
           payload: { data: { player, userDeck } },
+        })
+      })
+        .on("presence", { event: "sync" }, () => {
+          const state = channel.presenceState();
+          setPresence(state);
+          console.log("presence state", state);
         });
-      });
+      
     setTimeout(() => {
       setLocalLoading(false);
     }, 2000);
