@@ -10,6 +10,7 @@ import { GlobalContext } from '@/lib/GlobalContext';
 import GameComponent from '@/components/Game/GameComponent';
 import Loading from '@/components/Game/Loading';
 import Router from 'next/router';
+import EndModal from '@/components/Game/EndModal';
 
 const Game = (props) => {
 	const authUser = useUser();
@@ -38,7 +39,7 @@ const Game = (props) => {
 				{/* <GameRoom props={publicUser} /> */}
 				{loading && !ended && <Loading />}
 				{!loading && <GameComponent user={user} userDeck={userDeck} />}
-				{/* {ended && <div>GAME OVER</div>} */}
+				{ended && <EndModal />}
 
 				{/* <Messages props={publicUser} /> */}
 			</GlobalContext.Provider>
