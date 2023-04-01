@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './EndModal.module.css';
-import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { gameActions } from '@/store/slices/gameSlice';
+import Router from 'next/router';
 
 let EndModal = () => {
 	const dispatch = useDispatch();
@@ -14,15 +14,16 @@ let EndModal = () => {
 	const handleEndGame = (e) => {
 		e.preventDefault();
 		dispatch(gameActions.endGame(false));
+		Router.push('/lobby');
 	};
 
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>
 			<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.2 }} className={styles.card}>
 				<h1 className={styles.winMessage}>{winner} Wins!</h1>
-				<Link className={styles.link} href="/lobby" onClick={handleEndGame}>
+				<button className={styles.link} onClick={handleEndGame}>
 					Return to game lobby
-				</Link>
+				</button>
 			</motion.div>
 		</div>
 	);

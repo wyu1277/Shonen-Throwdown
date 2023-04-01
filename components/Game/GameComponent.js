@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useRef } from 'react';
 import { gameActions } from '@/store/slices/gameSlice';
 import Router from 'next/router';
-import EndModal from './EndModal';
 
 let oppCard = null;
 let myCard = null;
