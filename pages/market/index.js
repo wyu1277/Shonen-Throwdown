@@ -155,8 +155,7 @@ const Market = () => {
 	return (
 		<div className={styles.pageParent}>
 			<div className={styles.storeParent}>
-				<h1>Currency: {userData ? `${userData.wallet} tokens` : 'loading'}</h1>
-				<Store />
+				<h1 className={styles.h1}>Currency: {userData ? `${userData.wallet} tokens` : 'loading'}</h1>
 			</div>
             <nav className={styles.nav}>
                 <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(1)}>One Piece</h1>
