@@ -1,18 +1,19 @@
 .card {
-	height: 800px;
 	z-index: 3;
 	position: fixed;
 	top: 10%;
 	left: 40%;
+	background-color: #fff;
 }
 
 .img {
 	object-fit: cover;
 	height: 80%;
+	box-shadow: 0 0 5px 5px #fff, 0 0 10px 5px rgb(189, 219, 247), 0 0 35px 25px rgb(255, 255, 255);
 }
 
 .close {
-	margin-left: 350px;
+	margin-left: 410px;
 	height: 30px;
 	width: 70px;
 	position: fixed;
@@ -83,8 +84,8 @@
 
 .quantity {
 	position: fixed;
-	margin-top: 590px;
-	margin-left: 240px;
+	margin-top: 680px;
+	margin-left: 285px;
 	background-color: black;
 	width: 120px;
 	height: 30px;

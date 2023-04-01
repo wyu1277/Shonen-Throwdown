@@ -5,7 +5,7 @@
 }
 
 .close {
-	margin-top: 450px;
+	margin-top: 350px;
 	height: 30px;
 	width: 100px;
 	position: fixed;
@@ -15,18 +15,21 @@
 }
 
 .img {
-	object-fit: cover;
-	height: 80%;
+	border-radius: 20px;
+	height: 70%;
+	box-shadow: inset 0 0 50px #fff, inset 20px 0 80px rgb(219, 2, 219), inset -20px 0 80px rgb(0, 252, 252),
+		inset 20px 0 300px rgb(111, 0, 255), inset -20px 0 300px #0ff, 0 0 50px #fff, -10px 0 80px rgb(227, 3, 227),
+		10px 0 80px #0ff;
 }
 
 .card {
 	height: 600px;
 	top: 10%;
 	left: 40%;
-	margin: 25px;
+	margin: 35px;
 }
 
 .marketModalMessage {
 	position: fixed;
-	margin-bottom: 650px;
+	margin-bottom: 700px;
 }
