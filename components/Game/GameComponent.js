@@ -371,7 +371,6 @@ const GameComponent = (props) => {
 							);
 						})}
 				</div>
-				{endModal && <EndModal />}
 				<Player1HP user={props.user} setEndModal={setEndModal} />
 				<Player2HP opp={player2.username} />
 			</GameContainer>
