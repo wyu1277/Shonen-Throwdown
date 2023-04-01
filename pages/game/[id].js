@@ -9,7 +9,7 @@ import Channels from "@/components/Channels/Channels";
 import { GlobalContext } from "@/lib/GlobalContext";
 import GameComponent from "@/components/Game/GameComponent";
 import Loading from "@/components/Game/Loading";
-import { useRouter } from "next/router";
+import Router from "next/router";
 
 const Game = (props) => {
   const authUser = useUser();
@@ -28,30 +28,19 @@ const Game = (props) => {
     return state.deck;
   });
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const { data } = await supabase
-  //       .from("users")
-  //       .select("*")
-  //       .eq("id", user.id)
-  //       .single();
-  //     setConUser(data);
-  //   };
-  //   fetchUser();
-  // }, []);
-  const router = useRouter();
-  const channel = router.query;
-
-  console.log("this is channel", channel);
+  const ended = useSelector((state) => {
+    return state.game.ended;
+  });
 
   return (
     <div>
       <GlobalContext.Provider value={publicUser}>
         {/* <GameRoom props={publicUser} /> */}
-        {loading && <Loading />}
+        {loading && !ended && <Loading />}
         {!loading && <GameComponent user={user} userDeck={userDeck} />}
+        {ended && <div>GAME OVER</div>}
 
-        <Messages props={publicUser} />
+        {/* <Messages props={publicUser} /> */}
       </GlobalContext.Provider>
     </div>
   );

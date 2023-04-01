@@ -80,7 +80,7 @@ let Modal = (props) => {
 				</motion.div>
 				<motion.div
 					initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
-					animate={{ x: -500, opacity: 1, scale: 1 }}
+					animate={{ x: -600, opacity: 1, scale: 1 }}
 					exit={{ x: -100 }}
 					transition={{ duration: 1 }}
 					className={styles.carddesc}
@@ -121,7 +121,7 @@ let Modal = (props) => {
 				</motion.div>
 				<motion.div
 					initial={{ x: 0, y: 0, opacity: 0, color: '#000000', scale: 0 }}
-					animate={{ x: -500, opacity: 1, scale: 1 }}
+					animate={{ x: -600, opacity: 1, scale: 1 }}
 					exit={{ x: -100 }}
 					transition={{ duration: 1 }}
 					className={styles.carddesc}

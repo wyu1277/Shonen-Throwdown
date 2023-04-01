@@ -1,12 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef, createContext } from "react";
 import Messages from "@/components/Messages/Messages";
-import {
-  supabase,
-  useStore,
-  fetchAllMessages,
-  fetchCurrentUser,
-} from "@/lib/supabase";
+import { supabase, useStore } from "@/lib/supabase";
 import GameRoom from "@/components/GameRoom/GameRoom";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";

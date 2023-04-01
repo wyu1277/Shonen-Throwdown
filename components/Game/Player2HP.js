@@ -1,20 +1,22 @@
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Router from "next/router";
 import { useEffect } from "react";
+import { gameActions } from "@/store/slices/gameSlice";
+import { loadActions } from "@/store/slices/loadSlice";
+
 const Player2HP = (props) => {
+  const dispatch = useDispatch();
+  console.log(props, "PLAYER2 PROPS");
   // const router = useRouter();
   const health = useSelector((state) => {
     return state.game.player2HP;
   });
 
   useEffect(() => {
-    setInterval(() => {
-      if (health <= 0) {
-        Router.push("/");
-      }
-    }, 1000);
-  }, []);
+    health <= 0 && dispatch(gameActions.endGame(true));
+    health <= 0 && dispatch(loadActions.setLoading(true));
+  }, [health]);
 
   return (
     <motion.div
@@ -22,7 +24,7 @@ const Player2HP = (props) => {
       animate={{ scale: 1, opacity: 1 }}
       className="player2-hp"
     >
-      {props?.opp?.username} HP: {health}
+      {props?.opp} HP: {health}
     </motion.div>
   );
 };

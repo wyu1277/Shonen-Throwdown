@@ -2,8 +2,11 @@
 import Game from "@/pages/game/[id]";
 import React, { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
+import { userActions } from "@/store/slices/userSlice";
+import { useUser } from "@supabase/auth-helpers-react";
 
 const Channels = () => {
   const [listChannels, setListChannels] = useState([]);
@@ -31,7 +34,18 @@ const Channels = () => {
   //     query: { id: `${gameId}` },
   //   });
   // };
-
+  const uuid = uuidv4();
+  const user = useUser();
+  const handleCreateRoom = () => {
+    const createChannel = async () => {
+      const { data, error } = await supabase
+        .from("game")
+        .insert([{ id: `${uuid}`, player1: user.id }]);
+    };
+    createChannel();
+    supabase.channel(`${uuid}`).subscribe();
+    Router.push(`/game/${uuid}`);
+  };
   return (
     <div>
       Channels:
@@ -39,12 +53,13 @@ const Channels = () => {
         <ul>
           {listChannels.map((channel) => (
             <li key={channel.id}>
-              <Link
+              <Link href={`/game/${channel.id}`}>
+                {/* <Link
                 href={{
                   pathname: "/game/[id]",
                   query: { id: channel.id },
                 }}
-              >
+              > */}
                 {/* <button onClick={handleJoin} value={channel.id}> */}
                 Join: {channel.id}
                 {/* </button> */}
@@ -54,8 +69,9 @@ const Channels = () => {
         </ul>
       </h4>
       {/*create room will cause trigger to create new game row and create route user to newly created game[id].js set player1 to user who created and wait for player 2*/}
-      <button>Create Room</button>
+      <button onClick={handleCreateRoom}>Create Room</button>
     </div>
   );
 };
+
 export default Channels;

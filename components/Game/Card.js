@@ -1,38 +1,99 @@
+"use client";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, forwardRef } from "react";
 import { supabase } from "@/lib/supabase";
 import { useEffect } from "react";
+import Router from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { gameActions } from "@/store/slices/gameSlice";
+import { loadActions } from "@/store/slices/loadSlice";
 
-const Card = (props) => {
+const Card = (props, refs) => {
+  const dispatch = useDispatch();
+  const channels = Router.query.id;
   const audioRef = useRef(null);
   const [tapCard, setTapCard] = useState(true);
+
+  const health = useSelector((state) => {
+    return state.game.player1HP;
+  });
+
+  const cardInPlay = useSelector((state) => {
+    return state.game.cardInPlay;
+  });
+
+  const counter = useSelector((state) => {
+    return state.game.counter;
+  });
+
+  // const counterCheck = () => {
+  //   console.log(counter);
+  //   if (counter > 11) {
+  //     console.log("This game is ova");
+  //   }
+  // };
+
+  // const [channels, setChannels] = useState();
   // setTapCard(false);
+
+  // const getChannel = async () => {
+  //   const channels = Router.query.id;
+  //   // console.log("this is new channel", newChannel);
+  //   setChannels(newChannel.id);
+  // };
   useEffect(() => {
+    const counterCheck = () => {
+      // console.log(counter);
+      if (counter > 11) {
+        console.log("This game is ova");
+        dispatch(gameActions.ended(true));
+        dispatch(loadActions.setLoading(true));
+      }
+    };
+
+    const interval = setInterval(() => {
+      counterCheck();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [counter]);
+
+  useEffect(() => {
+    // getChannel();
     setTapCard(!tapCard);
   }, []);
 
   const cardHandler = () => {
-    props.setShowSet(true);
-    props.setMyCard(props.card);
-    setTapCard(!tapCard);
-    // audioRef.current.play();
-    supabase
-      .channel("game1")
-      .subscribe()
-      .send({
-        type: "broadcast",
-        event: "cardmove",
-        payload: {
-          data: {
-            index: props.index,
-            cardInfo: props.card,
+    console.log(props.card);
+    console.log(cardInPlay);
+    if (!cardInPlay) {
+      props.setMyCard(props.card, props.index);
+      setTapCard(!tapCard);
+      // audioRef.current.play();
+      supabase
+        .channel(channels)
+        .subscribe(async (status) => {
+          console.log(status);
+        })
+        .send({
+          type: "broadcast",
+          event: "cardmove",
+          payload: {
+            data: {
+              index: props.index,
+              cardInfo: props.card,
+            },
           },
-        },
-      });
+        });
+
+      dispatch(gameActions.increaseCounter());
+      // counterCheck();
+    }
   };
+
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0 }}
+      initial={{ scale: 0, opacity: 0, x: props.x }}
       animate={
         tapCard
           ? {
@@ -40,7 +101,7 @@ const Card = (props) => {
               opacity: 1,
               x: 600,
               y: -275,
-              zIndex: `${12 - props.zIndex}`,
+              zIndex: `${props.zIndex}`,
             }
           : {
               scale: 1,
@@ -48,9 +109,12 @@ const Card = (props) => {
               backgroundImage: `${props.card.image}`,
             }
       }
+      exit={{ x: -3000 }}
       //   whileHover={{ backgroundColor: "white" }}
       onClick={cardHandler}
+      whileHover={{ scale: 2 }}
       className="user-container"
+      ref={refs}
     >
       <img
         src={props.card.image}
@@ -62,4 +126,4 @@ const Card = (props) => {
   );
 };
 
-export default Card;
+export default forwardRef(Card);

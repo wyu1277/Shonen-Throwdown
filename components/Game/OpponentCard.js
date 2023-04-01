@@ -1,18 +1,25 @@
 import { forwardRef, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
+import { useSelector } from "react-redux";
 
 const OpponentCard = (props, ref) => {
+  // const myCard = props.showMyCard();
   const audioRef = useRef(null);
+
+  // const myCard = useSelector((state) => {
+  //   return state.game.setCardToPlay;
+  // });
 
   const [tapCard, setTapCard] = useState(false);
   const opponentCardHandler = () => {
     setTapCard(!tapCard);
+    props.setOppCardPos(props.index);
   };
 
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0 }}
+      initial={{ scale: 0, x: props.x }}
       animate={
         tapCard
           ? {
@@ -23,17 +30,25 @@ const OpponentCard = (props, ref) => {
               opacity: 1,
               zIndex: `${12 - props.zIndex}`,
             }
-          : { scale: 1, opacity: 0.6 }
+          : { scale: 1 }
       }
       className="opponent-container"
       onClick={() => opponentCardHandler()}
       ref={ref}
     >
-      <img
-        src={props.card.image}
-        alt={props.card.title}
-        className="gameplay-card"
-      />
+      {tapCard ? (
+        <img
+          src="https://i.imgur.com/JBJoKPI.png"
+          alt={props.card.title}
+          className="gameplay-card"
+        />
+      ) : (
+        <img
+          src={"https://i.imgur.com/JBJoKPI.png"}
+          alt={props.card.title}
+          className="gameplay-card"
+        />
+      )}
       <audio src="/audio/Cut.wav" ref={audioRef} />
     </motion.div>
   );
