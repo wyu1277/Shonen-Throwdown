@@ -28,9 +28,9 @@ const Game = (props) => {
 		return state.deck;
 	});
 
-	// const ended = useSelector((state) => {
-	//   return state.game.ended;
-	// });
+	const ended = useSelector((state) => {
+		return state.game.ended;
+	});
 
 	return (
 		<div>
