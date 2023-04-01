@@ -11,6 +11,7 @@ import { fetchDeckCards } from "@/store/slices/deckSlice";
 import Router from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import Throwaway from "./Throwaway";
+import OpponentInfo from "./OpponentInfo";
 
 let player2info = null;
 let player2Deck2 = null;
@@ -60,26 +61,35 @@ const Loading = () => {
 
   useEffect(() => {
     channel.subscribe(async (status) => {
-      console.log(status, "STATUS");
+      await channel.track();
+    });
+
+    channel.on("presence", { event: "sync" }, (status) => {});
+
+    channel.on("presence", { event: "join" }, ({ newPresences }) => {
+      console.log("joined");
+      channel.send({
+        type: "broadcast",
+        event: "getUserInfo/" + Router.query.id,
+        payload: { player, userDeck },
+      });
     });
 
     channel.on(
       "broadcast",
-      { event: "readyUp" + Router.query.id },
+      { event: "getUserInfo/" + Router.query.id },
       (payload) => {
-        console.log(payload.payload, "READY UP PAYLOAD");
-        dispatch(gameActions.setPlayer2(payload.payload.data));
+        console.log(payload.payload, "get payload");
+        console.log(payload.payload.player);
+        console.log(payload.payload.userDeck);
+        dispatch(gameActions.setPlayer2(payload.payload.player));
         dispatch(gameActions.setPlayer2Deck(payload.payload.userDeck));
       }
     );
   }, [user]);
 
   const playGame = () => {
-    console.log(player, "PLAYER");
-    // console.log(player2, "PLAYER2");
-    console.log(userDeck, "USERDECK");
-    // console.log(player2Deck, "PLAYER2DECK");
-    console.log(loading, "LOADING STATUS");
+    dispatch(loadActions.setLoading(false));
   };
 
   const readyHandler = async () => {
@@ -88,7 +98,6 @@ const Loading = () => {
       event: "readyUp" + Router.query.id,
       payload: { data: player, userDeck },
     });
-    dispatch(loadActions.setLoading(false));
   };
 
   return (
@@ -100,8 +109,8 @@ const Loading = () => {
       )}
 
       <Throwaway player2info={player2info} player2Deck={player2Deck2} />
-
-      <button onClick={readyHandler}>Ready?</button>
+      <h1>YOUR OPPONENT: </h1>
+      <OpponentInfo />
     </div>
   );
 };
