@@ -1,58 +1,88 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Router from "next/router";
-import { gameActions } from "@/store/slices/gameSlice";
-import { loadActions } from "@/store/slices/loadSlice";
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Router from 'next/router';
+import { gameActions } from '@/store/slices/gameSlice';
+import { loadActions } from '@/store/slices/loadSlice';
+import { supabase } from '@/lib/supabase';
 
 const Player1HP = (props) => {
-  const dispatch = useDispatch();
-  // const router = useRouter;
-  // const [health, setHealth] = useState(props.myHP);
-  const player1 = useSelector((state) => {
-    return state.game.player1;
-  });
-  const player2 = useSelector((state) => {
-    return state.game.player2;
-  });
+	const dispatch = useDispatch();
+	// const router = useRouter;
+	// const [health, setHealth] = useState(props.myHP);
+	const player1 = useSelector((state) => {
+		return state.game.player1;
+	});
+	const player2 = useSelector((state) => {
+		return state.game.player2;
+	});
 
-  const ended = useSelector((state) => {
-    return state.game.ended;
-  });
+	const ended = useSelector((state) => {
+		return state.game.ended;
+	});
 
-  const health1 = useSelector((state) => {
-    return state.game.player1HP;
-  });
+	const health1 = useSelector((state) => {
+		return state.game.player1HP;
+	});
 
-  const health2 = useSelector((state) => {
-    return state.game.playerHP;
-  });
+	const health2 = useSelector((state) => {
+		return state.game.playerHP;
+	});
 
-  useEffect(() => {
-    if (ended) {
-      if (health1 > health2) {
-        dispatch(gameActions.setWinner(player1.id));
-        dispatch(gameActions.setLoser(player2.id));
-      } else if (health2 > health1) {
-        dispatch(gameActions.setWinner(player2.id));
-        dispatch(gameActions.setLoser(player1.id));
-      }
-    }
-  }, [ended]);
+	const winner = useSelector((state) => {
+		return state.game.winner;
+	});
 
-  useEffect(() => {
-    health1 <= 0 && dispatch(gameActions.endGame(true));
-    health1 <= 0 && dispatch(loadActions.setLoading(true));
-  }, [health1]);
-  return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      className="player1-hp"
-    >
-      {props.user?.username} HP: {health1}
-    </motion.div>
-  );
+	useEffect(() => {
+		if (ended) {
+			const setEndState = () => {
+				if (health1 > health2) {
+					dispatch(gameActions.setWinner(player1.id));
+				} else if (health2 > health1) {
+					dispatch(gameActions.setWinner(player2.id));
+				}
+				setEndState();
+				const updateGameHistory = async () => {
+					if (health1 === health2) {
+						try {
+							await supabase.from('game').update({ isDraw: true }).eq('id', Router.query.id);
+						} catch (error) {
+							console.log('error in update game history', error);
+						}
+					} else {
+						try {
+							await supabase.from('game').update({ winner: winner }).eq('id', Router.query.id);
+						} catch (error) {
+							console.log('error in update game history', error);
+						}
+						const { data } = await supabase.from('users').select('wallet').eq('id', winner);
+						console.log('winner wallet value', data);
+						const walletUpdate = data + 3;
+						const updateWallet = async () => {
+							try {
+								await supabase.from('users').update({ wallet: walletUpdate }).eq('id', winner);
+							} catch (error) {
+								console.log('error updating winner wallet', error);
+							}
+						};
+						updateWallet();
+					}
+				};
+				updateGameHistory();
+			};
+		}
+	}, [ended]);
+
+	useEffect(() => {
+		health1 <= 0 && dispatch(gameActions.endGame(true));
+		health1 <= 0 && dispatch(loadActions.setLoading(true));
+	}, [health1]);
+
+	return (
+		<motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="player1-hp">
+			{props.user?.username} HP: {health1}
+		</motion.div>
+	);
 };
 
 export default Player1HP;
