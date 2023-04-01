@@ -45,6 +45,7 @@ const Player1HP = (props) => {
 				}
 				setEndState();
 				console.log('game winner', winner);
+				props.setEndModal(true);
 				const updateGameHistory = async () => {
 					if (health1 === health2) {
 						try {

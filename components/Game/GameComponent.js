@@ -59,6 +59,25 @@ const GameComponent = (props) => {
 		return state.game.ended;
 	});
 
+	//!ADDED START
+	const player1 = useSelector((state) => {
+		return state.game.player1;
+	});
+
+	const health1 = useSelector((state) => {
+		return state.game.player1HP;
+	});
+
+	const health2 = useSelector((state) => {
+		return state.game.playerHP;
+	});
+
+	const winner = useSelector((state) => {
+		return state.game.winner;
+	});
+
+	//!END
+
 	const resetCard = () => {
 		if (myCardPos !== null && oppCardPos !== null) {
 			console.log(myCardRefs.current[myCardPos - 1]);
@@ -74,6 +93,50 @@ const GameComponent = (props) => {
 			dispatch(gameActions.setCardToPlay(false));
 		}
 	};
+
+	useEffect(() => {
+		console.log('END GAME USE EFFECT BEFORE THE IF STATEMENT');
+		if (ended) {
+			console.log('THE GAME HAS ENDED INSIDE IF STATEMENT');
+			const setEndState = () => {
+				if (health1 > health2) {
+					dispatch(gameActions.setWinner(player1.id));
+				} else if (health2 > health1) {
+					dispatch(gameActions.setWinner(player2.id));
+				}
+				setEndState();
+				console.log('game winner', winner);
+				props.setEndModal(true);
+				const updateGameHistory = async () => {
+					if (health1 === health2) {
+						try {
+							await supabase.from('game').update({ isDraw: true }).eq('id', Router.query.id);
+						} catch (error) {
+							console.log('error in update game history', error);
+						}
+					} else {
+						try {
+							await supabase.from('game').update({ winner: winner }).eq('id', Router.query.id);
+						} catch (error) {
+							console.log('error in update game history', error);
+						}
+						const { data } = await supabase.from('users').select('wallet').eq('id', winner);
+						console.log('winner wallet value', data);
+						const walletUpdate = data + 3;
+						const updateWallet = async () => {
+							try {
+								await supabase.from('users').update({ wallet: walletUpdate }).eq('id', winner);
+							} catch (error) {
+								console.log('error updating winner wallet', error);
+							}
+						};
+						updateWallet();
+					}
+				};
+				updateGameHistory();
+			};
+		}
+	}, [ended]);
 
 	const checkCards = (player1Card, player2Card) => {
 		let damage;
