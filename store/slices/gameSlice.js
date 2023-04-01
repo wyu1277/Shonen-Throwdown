@@ -8,7 +8,6 @@ const initialState = {
 	player1Deck: [],
 	player2Deck: [],
 	winner: null,
-	loser: null,
 	cardInPlay: false,
 	counter: 0,
 	ended: false
@@ -42,20 +41,19 @@ const gameSlice = createSlice({
 		increaseCounter(state, action) {
 			state.counter++;
 		},
+		setCounter(state, action) {
+			state.counter = action.payload;
+		},
 		endGame(state, action) {
-			console.log('endgame action', state);
 			state.ended = action.payload;
 		},
 		setWinner(state, action) {
 			state.winner = action.payload;
 		},
-		setLoser(state, action) {
-			state.loser = action.payload;
-		},
 		setPlayer1hp(state, action) {
 			state.player1HP = action.payload;
 		},
-		setPlayer2HP(state, action) {
+		setPlayer2hp(state, action) {
 			state.player2HP = action.payload;
 		}
 	},

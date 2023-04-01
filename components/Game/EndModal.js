@@ -16,6 +16,12 @@ let EndModal = () => {
 		dispatch(gameActions.endGame(false));
 		dispatch(gameActions.setPlayer1hp(15));
 		dispatch(gameActions.setPlayer2hp(15));
+		dispatch(gameActions.setPlayer1({}));
+		dispatch(gameActions.setPlayer2({}));
+		dispatch(gameActions.setPlayer1Deck([]));
+		dispatch(gameActions.setPlayer2Deck([]));
+		dispatch(gameActions.setCounter(0));
+		dispatch(gameActions.setWinner(null));
 		Router.push('/lobby');
 	};
 
