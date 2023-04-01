@@ -35,6 +35,7 @@ const Player1HP = (props) => {
 
 	useEffect(() => {
 		if (ended) {
+			console.log('THE GAME HAS ENDED FROM USE EFFECT');
 			const setEndState = () => {
 				if (health1 > health2) {
 					dispatch(gameActions.setWinner(player1.id));
@@ -42,6 +43,7 @@ const Player1HP = (props) => {
 					dispatch(gameActions.setWinner(player2.id));
 				}
 				setEndState();
+				console.log('game winner', winner);
 				props.setEndModal(true);
 				const updateGameHistory = async () => {
 					if (health1 === health2) {
