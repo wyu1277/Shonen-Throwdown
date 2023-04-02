@@ -5,10 +5,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { gameActions } from '@/store/slices/gameSlice';
 import Router from 'next/router';
 
+import { supabase } from '@/lib/supabase';
+
 let EndModal = () => {
 	const dispatch = useDispatch();
-	const winner = useSelector((state) => {
-		return state.game.winner;
+	const winnerUsername = useSelector((state) => {
+		return state.game.winnerUsername;
+	});
+
+	const ended = useSelector((state) => {
+		return state.game.ended;
 	});
 
 	const handleEndGame = (e) => {
@@ -22,13 +28,22 @@ let EndModal = () => {
 		dispatch(gameActions.setPlayer2Deck([]));
 		dispatch(gameActions.setCounter(0));
 		dispatch(gameActions.setWinner(null));
-		Router.push('/lobby');
+		dispatch(gameActions.setCardToPlay(false));
+		dispatch(gameActions.setShouldReload(true));
+		dispatch(gameActions.setWinnerUsername(null));
+		supabase.removeAllChannels();
+		Router.push('/');
+	};
+
+	const checkstate = () => {
+		console.log('state in end screen page', ended);
+
 	};
 
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>
 			<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.2 }} className={styles.card}>
-				<h1 className={styles.winMessage}>{winner} Wins!</h1>
+				<h1 className={styles.winMessage}>{winnerUsername} Wins!</h1>
 				<button className={styles.link} onClick={handleEndGame}>
 					Return to game lobby
 				</button>

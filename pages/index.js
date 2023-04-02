@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchUser } from "@/store/slices/userSlice";
@@ -7,6 +9,8 @@ import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
+import styles from "../styles/home.module.css";
+import Router from "next/router";
 
 const Home = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,8 +25,17 @@ const Home = ({ user }) => {
   const loadState = useSelector((state) => {
     return state.user.loading;
   });
+
+  const shouldReload = useSelector((state) => {
+    return state.game.shouldReload;
+  });
+
   useEffect(() => {
     // console.log("loading");
+
+    if (shouldReload) {
+      window.location.reload();
+    }
     if (user) {
       dispatch(searchUser(user.id));
       dispatch(fetchDeckCards(user.id));
@@ -43,10 +56,17 @@ const Home = ({ user }) => {
       {loadState ? (
         <div>loading</div>
       ) : (
-        <>
-          <div>Hello, {user.email}</div>
-          <p>Peppermint Patties Home Page</p>
-        </>
+        <div className={styles.outer}>
+          <div className={styles.imageDiv}>
+            <img
+              className={styles.img}
+              src="https://pbs.twimg.com/media/E4f3Ub7XMAkrBay?format=jpg&name=large"
+            ></img>
+          </div>
+          <div className={styles.one}></div>
+          <div className={styles.two}></div>
+          <div className={styles.three}></div>
+        </div>
       )}
     </motion.div>
   );

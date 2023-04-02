@@ -1,4 +1,3 @@
-"use client"
 import Modal from '@/components/collection/modal';
 import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useEffect, useState, useRef } from 'react';

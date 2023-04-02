@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
@@ -9,6 +10,7 @@ const notoSerif = Noto_Serif({
   subsets: ["latin"],
   weight: "400",
 });
+
 
 const Messages = (props) => {
   const [channels, setChannels] = useState(null);
@@ -28,6 +30,7 @@ const Messages = (props) => {
   };
 
   const user = props.props;
+
 
   useEffect(() => {
     const getData = async () => {
@@ -88,9 +91,13 @@ const Messages = (props) => {
 
   return (
     <div className={styles.wrapper}>
+
       <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>
         CHAT
       </h2>
+
+      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>CHAT</h2>
+
       {isVisible && (
         <>
           <div

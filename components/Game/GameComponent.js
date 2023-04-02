@@ -1,3 +1,4 @@
+'use client';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import Card from './Card';
@@ -61,15 +62,16 @@ const GameComponent = (props) => {
 
 	const resetCard = () => {
 		if (myCardPos !== null && oppCardPos !== null) {
-			console.log(myCardRefs.current[myCardPos - 1]);
-
-			myCardRefs.current[myCardPos - 1].remove();
-			cardRefs.current[oppCardPos].remove();
+			// console.log(myCardRefs.current[myCardPos - 1]);
+			oppImage = null;
+			if (myCardRefs.current[myCardPos - 1] !== null) {
+				myCardRefs.current[myCardPos - 1].remove();
+				cardRefs.current[oppCardPos].remove();
+			}
 			myCardPos = null;
 			oppCardPos = null;
 			myCard = null;
 			oppCard = null;
-			oppImage = null;
 
 			dispatch(gameActions.setCardToPlay(false));
 		}
@@ -80,9 +82,15 @@ const GameComponent = (props) => {
 		let winningElement;
 		let damagedPlayer;
 		// console.log(myCardPos, oppCardPos, "CARD POSITIONS");
-
-		if (myCard && oppImage) {
-			cardRefs.current[oppCardPos].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+		// console.log(myCard, "MY CArd  BEFORE ");
+		// console.log(oppImage, "opp CARD IMAGE BEFORE ");
+		if (myCard !== null && oppImage !== null) {
+			// console.log(myCardRefs, "MY CARD REFS");
+			// console.log(cardRefs, 'cardRefs');
+			// console.log(oppCardPos, 'oppCardPosition');
+			if (cardRefs.current[oppCardPos] !== null) {
+				cardRefs.current[oppCardPos].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+			}
 		}
 
 		if (myCard && oppCard) {
@@ -170,7 +178,7 @@ const GameComponent = (props) => {
 		// if (!ended) {
 		setInterval(() => {
 			checkCards(myCard, oppCard);
-		}, 1000);
+		}, 2000);
 
 		setInterval(() => {
 			if (myCard) {
@@ -186,76 +194,7 @@ const GameComponent = (props) => {
 		channel.on('presence', { event: 'sync' }, () => {
 			console.log('ACTIVE USERS', channel.presenceState());
 		});
-
-		// channel
-		//   .on("presence", { event: "getUserDeck/" + channel }, (status) => {
-		//   })
-		//   .subscribe();
 	});
-
-	// useEffect(() => {
-	//   // getChannel();
-	//   // const channel = supabase.channel(channels, {
-	//   //   config: { presence: { key: user.username } },
-	//   // });
-
-	//   channel
-	//     // .on("presence", { event: "sync" }, async () => {
-	//     //   const state = channel.presenceState();
-	//     //   console.log(state, "SYNC STATE");
-	//     //   channel.send({
-	//     //     type: "broadcast",
-	//     //     event: "getUserDeck/" + channels,
-	//     //     payload: { data: { user: props.user, userDeck: props.userDeck } },
-	//     //   });
-	//     // })
-	//     .on("presence", { event: "join" }, (object) => {
-	//       setPresences((presences) => [...presences, object]);
-	//     })
-	//     .on("presence", { event: "leave" }, async (object1234) => {
-	//       await channel.unsubscribe();
-	//     })
-	//     .on("broadcast", { event: "getUserDeck/" + channel }, async (payload) => {
-	//       setLoading(true);
-	//       setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-	//       setOpponentInfo((opponentInfo) => payload.payload.data?.user);
-	//       setLoading(false);
-	//     })
-	//     .on("broadcast", { event: "cardmove" }, (payload) => {
-	//       console.log(cardRefs?.current, "CARDMOVE BROADCAST");
-	//       console.log(payload.payload, "CARD MOVE PAYLOAD");
-	// cardRefs?.current[payload.payload.data.index - 1]?.click();
-	//       oppCard = payload.payload.data.cardInfo;
-	//       // checks();
-	//     })
-	//     .on("broadcast", { event: "cardmove" }, () => {});
-	//   // checks();
-	//   // }).subscribe(async (status) => {
-	//   //   if (status === "SUBSCRIBED") {
-	//   //     console.log(status, "CHANNEL STATUS ");
-	//   //     const trackStatus = await channel.track({ key: user.username });
-	//   //     console.log(trackStatus, "TRACK STATUS");
-	//   //   }
-	//   // })
-	//   // .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
-	//   //   setLoading(true);
-	//   //   setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-	//   //   setOpponentInfo((opponentInfo) => payload.payload.data?.user);
-	//   //   setLoading(false);
-	//   // })
-	//   //
-	// }, []);
-
-	// useEffect(() => {
-	//   // const channel = supabase.channel(Router.query.id);
-	//   // channel
-	//     // .on("presence", { event: "join" }, (object) => {
-	//     //   setPresences((presences) => [...presences, object]);
-	//     // })
-	//     // .on("presence", { event: "leave" }, (object) => {
-	//     //   channel.unsubscribe();
-	//     // });
-	// }, [presences]);
 
 	useEffect(() => {
 		// audioRef.current.play();

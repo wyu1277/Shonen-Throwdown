@@ -8,9 +8,11 @@ const initialState = {
 	player1Deck: [],
 	player2Deck: [],
 	winner: null,
+	winnerUsername: null,
 	cardInPlay: false,
 	counter: 0,
-	ended: false
+	ended: false,
+	shouldReload: false
 };
 
 const gameSlice = createSlice({
@@ -55,6 +57,12 @@ const gameSlice = createSlice({
 		},
 		setPlayer2hp(state, action) {
 			state.player2HP = action.payload;
+		},
+		setShouldReload(state, action) {
+			state.shouldReload = action.payload;
+		},
+		setWinnerUsername(state, action) {
+			state.winnerUsername = action.payload;
 		}
 	},
 	extraReducers: {}

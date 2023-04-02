@@ -7,3 +7,11 @@
 .winMessage {
 	color: aqua;
 }
+
+
+.throwaway {
+	z-index: -3;
+	position: fixed;
+	opacity: 0%;
+}
+
