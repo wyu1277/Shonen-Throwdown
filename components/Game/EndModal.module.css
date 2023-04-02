@@ -1,0 +1,9 @@
+.pageParent {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.winMessage {
+	color: aqua;
+}

@@ -34,7 +34,9 @@ const Player1HP = (props) => {
 	});
 
 	useEffect(() => {
+		console.log('END GAME USE EFFECT BEFORE THE IF STATEMENT');
 		if (ended) {
+			console.log('THE GAME HAS ENDED INSIDE IF STATEMENT');
 			const setEndState = () => {
 				if (health1 > health2) {
 					dispatch(gameActions.setWinner(player1.id));
@@ -42,6 +44,7 @@ const Player1HP = (props) => {
 					dispatch(gameActions.setWinner(player2.id));
 				}
 				setEndState();
+				console.log('game winner', winner);
 				const updateGameHistory = async () => {
 					if (health1 === health2) {
 						try {
