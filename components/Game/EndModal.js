@@ -4,6 +4,7 @@ import styles from './EndModal.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { gameActions } from '@/store/slices/gameSlice';
 import Router from 'next/router';
+
 import { supabase } from '@/lib/supabase';
 
 let EndModal = () => {
@@ -36,6 +37,7 @@ let EndModal = () => {
 
 	const checkstate = () => {
 		console.log('state in end screen page', ended);
+
 	};
 
 	return (

@@ -7,6 +7,7 @@ import { loadActions } from '@/store/slices/loadSlice';
 
 const Player2HP = (props) => {
 	const dispatch = useDispatch();
+
 	const health2 = useSelector((state) => {
 		return state.game.player2HP;
 	});

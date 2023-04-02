@@ -14,25 +14,26 @@ import EndModal from "@/components/Game/EndModal";
 import Throwaway from "@/components/Game/Throwaway";
 
 const Game = (props) => {
-  const authUser = useUser();
-  const publicUser = useSelector((state) => state.user.user);
-  const [conUser, setConUser] = useState(null);
-  //const [conDeck, setConDeck] = useState(null)
-  const loading = useSelector((state) => {
-    return state.load;
-  });
+	const authUser = useUser();
+	const publicUser = useSelector((state) => state.user.user);
+	const [conUser, setConUser] = useState(null);
+	//const [conDeck, setConDeck] = useState(null)
+	const loading = useSelector((state) => {
+		return state.load;
+	});
 
-  const user = useSelector((state) => {
-    return state.user.user;
-  });
+	const user = useSelector((state) => {
+		return state.user.user;
+	});
 
-  const userDeck = useSelector((state) => {
-    return state.deck;
-  });
+	const userDeck = useSelector((state) => {
+		return state.deck;
+	});
 
-  const ended = useSelector((state) => {
-    return state.game.ended;
-  });
+	const ended = useSelector((state) => {
+		return state.game.ended;
+	});
+
 
   return (
     <div>
@@ -42,11 +43,10 @@ const Game = (props) => {
         {!loading && <GameComponent user={user} userDeck={userDeck} />}
         {ended && <EndModal />}
         <Throwaway />
-
-        {/* <Messages props={publicUser} /> */}
-      </GlobalContext.Provider>
-    </div>
-  );
+				{/* <Messages props={publicUser} /> */}
+			</GlobalContext.Provider>
+		</div>
+	);
 };
 
 export default Game;

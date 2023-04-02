@@ -37,6 +37,7 @@ const LoginPage = () => {
         <Auth
           redirectTo="http://localhost:3000/"
           appearance={{ theme: ThemeSupa }}
+          theme = 'dark'
           supabaseClient={supabaseClient}
           providers={["google", "github"]}
           socialLayout="horizontal"
