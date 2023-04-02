@@ -8,8 +8,8 @@ import { supabase } from '@/lib/supabase';
 
 let EndModal = () => {
 	const dispatch = useDispatch();
-	const winner = useSelector((state) => {
-		return state.game.winner;
+	const winnerUsername = useSelector((state) => {
+		return state.game.winnerUsername;
 	});
 
 	const ended = useSelector((state) => {
@@ -29,6 +29,7 @@ let EndModal = () => {
 		dispatch(gameActions.setWinner(null));
 		dispatch(gameActions.setCardToPlay(false));
 		dispatch(gameActions.setShouldReload(true));
+		dispatch(gameActions.setWinnerUsername(null));
 		supabase.removeAllChannels();
 		Router.push('/');
 	};
@@ -40,12 +41,9 @@ let EndModal = () => {
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>
 			<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.2 }} className={styles.card}>
-				<h1 className={styles.winMessage}>{winner} Wins!</h1>
+				<h1 className={styles.winMessage}>{winnerUsername} Wins!</h1>
 				<button className={styles.link} onClick={handleEndGame}>
 					Return to game lobby
-				</button>
-				<button className={styles.link} onClick={checkstate}>
-					check state
 				</button>
 			</motion.div>
 		</div>

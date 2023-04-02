@@ -45,10 +45,11 @@ const Throwaway = (props) => {
 				if (health1 > health2) {
 					console.log('PLAYER1', player1);
 					dispatch(gameActions.setWinner(player1.id));
+					dispatch(gameActions.setWinnerUsername(player1.username));
 				} else if (health2 > health1) {
 					console.log('PLAYER2', player2);
-
 					dispatch(gameActions.setWinner(player2.id));
+					dispatch(gameActions.setWinnerUsername(player2.username));
 				}
 			};
 
