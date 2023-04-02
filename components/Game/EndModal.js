@@ -11,6 +11,10 @@ let EndModal = () => {
 		return state.game.winner;
 	});
 
+	const ended = useSelector((state) => {
+		return state.game.ended;
+	});
+
 	const handleEndGame = (e) => {
 		e.preventDefault();
 		dispatch(gameActions.endGame(false));
@@ -25,12 +29,19 @@ let EndModal = () => {
 		Router.push('/lobby');
 	};
 
+	const checkstate = () => {
+		console.log('state in end screen page', ended);
+	};
+
 	return (
 		<div className={`backdrop ${styles.pageParent}`}>
 			<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.2 }} className={styles.card}>
 				<h1 className={styles.winMessage}>{winner} Wins!</h1>
 				<button className={styles.link} onClick={handleEndGame}>
 					Return to game lobby
+				</button>
+				<button className={styles.link} onClick={checkstate}>
+					check state
 				</button>
 			</motion.div>
 		</div>

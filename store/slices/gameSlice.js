@@ -45,6 +45,7 @@ const gameSlice = createSlice({
 			state.counter = action.payload;
 		},
 		endGame(state, action) {
+			console.log('endgame state change');
 			state.ended = action.payload;
 		},
 		setWinner(state, action) {

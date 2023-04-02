@@ -1,3 +1,4 @@
+'use client';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -81,9 +82,14 @@ const Player1HP = (props) => {
 		health1 <= 0 && dispatch(loadActions.setLoading(true));
 	}, [health1]);
 
+	const checkstate = () => {
+		console.log('ended state in player1hp', ended);
+	};
+
 	return (
 		<motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="player1-hp">
 			{props.user?.username} HP: {health1}
+			<button onClick={checkstate}>check ended state</button>
 		</motion.div>
 	);
 };

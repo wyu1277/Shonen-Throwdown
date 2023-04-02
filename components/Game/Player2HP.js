@@ -1,3 +1,4 @@
+'use client';
 import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
