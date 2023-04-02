@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import styles from "./Navbar.module.css";
@@ -11,45 +11,60 @@ const Navbar = () => {
 	const signOutHandler = async () => {
 		await supabaseClient.auth.signOut();
 		router.push('/login');
+		setShowDropdown(!showDropdown);
+	};
+	const [showDropdown, setShowDropdown] = useState(false);
+	const toggleDropdown = () => {
+		setShowDropdown(!showDropdown);
 	};
 	return (
 		<div className={styles.nav}>
-			<Link className={styles.link} href="/">
-				Home
-			</Link>
-			<Link className={styles.link} href="/news">
-				News and Updates
-			</Link>
-			<Link className={styles.link} href="/about">
-				About
-			</Link>
-			<Link className={styles.link} href="/how-to-play">
-				How to Play
-			</Link>
-			<Link className={styles.link} href="/collection">
-				Cards
-			</Link>
-			{user && (
-				<Link className={styles.link} href="/market">
-					Market
+			<div className = {styles.linkContainer}>
+				<Link className={styles.logoContainer} href="/">
+					<img className= {styles.logo} src= 'https://i.imgur.com/igGs067.png'/>
 				</Link>
-			)}
-			{user && (
-				<Link className={styles.link} href="/lobby">
-					Play!
+				<Link className={styles.link} href="/news">
+					NEWS AND UPDATE
 				</Link>
-			)}
-			{!user && (
-				<Link className={styles.link} href="/login">
-					Login/Sign Up
+				<Link className={styles.link} href="/about">
+					ABOUT
 				</Link>
-			)}
-			{user && (
-				<Link className={styles.link} href="/user">
-					Account
+				<Link className={styles.link} href="/how-to-play">
+					HOW TO PLAY
 				</Link>
+				<Link className={styles.link} href="/collection">
+					CARDS
+				</Link>
+				{user && (
+					<Link className={styles.link} href="/market">
+						MARKET
+					</Link>
+				)}
+				{user && (
+					<Link className={styles.link} href="/lobby">
+						PLAY!
+					</Link>
+				)}
+				{!user && (
+					<Link className={styles.link} href="/login">
+						LOGIN/SIGNUP
+					</Link>
+				)}
+			</div>
+			{user && (<div className={styles.dropDownWrapper} onClick={toggleDropdown}>
+				SETTINGS
+			</div>)}
+			{showDropdown &&(
+				<div className= {styles.dropDown}>
+				{user && (
+				<Link className = {styles.dropDownLink} href="/user">
+					MY ACCOUNT
+				</Link>
+				)}
+				{user && (<button onClick={() => signOutHandler()}>Sign Out</button>)}
+				</div>
 			)}
-			{user && <button onClick={() => signOutHandler()}>Sign Out</button>}
+			
 		</div>
 	);
 };

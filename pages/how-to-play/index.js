@@ -39,14 +39,14 @@ export default function HowToPlay() {
       {" "}
       {!toggledState ? (
         <>
-          <h1 className={roboto.className}>Welcome To Capstone Card Game!</h1>
+          <h1 className={roboto.className}>Welcome To Shonen Throwdown!</h1>
           <img
             className={styles.bannerimg}
             src="https://i.imgur.com/zXVH6ZY.jpeg"
           />
           <h2 className={roboto.className}>Introduction:</h2>
           <p className={`${notoSerif.className} ${styles.p}`}>
-          Welcome to Capstone Card Game! This is a strategic 1v1 trading card game that combines elements of chance, skill, and luck. Players build their own decks of 12 cards and battle against each other to see who comes out on top. Each card has its own unique stats and abilities, and players must use them strategically to outwit and defeat their opponents. One of the most exciting aspects of this game is that the cards are based on popular anime series such as Naruto, One Piece, Bleach, and Dragon Ball Z. You'll have the chance to collect your favorite anime characters and use them to battle other players online. In this article, we'll go over the basic rules of the game so you can start playing right away!
+          Welcome to Shonen Throwdown! This is a strategic 1v1 trading card game that combines elements of chance, skill, and luck. Players build their own decks of 12 cards and battle against each other to see who comes out on top. Each card has its own unique stats and abilities, and players must use them strategically to outwit and defeat their opponents. One of the most exciting aspects of this game is that the cards are based on popular anime series such as Naruto, One Piece, Bleach, and Dragon Ball Z. You'll have the chance to collect your favorite anime characters and use them to battle other players online. In this article, we'll go over the basic rules of the game so you can start playing right away!
           </p>
           <h2 className={roboto.className}>Deck Building:</h2>
           <figure className={styles.figure}>
@@ -63,7 +63,7 @@ export default function HowToPlay() {
           </p>
           <h2 className={roboto.className}>Gameplay:</h2>
           <p className={`${notoSerif.className} ${styles.p}`}>
-          Once you've built your deck, you're ready to start playing Capstone Card Game! The goal of the game is to reduce your opponent's HP to zero by playing cards and dealing damage. Each player starts with 15 HP, and the player who reduces their opponent's HP to zero first wins the game. Here's how to play:
+          Once you've built your deck, you're ready to start playing Shonen Throwdown! The goal of the game is to reduce your opponent's HP to zero by playing cards and dealing damage. Each player starts with 15 HP, and the player who reduces their opponent's HP to zero first wins the game. Here's how to play:
           </p>
           <ol className={`${notoSerif.className} ${styles.p} `}>
             <li className={`${notoSerif.className} ${styles.p} `}>
@@ -78,7 +78,7 @@ export default function HowToPlay() {
           </ol>
           <h2 className={roboto.className}>Conclusion:</h2>
           <p className={`${notoSerif.className} ${styles.p}`}>
-            And that's how you play Capstone Card Game! Remember to build your
+            And that's how you play Shonen Throwdown! Remember to build your
             deck carefully, strategize your moves, and use your cards wisely to
             defeat your opponents. With practice, skill, and a bit of luck, you
             can become a master of this exciting trading card game.
