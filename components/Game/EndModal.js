@@ -28,8 +28,8 @@ let EndModal = () => {
     dispatch(gameActions.setCounter(0));
     dispatch(gameActions.setWinner(null));
     dispatch(gameActions.setCardToPlay(false));
-    const channel = supabase.channel(Router.query.id).subscribe();
-    channel.removeAllChannels();
+    supabase.removeAllChannels();
+
     Router.push("/lobby");
   };
 
