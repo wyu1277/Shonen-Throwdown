@@ -68,6 +68,7 @@ const Loading = () => {
       { event: "readyUp" + Router.query.id },
       (payload) => {
         console.log(payload.payload, "READY UP PAYLOAD");
+        dispatch(gameActions.setPlayer1(player));
         dispatch(gameActions.setPlayer2(payload.payload.data));
         dispatch(gameActions.setPlayer2Deck(payload.payload.userDeck));
       }
