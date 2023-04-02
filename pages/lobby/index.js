@@ -6,9 +6,9 @@ import GameRoom from "@/components/GameRoom/GameRoom";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useSelector } from "react-redux";
 import Channels from "@/components/Channels/Channels";
-import { Router } from "react-router-dom";
+// import { Router } from "react-router-dom";
 import { useRouter } from "next/router";
-
+// import Router from "next/router";
 const Lobby = () => {
   const authUser = useUser();
   const [user, setUser] = useState();
@@ -16,7 +16,15 @@ const Lobby = () => {
   const route = router.pathname;
   console.log("🚀 ~ file: index.js:22 ~ Lobby ~ route:", route);
 
+  const shouldReload = useSelector((state) => {
+    return state.game.shouldReload;
+  });
+
   useEffect(() => {
+    console.log(shouldReload);
+    if (shouldReload) {
+      window.location.reload();
+    }
     const fetchUser = async () => {
       const { data } = await supabase
         .from("users")

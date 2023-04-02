@@ -28,6 +28,7 @@ let EndModal = () => {
     dispatch(gameActions.setCounter(0));
     dispatch(gameActions.setWinner(null));
     dispatch(gameActions.setCardToPlay(false));
+    dispatch(gameActions.setShouldReload(true));
     supabase.removeAllChannels();
 
     Router.push("/lobby");

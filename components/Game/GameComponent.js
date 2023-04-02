@@ -64,7 +64,7 @@ const GameComponent = (props) => {
     if (myCardPos !== null && oppCardPos !== null) {
       // console.log(myCardRefs.current[myCardPos - 1]);
       oppImage = null;
-      if (myCardRefs.current[oppCardPos - 1] !== null) {
+      if (myCardRefs.current[myCardPos - 1] !== null) {
         myCardRefs.current[myCardPos - 1].remove();
         cardRefs.current[oppCardPos].remove();
       }
@@ -180,7 +180,7 @@ const GameComponent = (props) => {
     // if (!ended) {
     setInterval(() => {
       checkCards(myCard, oppCard);
-    }, 1000);
+    }, 2000);
 
     setInterval(() => {
       if (myCard) {

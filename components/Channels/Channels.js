@@ -7,12 +7,23 @@ import Link from "next/link";
 import { v4 as uuidv4 } from "uuid";
 import { userActions } from "@/store/slices/userSlice";
 import { useUser } from "@supabase/auth-helpers-react";
-
+import { useDispatch } from "react-redux";
+import { searchUser } from "@/store/slices/userSlice";
+import { fetchDeckCards } from "@/store/slices/deckSlice";
 const Channels = () => {
-  const [listChannels, setListChannels] = useState([]);
+  // Router.reload();
+  const dispatch = useDispatch();
+  const user = useUser();
 
+  const [listChannels, setListChannels] = useState([]);
   //useeffect to fetch all game IDs aka channels and set game ID to channel ID
   useEffect(() => {
+    // Router.reload();
+    if (user) {
+      dispatch(searchUser(user.id));
+      dispatch(fetchDeckCards(user.id));
+    }
+
     const getChannels = async () => {
       const { data } = await supabase.from("game").select("id");
       setListChannels(data);
@@ -21,7 +32,11 @@ const Channels = () => {
     };
     getChannels();
   }, []);
+  // const refreshPage = () => {
+  //   window.location.reload();
+  // };
 
+  // refreshPage();
   // const handleJoin = (e) => {
   //   console.log(e.target.value);
 
@@ -35,7 +50,6 @@ const Channels = () => {
   //   });
   // };
   const uuid = uuidv4();
-  const user = useUser();
   const handleCreateRoom = () => {
     const createChannel = async () => {
       const { data, error } = await supabase
