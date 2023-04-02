@@ -63,6 +63,7 @@ const GameComponent = (props) => {
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
       console.log(myCardRefs.current[myCardPos - 1]);
+      oppImage = null;
 
       myCardRefs.current[myCardPos - 1].remove();
       cardRefs.current[oppCardPos].remove();
@@ -70,7 +71,6 @@ const GameComponent = (props) => {
       oppCardPos = null;
       myCard = null;
       oppCard = null;
-      oppImage = null;
 
       dispatch(gameActions.setCardToPlay(false));
     }
@@ -81,8 +81,12 @@ const GameComponent = (props) => {
     let winningElement;
     let damagedPlayer;
     // console.log(myCardPos, oppCardPos, "CARD POSITIONS");
-
+    console.log(myCard, "MY CArd  BEFORE ");
+    console.log(oppImage, "opp CARD IMAGE BEFORE ");
     if (myCard !== null && oppImage !== null) {
+      // console.log(myCardRefs, "MY CARD REFS");
+      console.log(cardRefs, "cardRefs");
+      console.log(oppCardPos, "oppCardPosition");
       cardRefs.current[
         oppCardPos
       ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
