@@ -25,8 +25,17 @@ const Home = ({ user }) => {
   const loadState = useSelector((state) => {
     return state.user.loading;
   });
+
+  const shouldReload = useSelector((state) => {
+    return state.game.shouldReload;
+  });
+
   useEffect(() => {
     // console.log("loading");
+
+    if (shouldReload) {
+      window.location.reload();
+    }
     if (user) {
       dispatch(searchUser(user.id));
       dispatch(fetchDeckCards(user.id));

@@ -19,10 +19,6 @@ const Channels = () => {
   //useeffect to fetch all game IDs aka channels and set game ID to channel ID
   useEffect(() => {
     // Router.reload();
-    if (user) {
-      dispatch(searchUser(user.id));
-      dispatch(fetchDeckCards(user.id));
-    }
 
     const getChannels = async () => {
       const { data } = await supabase.from("game").select("id");

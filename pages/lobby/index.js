@@ -16,15 +16,15 @@ const Lobby = () => {
   const route = router.pathname;
   console.log("🚀 ~ file: index.js:22 ~ Lobby ~ route:", route);
 
-  const shouldReload = useSelector((state) => {
-    return state.game.shouldReload;
-  });
-
   useEffect(() => {
-    console.log(shouldReload);
-    if (shouldReload) {
-      window.location.reload();
-    }
+    // if (user) {
+    //   dispatch(searchUser(user.id));
+    //   dispatch(fetchDeckCards(user.id));
+    // }
+    // console.log(shouldReload);
+    // if (shouldReload) {
+    //   window.location.reload();
+    // }
     const fetchUser = async () => {
       const { data } = await supabase
         .from("users")
