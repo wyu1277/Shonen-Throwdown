@@ -72,6 +72,83 @@ const Loading = () => {
         payload: { player, userDeck },
       });
     });
+<<<<<<< Updated upstream
+=======
+    // .on(
+    //   "broadcast",
+    //   { event: "getUserDeck/" + Router.query.id },
+    //   (payload) => {
+    //     console.log(payload, "LOADING PAYLOAD BROADCAST");
+    //     dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+    //     dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+    //   }
+    // )
+    channel.on("presence", { event: "join" }, ({ key, newPresences }) => {
+      if (player1id && player1id !== user.id) {
+        const setPlayer2 = async () => {
+          await supabase
+            .from("game")
+            .update({ player2: user.id })
+            .eq("id", Router.query.id);
+        };
+        setPlayer2();
+      }
+      let newPresence = newPresences[0];
+      console.log(key, newPresence, "IS COMIN IN HOTTTTTTTTTTTTTTT");
+      channel.on("presence", { event: "sync" }, () => {
+        console.log("PRESNECE SYNC WHATEVE THE FUCK 1");
+        channel
+          // .subscribe(async (status) => {
+          //   if (status === "SUBSCRIBED") {
+          //     const presenceTrackStatus = await channel.track({
+          //       player: player,
+          //       userDeck: userDeck,
+          //     });
+          //     console.log(presenceTrackStatus);
+          //   }
+          // })
+          .send({
+            type: "broadcast",
+            event: "getUserDeck/" + Router.query.id,
+            payload: { data: { player, userDeck } },
+          });
+      });
+      channel.on(
+        "broadcast",
+        { event: "getUserDeck/" + Router.query.id },
+        (payload) => {
+          console.log(payload, "LOADING PAYLOAD BROADCAST");
+          dispatch(gameActions.setPlayer2Deck(payload.payload.data?.userDeck));
+          dispatch(gameActions.setPlayer2(payload.payload.data?.player));
+        }
+      );
+    });
+    // .on("presence", { event: "join" }, (object) => {
+    //   setPresences((presences) => [...presences, object]);
+    //   console.log(presences);
+    // });
+    // .subscribe(async (status) => {
+    //   if (trackingStatus === "closed") {
+    //     const untrackStatus = await channel.untrack();
+    //     // console.log(trackStatus, "TRACKSTATUS LINE 57");
+    //     console.log(untrackStatus, "STATUS/HAS LEFT");
+    //   }
+
+    //   if (status === "SUBSCRIBED") {
+    //     const trackStatus = await channel.track();
+    //     console.log(trackStatus, "TRACKSTATUS");
+    //     // await channel.untrack();
+    //   }
+    // });
+    setTimeout(() => {
+      setLocalLoading(false);
+    }, 4000);
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+>>>>>>> Stashed changes
 
     channel.on("presence", { event: "join" }, ({ newPresences }) => {
       console.log("joined");

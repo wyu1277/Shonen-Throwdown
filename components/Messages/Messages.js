@@ -72,6 +72,23 @@ const Messages = (props) => {
       channel_id: channels,
     });
   };
+
+  useEffect(() => {
+    if (isVisible === true) {
+      let textArea = document.getElementById("textarea");
+      if (textArea !== null) {
+        console.log("text are block", textArea);
+        console.log("isvisible block", isVisible);
+        textArea.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("myBtn").click();
+          }
+        });
+      }
+    }
+  }, [isVisible]);
+
   // console.log("chat", chat);
   // console.log("current channel", channels);
 
@@ -117,8 +134,11 @@ const Messages = (props) => {
               className={styles.textarea}
               name="content"
               type="text"
+              id={"textarea"}
             ></textarea>
-            <button className={styles.button}>Send</button>
+            <button id={"myBtn"} className={styles.button}>
+              Send
+            </button>
           </form>
         </>
       )}
