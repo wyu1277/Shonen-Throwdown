@@ -9,7 +9,7 @@ import { userActions } from '@/store/slices/userSlice';
 import { useUser } from '@supabase/auth-helpers-react';
 import { useDispatch } from 'react-redux';
 import { searchUser } from '@/store/slices/userSlice';
-import { fetchDeckCards } from '@/store/slices/deckSlice';
+
 const Channels = () => {
 	const dispatch = useDispatch();
 	const user = useUser();
