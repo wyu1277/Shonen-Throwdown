@@ -6,15 +6,13 @@ import {
 } from "@/store/slices/collectionSlice";
 import { fetchAllCards, marketCards } from "@/store/slices/marketSlice";
 import { searchUser, updateWallet } from "@/store/slices/userSlice";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useUser } from "@supabase/auth-helpers-react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./market.module.css";
 import MarketModal from "@/components/market/marketModal";
-import Store from "@/components/store/store";
 
 const Market = () => {
-  const supabase = useSupabaseClient();
   const user = useUser();
   const dispatch = useDispatch();
   const cardsData = useSelector(marketCards);
@@ -30,7 +28,8 @@ const Market = () => {
 	const [noMoney, setNoMoney] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [newCards, SetNewCards] = useState([]);
-    const [currentBanner, setCurrentBanner] = useState(1);
+  const [currentBanner, setCurrentBanner] = useState(1);
+  const [selectedTitle, setSelectedTitle] = useState(null);
 
   useEffect(() => {
     dispatch(fetchAllCards());
@@ -154,14 +153,22 @@ const Market = () => {
 
 	return (
 		<div className={styles.pageParent}>
-			<div className={styles.storeParent}>
-				<h1 className={styles.h1}>Currency: {userData ? `${userData.wallet} tokens` : 'loading'}</h1>
+			<div className={styles.currencyContainer}>
+				<h1 className={styles.h1}>{userData ? `${userData.wallet} tokens` : 'loading'}</h1>
 			</div>
             <nav className={styles.nav}>
-                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(1)}>One Piece</h1>
-                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(2)}>Naruto</h1>
-                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(3)}>Bleach</h1>
-                <h1 style={{ cursor: 'pointer' }} onClick={() => handleBannerClick(4)}>DBZ</h1>
+              <div className={styles.cardBanner} style={{backgroundColor: currentBanner === 1 ? 'yellow':'blue', color: currentBanner === 1 ? 'black':'white'}} onClick={() => handleBannerClick(1)}>
+                <h1>One Piece</h1>
+              </div>
+              <div className={styles.cardBanner} style={{backgroundColor: currentBanner === 2 ? 'yellow':'blue', color: currentBanner === 2 ? 'black':'white'}} onClick={() => handleBannerClick(2)}>
+                <h1>Naruto</h1>
+              </div>
+              <div className={styles.cardBanner} style={{backgroundColor: currentBanner === 3 ? 'yellow':'blue', color: currentBanner === 3 ? 'black':'white'}} onClick={() => handleBannerClick(3)}>
+                <h1>Bleach</h1>
+              </div>
+              <div className={styles.cardBanner} style={{backgroundColor: currentBanner === 4 ? 'yellow':'blue', color: currentBanner === 4 ? 'black':'white'}} onClick={() => handleBannerClick(4)}>
+                <h1>DBZ</h1>
+              </div>
             </nav>
            { currentBanner === 1 && (
             <div className={styles.banner}>
