@@ -13,6 +13,12 @@ import store from "@/store";
 import { AnimatePresence } from "framer-motion";
 import { setUseProxies } from "immer";
 import Router from "next/router";
+import { Roboto, Noto_Serif } from "next/font/google";
+
+const roboto = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export default function App({ Component, pageProps, router }) {
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
@@ -23,9 +29,11 @@ export default function App({ Component, pageProps, router }) {
         supabaseClient={supabaseClient}
         initialSession={pageProps.initialSession}
       >
-        {showHeader && <Navbar />}
+        {showHeader && <Navbar/>}
         <AnimatePresence node="wait">
+        <main className={roboto.className}>
           <Component key={router.route} {...pageProps} />
+        </main>
         </AnimatePresence>
       </SessionContextProvider>
     </Provider>
