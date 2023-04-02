@@ -87,9 +87,11 @@ const GameComponent = (props) => {
       // console.log(myCardRefs, "MY CARD REFS");
       console.log(cardRefs, "cardRefs");
       console.log(oppCardPos, "oppCardPosition");
-      cardRefs.current[
-        oppCardPos
-      ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+      if (cardRefs.current[oppCardPos] !== null) {
+        cardRefs.current[
+          oppCardPos
+        ].innerHTML = `<img src=${oppImage} alt="card" class="gameplay-card" />`;
+      }
     }
 
     if (myCard && oppCard) {
