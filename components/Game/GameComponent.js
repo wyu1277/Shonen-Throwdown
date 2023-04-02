@@ -62,11 +62,12 @@ const GameComponent = (props) => {
 
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
-      console.log(myCardRefs.current[myCardPos - 1]);
+      // console.log(myCardRefs.current[myCardPos - 1]);
       oppImage = null;
-
-      myCardRefs.current[myCardPos - 1].remove();
-      cardRefs.current[oppCardPos].remove();
+      if (myCardRefs.current[oppCardPos - 1] !== null) {
+        myCardRefs.current[myCardPos - 1].remove();
+        cardRefs.current[oppCardPos].remove();
+      }
       myCardPos = null;
       oppCardPos = null;
       myCard = null;
