@@ -171,7 +171,7 @@ const Market = () => {
             </nav>
            { currentBanner === 1 && (
             <div className={styles.banner}>
-                <img className={styles.img} src="https://i.imgur.com/zKeGQID.png"/>
+                <img className={styles.img} src="https://i.imgur.com/zKeGQID.png" alt="One Piece Banner"/>
                 <div>
                     <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['One Piece'])}>Pull One 10 tokens</button>
                     <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['One Piece'])}>Pull Three 25 tokens</button>
@@ -180,7 +180,7 @@ const Market = () => {
             }
            { currentBanner === 2 && (
             <div className={styles.banner}>
-                <img className={styles.img} src="https://i.imgur.com/HhwbDvp.png"/>
+                <img className={styles.img} src="https://i.imgur.com/HhwbDvp.png" alt="Naruto Banner"/>
                 <div>
                 <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['Naruto'])}>Pull One 10 tokens</button>
                     <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['Naruto'])}>Pull Three 25 tokens</button>
@@ -189,7 +189,7 @@ const Market = () => {
             }
            { currentBanner === 3 && (
             <div className={styles.banner}>
-                <img className={styles.img} src="https://i.imgur.com/Gnfe44n.png"/>
+                <img className={styles.img} src="https://i.imgur.com/Gnfe44n.png" alt="Bleach Banner"/>
                 <div>
                 <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['Bleach'])}>Pull One 10 tokens</button>
 			        <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['Bleach'])}>Pull Three 25 tokens</button>
@@ -198,7 +198,7 @@ const Market = () => {
             }
            { currentBanner === 4 && (
             <div className={styles.banner}>
-                <img className={styles.img} src="https://i.imgur.com/eiqVfQA.png"/>
+                <img className={styles.img} src="https://i.imgur.com/eiqVfQA.png" alt="Dragon Ball Z Banner"/>
                 <div>
                 <button className={styles.button} onClick={() => getRandomCard(cardsBySeries['DBZ'])}>Pull One 10 tokens</button>
 			        <button className={styles.button} onClick={() => getThreeCards(cardsBySeries['DBZ'])}>Pull Three 25 tokens</button>
