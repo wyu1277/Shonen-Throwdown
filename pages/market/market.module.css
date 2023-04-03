@@ -23,6 +23,8 @@
 
 .button{
 	margin: 10px 10px;
+	height: 30px;
+	width: 300px;
 }
 
 .nav{
@@ -39,6 +41,12 @@
 
 .h1{
 	margin-right: 10px;
+	font-size: 25px;
+}
+
+.cardBanner:hover{
+	background-color: yellow;
+	color:black;
 }
 
 .cardBanner{
@@ -51,10 +59,6 @@
 	border-color: yellow;
 	margin: 10px;
 	cursor: pointer;
-}
-.cardBanner:hover{
-	background-color: yellow;
-	color:black;
 }
 
 .cardBanner h1{
