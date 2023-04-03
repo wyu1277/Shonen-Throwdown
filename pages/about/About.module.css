@@ -1,0 +1,49 @@
+.container {
+  background-image: url("https://i.imgur.com/E3uMq2U.jpg");
+  background-repeat: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -30px;
+  height: 100vh;
+}
+
+.kylesCard {
+  background-image: url(https://i.imgur.com/GDBpXpC.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 30vh;
+  width: 30vw;
+}
+
+.wilsonsCard {
+  background-image: url(https://i.imgur.com/nmhfFBZ.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 30vh;
+  width: 30vw;
+}
+
+.victorsCard {
+  background-image: url(https://i.imgur.com/u7SeDyz.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 30vh;
+  width: 30vw;
+}
+
+.jonsCard {
+  background-image: url(https://i.imgur.com/u7SeDyz.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 30vh;
+  width: 30vw;
+}
+
+.banner {
+  height: 25vh;
+}

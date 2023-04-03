@@ -1,4 +1,4 @@
-import classes from "./AccountSetupForm.module.css";
+import classes from "./AccountUpdateForm.module.css";
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import supabase from "@/lib/supabase";
@@ -42,8 +42,9 @@ const AccountUpdateForm = (props) => {
 
   return (
     <div className={classes.container}>
+      <h1>Update Account Info</h1>
       <form onSubmit={submitHandler}>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="fName">First Name:</label>
           <input
             name="fName"
@@ -52,7 +53,7 @@ const AccountUpdateForm = (props) => {
             ref={fnameRef}
           />
         </div>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="lName">Last Name:</label>
           <input
             name="lName"
@@ -61,7 +62,7 @@ const AccountUpdateForm = (props) => {
             ref={lnameRef}
           />
         </div>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="pnumber">Phone:</label>
           <input
             name="pnumber"
@@ -71,7 +72,7 @@ const AccountUpdateForm = (props) => {
             ref={phoneRef}
           />
         </div>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="username">Username:</label>
           <input
             name="username"
