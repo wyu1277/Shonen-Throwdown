@@ -4,7 +4,7 @@
 
 html {
   height: 100%;
-  background-color: #220901;
+  background-color: black;
   padding: 0;
   margin: 0;
 }
@@ -33,6 +33,17 @@ a {
   z-index: 1;
 }
 
+.container-account {
+  background-color: transparent;
+  height: 75vh;
+  width: 75vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/images/bleach.png");
+  background-size: cover;
+}
+
 .game-container {
   height: 100%;
   width: 100%;
@@ -48,11 +59,12 @@ a {
   background-image: url("/images/Jiraiya.gif");
   background-size: cover;
   position: relative;
+  opacity: 0.7;
   /* background-color: #000000; */
 }
 
 .user-container {
-  border: 1px solid yellow;
+  /* border: 1px solid yellow; */
   background-color: black;
   height: 180px;
   width: 100px;
@@ -61,6 +73,7 @@ a {
   bottom: 0;
   left: 0;
   margin: 20px;
+  opacity: 1;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 1);
 }
 
@@ -75,6 +88,7 @@ a {
   margin: 20px;
   background-color: black;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  font-size: large;
 }
 
 .player1-hp {
@@ -89,6 +103,8 @@ a {
   bottom: 250px;
   left: 250px;
   border-radius: 10px;
+  opacity: 1;
+  font-weight: bold;
 }
 
 .player2-hp {
@@ -108,6 +124,7 @@ a {
 .gameplay-card {
   height: 180px;
   width: 120px;
+  opacity: 1;
 }
 
 .player-div {
@@ -157,4 +174,118 @@ a {
   position: fixed;
   bottom: 0;
   left: 0;
+}
+
+.load-container {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ready-btn {
+  background-color: transparent;
+  border-style: solid;
+  border-color: black;
+  /* background-image: url("http://vignette2.wikia.nocookie.net/fictional-battle-omniverse/images/8/8b/Goku_Dragon_Ball_Z.png/revision/latest?cb=20150508010447"); */
+}
+
+.container1 {
+  display: block;
+  position: relative;
+  /* bottom: -600px; */
+  width: 600px;
+  height: 500px;
+  border-radius: 50px;
+  text-align: center;
+  font-family: "Ravi Prakash", cursive;
+  -webkit-text-stroke: 2px black;
+  font-size: 50px;
+  font-weight: 500;
+  perspective: 600px;
+  perspective-origin: 50% 0;
+  background-image: url("/images/gokufirst.gif");
+  background-size: cover;
+}
+
+.dbztext {
+  color: yellow;
+  background: linear-gradient(to bottom, yellow 0%, red 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.textleft {
+  transform-origin: 20% 0%;
+  transform-style: preserve-3d;
+  transform: rotateY(10deg);
+}
+
+.textscroll {
+  animation: scrolling 40s linear 0s infinite;
+}
+
+@keyframes scrolling {
+  from {
+    transform: translateY(25%);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.dbzlogo {
+  max-width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.ready-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  color: #f0833a;
+  font-family: "Ravi Prakash", cursive;
+}
+
+.dragon-balls {
+  height: 150px;
+  width: 150px;
+  position: absolute;
+}
+
+.db1 {
+  left: 140px;
+}
+
+.db2 {
+  right: 40px;
+  top: 160px;
+}
+
+.db3 {
+  left: 20px;
+  top: 100px;
+}
+.db4 {
+  right: 300px;
+  top: 40px;
+}
+.db5 {
+  right: 100px;
+  bottom: 150px;
+}
+.db6 {
+  height: 140px;
+  width: 170px;
+  right: 250px;
+  top: 350px;
+}
+.db7 {
+  left: 50px;
+  bottom: 50px;
 }

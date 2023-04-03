@@ -5,9 +5,14 @@
 }
 
 .winMessage {
-	color: aqua;
+	color: rgb(255, 255, 0);
+	margin-bottom: 100px;
 }
 
+.loseMessage {
+	color: rgb(255, 0, 0);
+	margin-bottom: 100px;
+}
 
 .throwaway {
 	z-index: -3;
@@ -15,3 +20,50 @@
 	opacity: 0%;
 }
 
+.returnHome {
+	height: 40px;
+	width: 120px;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 15px;
+	border-radius: 10px;
+	margin: 10px;
+	background-color: rgb(225, 255, 254);
+	box-shadow: 10px 10px 10px #000;
+}
+
+.returnHome:hover {
+	background-color: rgb(5, 95, 222);
+	color: white;
+}
+
+.cardWin {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	text-shadow: 0 0 4px #000, 0 0 4px #000, 0 0 4px #000, 0 0 4px #000;
+	height: 500px;
+	width: 1100px;
+	border-radius: 15px;
+	background-image: url('/images/lightBig4.jpeg');
+	background-size: cover;
+	box-shadow: inset 0 0 50px #fff, inset 20px 0 80px rgb(242, 255, 144), inset -20px 0 80px rgb(255, 230, 0),
+		inset 20px 0 300px rgb(255, 227, 102), inset -20px 0 300px rgb(255, 247, 0), 0 0 50px #fff,
+		-10px 0 80px rgb(255, 242, 0), 10px 0 80px rgb(255, 247, 0);
+}
+
+.cardLose {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	text-shadow: 0 0 4px #000, 0 0 4px #000, 0 0 4px #000, 0 0 4px #000;
+	height: 500px;
+	width: 1100px;
+	border-radius: 15px;
+	background-image: url('/images/darkBig4.jpg');
+	background-size: cover;
+	box-shadow: inset 0 0 50px rgb(6, 6, 6), inset 20px 0 80px rgb(244, 90, 51), inset -20px 0 80px rgb(0, 0, 0),
+		inset 20px 0 300px rgb(47, 1, 1), inset -20px 0 300px rgb(21, 4, 1), 0 0 50px #fff, -10px 0 80px rgb(255, 0, 0),
+		10px 0 80px rgb(210, 18, 1);
+}

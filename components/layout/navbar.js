@@ -20,69 +20,46 @@ const Navbar = () => {
     setShowDropdown(!showDropdown);
     audioRef.current.play();
   };
+
+  const audioHandler = () => {
+    audioRef.current.volume = 0.2;
+    audioRef.current.play();
+  };
   return (
     <div className={styles.nav}>
       <audio src="/audio/click.wav" ref={audioRef} />
       <div className={styles.linkContainer}>
-        <Link
-          className={styles.logoContainer}
-          onClick={() => audioRef.current.play()}
-          href="/"
-        >
+        <Link className={styles.logoContainer} onClick={audioHandler} href="/">
           <img className={styles.logo} src="https://i.imgur.com/igGs067.png" />
         </Link>
-        <Link
-          className={styles.link}
-          onClick={() => audioRef.current.play()}
-          href="/news"
-        >
-          NEWS AND UPDATE
+        <Link className={styles.link} onClick={audioHandler} href="/news">
+          NEWS AND UPDATES
         </Link>
-        <Link
-          className={styles.link}
-          onClick={() => audioRef.current.play()}
-          href="/about"
-        >
+        <Link className={styles.link} onClick={audioHandler} href="/about">
           ABOUT
         </Link>
         <Link
           className={styles.link}
-          onClick={() => audioRef.current.play()}
+          onClick={audioHandler}
           href="/how-to-play"
         >
           HOW TO PLAY
         </Link>
-        <Link
-          className={styles.link}
-          onClick={() => audioRef.current.play()}
-          href="/collection"
-        >
+        <Link className={styles.link} onClick={audioHandler} href="/collection">
           CARDS
         </Link>
         {user && (
-          <Link
-            className={styles.link}
-            onClick={() => audioRef.current.play()}
-            href="/market"
-          >
+          <Link className={styles.link} onClick={audioHandler} href="/market">
             MARKET
           </Link>
         )}
         {user && (
-          <Link
-            className={styles.link}
-            onClick={() => audioRef.current.play()}
-            href="/lobby"
-          >
+          <Link className={styles.link} onClick={audioHandler} href="/lobby">
             PLAY!
           </Link>
         )}
         {!user && (
-          <Link
-            className={styles.link}
-            onClick={() => audioRef.current.play()}
-            href="/login"
-          >
+          <Link className={styles.link} onClick={audioHandler} href="/login">
             LOGIN/SIGNUP
           </Link>
         )}
@@ -97,7 +74,7 @@ const Navbar = () => {
           {user && (
             <Link
               className={styles.dropDownLink}
-              onClick={() => audioRef.current.play()}
+              onClick={audioHandler}
               href="/user"
             >
               MY ACCOUNT
