@@ -1,5 +1,5 @@
 "use client";
-
+import { Roboto } from "next/font/google";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { searchUser } from "@/store/slices/userSlice";
@@ -11,6 +11,13 @@ import container from "@/styles/variants";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
 import styles from "../styles/home.module.css";
 import Router from "next/router";
+import shonenthrowdown from '../public/images/shonenthrowdown.gif'
+import Image from "next/image";
+
+const roboto = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const Home = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,16 +63,34 @@ const Home = ({ user }) => {
       {loadState ? (
         <div>loading</div>
       ) : (
-        <div className={styles.outer}>
-          <div className={styles.imageDiv}>
-            <img
-              className={styles.img}
-              src="https://pbs.twimg.com/media/E4f3Ub7XMAkrBay?format=jpg&name=large"
-            ></img>
+        <div className={styles.homepageContainer}>
+          <div className={styles.imgContainer}>
+            <Image className={styles.img} src={shonenthrowdown}/>
+            <button className={`${roboto.className} ${styles.button}`} onClick={()=>router.push('/lobby')}>PLAY NOW &#62;</button>
           </div>
-          <div className={styles.one}></div>
-          <div className={styles.two}></div>
-          <div className={styles.three}></div>
+          <div className={styles.section}>
+            <img className={styles.sectionImg} src='http://rubberslug.s3.amazonaws.com/user/3/262b639333041368802c7e7c7bbe5ff/fdoxmylygp_o.jpg'/>
+            <div className={styles.sectionInfo}>
+              <div className= {styles.sectionTextContainer}>
+                <h2>Featured Card</h2>
+                <h1>Ichigo Kurosaki</h1>
+                <button className={roboto.className} onClick={()=> router.push('/market')}>PULL NOW &#62;</button>
+              </div>
+              <img className={styles.cardImg} src ='https://i.imgur.com/SfS6xsj.png'/>
+            </div>
+          </div>
+          <div className={styles.section}>
+            <img className={styles.sectionImg} src='https://images.pexels.com/photos/172277/pexels-photo-172277.jpeg'/>
+            <div className={styles.sectionInfo}>
+              <img className={styles.cardImg2} src ='https://i.imgur.com/1RbpkCe.png'/>
+              <div className= {styles.sectionTextContainer}>
+                <h2>EASY TO LEARN, FUN TO PLAY!</h2>
+                <h1>BEGIN YOUR ADVENTURE</h1>
+                <h1>WITH OUR HOW TO PLAY!</h1>
+                <button className={roboto.className} onClick={()=> router.push('/market')}>LEARN MORE &#62;</button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </motion.div>
