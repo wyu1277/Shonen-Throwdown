@@ -30,6 +30,7 @@ let EndModal = () => {
 		return state.game.loser;
 	});
 
+
 	useEffect(() => {
 		console.log(loser, 'LOSER IN USE EFFECT');
 		console.log(player, 'CONST PLAYER IN USEEFFECT');
@@ -59,6 +60,7 @@ let EndModal = () => {
 		supabase.removeAllChannels();
 		Router.push('/');
 	};
+
 
 	const checkstate = () => {
 		console.log('state in end screen page', ended);
