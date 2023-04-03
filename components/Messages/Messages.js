@@ -6,9 +6,10 @@ import styles from "./Messages.module.css";
 import { Noto_Serif } from "next/font/google";
 import { motion } from "framer-motion";
 
+
 const notoSerif = Noto_Serif({
-  subsets: ["latin"],
-  weight: "400",
+	subsets: ['latin'],
+	weight: '400'
 });
 
 const Messages = (props) => {
