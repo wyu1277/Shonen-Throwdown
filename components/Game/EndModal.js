@@ -18,6 +18,10 @@ let EndModal = () => {
     return state.game.winnerUsername;
   });
 
+  const player = useSelector((state) => {
+    return state.game.player1;
+  });
+
   const ended = useSelector((state) => {
     return state.game.ended;
   });
@@ -27,11 +31,15 @@ let EndModal = () => {
   });
 
   useEffect(() => {
-    if (user.id === loser?.id) {
-      loseRef.current.play();
-    } else if (user.id !== loser?.id) {
-      winRef.current.play();
-    }
+    console.log(loser, "LOSER IN USE EFFECT");
+    console.log(player, "CONST PLAYER IN USEEFFECT");
+    setTimeout(() => {
+      if (loser !== null && player.id === loser.id) {
+        loseRef.current.play();
+      } else if (loser !== null && player.id !== loser.id) {
+        winRef.current.play();
+      }
+    }, 1000);
   }, [loser]);
 
   const handleEndGame = (e) => {
@@ -64,7 +72,7 @@ let EndModal = () => {
         transition={{ duration: 0.2 }}
         className={styles.card}
       >
-        {user.id === loser?.id ? (
+        {player.id === loser?.id ? (
           <h1 className={styles.winMessage}>You lost!</h1>
         ) : (
           <h1 className={styles.winMessage}>You win!</h1>
