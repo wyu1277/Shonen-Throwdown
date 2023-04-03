@@ -1,15 +1,8 @@
 import { forwardRef, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "@/lib/supabase";
-import { useSelector } from "react-redux";
 
 const OpponentCard = (props, ref) => {
-  // const myCard = props.showMyCard();
   const audioRef = useRef(null);
-
-  // const myCard = useSelector((state) => {
-  //   return state.game.setCardToPlay;
-  // });
 
   const [tapCard, setTapCard] = useState(false);
   const opponentCardHandler = () => {

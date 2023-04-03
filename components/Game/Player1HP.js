@@ -2,10 +2,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Router from "next/router";
 import { gameActions } from "@/store/slices/gameSlice";
 import { loadActions } from "@/store/slices/loadSlice";
-import { supabase } from "@/lib/supabase";
 
 const Player1HP = (props) => {
   const dispatch = useDispatch();
@@ -24,8 +22,8 @@ const Player1HP = (props) => {
 
   return (
     <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
+      initial={{ scale: 0, backgroundColor: " #220901" }}
+      animate={{ scale: 1, backgroundColor: ["white", "red", " #220901"] }}
       className="player1-hp"
     >
       {player1.username} HP: {health1}

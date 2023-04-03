@@ -35,7 +35,7 @@ let EndModal = () => {
     console.log(player, "CONST PLAYER IN USEEFFECT");
     setTimeout(() => {
       if (loser !== null && player.id === loser.id) {
-        loseRef.current.play();
+        lose2Ref.current.play();
       } else if (loser !== null && player.id !== loser.id) {
         winRef.current.play();
       }
@@ -57,7 +57,7 @@ let EndModal = () => {
     dispatch(gameActions.setShouldReload(true));
     dispatch(gameActions.setWinnerUsername(null));
     supabase.removeAllChannels();
-    Router.push("/");
+    if (typeof window !== "undefined") Router.push("/");
   };
 
   const checkstate = () => {

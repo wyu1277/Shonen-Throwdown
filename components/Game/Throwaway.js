@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { gameActions } from "@/store/slices/gameSlice";
-import { loadActions } from "@/store/slices/loadSlice";
 import { supabase } from "@/lib/supabase";
 import Router from "next/router";
 import styles from "./EndModal.module.css";
@@ -33,8 +32,7 @@ const Throwaway = (props) => {
   const ended = useSelector((state) => {
     return state.game.ended;
   });
-  //   const player2 = props.player2info;
-  //   const player2Deck = props.player2Deck;
+
   useEffect(() => {
     console.log("END GAME USE EFFECT BEFORE THE IF STATEMENT");
     if (ended) {

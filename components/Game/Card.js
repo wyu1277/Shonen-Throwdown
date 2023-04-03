@@ -14,10 +14,6 @@ const Card = (props, refs) => {
   const audioRef = useRef(null);
   const [tapCard, setTapCard] = useState(true);
 
-  const health = useSelector((state) => {
-    return state.game.player1HP;
-  });
-
   const cardInPlay = useSelector((state) => {
     return state.game.cardInPlay;
   });
@@ -26,24 +22,8 @@ const Card = (props, refs) => {
     return state.game.counter;
   });
 
-  // const counterCheck = () => {
-  //   console.log(counter);
-  //   if (counter > 11) {
-  //     console.log("This game is ova");
-  //   }
-  // };
-
-  // const [channels, setChannels] = useState();
-  // setTapCard(false);
-
-  // const getChannel = async () => {
-  //   const channels = Router.query.id;
-  //   // console.log("this is new channel", newChannel);
-  //   setChannels(newChannel.id);
-  // };
   useEffect(() => {
     const counterCheck = () => {
-      // console.log(counter);
       if (counter > 11) {
         console.log("This game is ova");
         dispatch(gameActions.ended(true));
@@ -59,7 +39,6 @@ const Card = (props, refs) => {
   }, [counter]);
 
   useEffect(() => {
-    // getChannel();
     setTapCard(!tapCard);
   }, []);
 
@@ -87,7 +66,6 @@ const Card = (props, refs) => {
         });
 
       dispatch(gameActions.increaseCounter());
-      // counterCheck();
     }
   };
 
@@ -110,7 +88,6 @@ const Card = (props, refs) => {
             }
       }
       exit={{ x: -3000 }}
-      //   whileHover={{ backgroundColor: "white" }}
       onClick={cardHandler}
       whileHover={{ scale: 2 }}
       className="user-container"
