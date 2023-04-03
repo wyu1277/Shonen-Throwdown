@@ -103,8 +103,8 @@ const Loading = () => {
   const readyHandler = () => {
     channel.send({
       type: "broadcast",
-      event: "readyUp" + Router.query.id,
-      payload: { data: player, userDeck },
+      event: "readyUp/" + Router.query.id,
+      payload: { player, userDeck },
     });
     console.log(audioRef, "AUDIO REF");
 
