@@ -37,7 +37,7 @@ const Loading = () => {
     if (userDeck.length === 0) dispatch(fetchDeckCards(user.id));
   }, []);
 
-  const channel = supabase.channel(Router.channelID, {
+  const channel = supabase.channel(channelID, {
     config: { presence: { key: player?.username } },
   });
 
