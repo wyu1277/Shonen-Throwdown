@@ -47,12 +47,12 @@ const Home = ({ user }) => {
       dispatch(searchUser(user.id));
       dispatch(fetchDeckCards(user.id));
     }
-
-    if (user && userData?.username === null) {
-      router.push("/login/setup-account");
-    }
     // console.log(userData, "USERDATA");
   }, [userInfo]);
+
+  if (user && userData?.username === null) {
+    router.push("/login/setup-account");
+  }
   return (
     <motion.div
       variants={container}

@@ -38,14 +38,14 @@ const AccountSetupForm = () => {
       username,
     };
     dispatch(updateUser(info));
-    router.push("/");
+    router.push("/collection");
   };
 
   return (
     <div className={classes.container}>
       <h1>Finish Setting Up Your Account to Continue 😃</h1>
       <form onSubmit={submitHandler}>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="fName">First Name:</label>
           <input
             name="fName"
@@ -54,7 +54,7 @@ const AccountSetupForm = () => {
             ref={fnameRef}
           />
         </div>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="lName">Last Name:</label>
           <input
             name="lName"
@@ -63,7 +63,7 @@ const AccountSetupForm = () => {
             ref={lnameRef}
           />
         </div>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="pnumber">Phone:</label>
           <input
             name="pnumber"
@@ -73,7 +73,7 @@ const AccountSetupForm = () => {
             ref={phoneRef}
           />
         </div>
-        <div>
+        <div className={classes.field}>
           <label htmlFor="username">Username:</label>
           <input
             name="username"
