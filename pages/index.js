@@ -65,7 +65,7 @@ const Home = ({ user }) => {
       ) : (
         <div className={styles.homepageContainer}>
           <div className={styles.imgContainer}>
-            <Image className={styles.img} src={shonenthrowdown} alt="Shonen Throwdown Logo with two cards"/>
+            <Image priority className={styles.img} src={shonenthrowdown} alt="Shonen Throwdown Logo with two cards"/>
             <button className={`${roboto.className} ${styles.button}`} onClick={()=>router.push('/lobby')}>PLAY NOW &#62;</button>
           </div>
           <div className={styles.section}>
