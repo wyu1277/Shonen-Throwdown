@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useRef } from "react";
 
 const Navbar = () => {
+  const audioRef = useRef(null);
   const router = useRouter();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
@@ -17,37 +18,71 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+    audioRef.current.play();
   };
   return (
     <div className={styles.nav}>
+      <audio src="/audio/click.wav" ref={audioRef} />
       <div className={styles.linkContainer}>
-        <Link className={styles.logoContainer} href="/">
+        <Link
+          className={styles.logoContainer}
+          onClick={() => audioRef.current.play()}
+          href="/"
+        >
           <img className={styles.logo} src="https://i.imgur.com/igGs067.png" />
         </Link>
-        <Link className={styles.link} href="/news">
+        <Link
+          className={styles.link}
+          onClick={() => audioRef.current.play()}
+          href="/news"
+        >
           NEWS AND UPDATE
         </Link>
-        <Link className={styles.link} href="/about">
+        <Link
+          className={styles.link}
+          onClick={() => audioRef.current.play()}
+          href="/about"
+        >
           ABOUT
         </Link>
-        <Link className={styles.link} href="/how-to-play">
+        <Link
+          className={styles.link}
+          onClick={() => audioRef.current.play()}
+          href="/how-to-play"
+        >
           HOW TO PLAY
         </Link>
-        <Link className={styles.link} href="/collection">
+        <Link
+          className={styles.link}
+          onClick={() => audioRef.current.play()}
+          href="/collection"
+        >
           CARDS
         </Link>
         {user && (
-          <Link className={styles.link} href="/market">
+          <Link
+            className={styles.link}
+            onClick={() => audioRef.current.play()}
+            href="/market"
+          >
             MARKET
           </Link>
         )}
         {user && (
-          <Link className={styles.link} href="/lobby">
+          <Link
+            className={styles.link}
+            onClick={() => audioRef.current.play()}
+            href="/lobby"
+          >
             PLAY!
           </Link>
         )}
         {!user && (
-          <Link className={styles.link} href="/login">
+          <Link
+            className={styles.link}
+            onClick={() => audioRef.current.play()}
+            href="/login"
+          >
             LOGIN/SIGNUP
           </Link>
         )}
@@ -60,7 +95,11 @@ const Navbar = () => {
       {showDropdown && (
         <div className={styles.dropDown}>
           {user && (
-            <Link className={styles.dropDownLink} href="/user">
+            <Link
+              className={styles.dropDownLink}
+              onClick={() => audioRef.current.play()}
+              href="/user"
+            >
               MY ACCOUNT
             </Link>
           )}
