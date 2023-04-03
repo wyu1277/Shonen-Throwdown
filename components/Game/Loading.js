@@ -83,10 +83,6 @@ const Loading = () => {
     });
   }, [user]);
 
-  const playGame = () => {
-    dispatch(loadActions.setLoading(false));
-  };
-
   const readyHandler = () => {
     channel.send({
       type: "broadcast",
@@ -108,18 +104,16 @@ const Loading = () => {
   };
 
   return (
-    <div>
+    <div className="load-container">
       <audio src="/audio/cut.wav" ref={audioRef} />
 
-      {localLoading ? (
-        <div>LOADING...</div>
-      ) : (
-        <button onClick={playGame}>Click to Play!</button>
-      )}
+      {localLoading && <div>LOADING...</div>}
 
       <Throwaway player2info={player2info} player2Deck={player2Deck2} />
 
-      <button onClick={readyHandler}>Ready!</button>
+      <button onClick={readyHandler} className="ready-btn">
+        <div className="goku"></div>
+      </button>
     </div>
   );
 };
