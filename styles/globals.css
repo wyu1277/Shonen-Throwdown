@@ -1,38 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Ravi+Prakash&display=swap");
 
 * {
-  margin: 0;
+	margin: 0;
 }
 
 html {
-  height: 100%;
-  background-color: black;
-  padding: 0;
-  margin: 0;
+	height: 100%;
+	background-color: black;
+	padding: 0;
+	margin: 0;
 }
 
 body {
-  height: 100%;
-  color: white;
+	height: 100%;
+	color: white;
 }
 
 a {
-  /* color: white; */
-  text-decoration: none;
+	/* color: white; */
+	text-decoration: none;
 }
 
 .portal {
-  z-index: 10;
+	z-index: 10;
 }
 
 .backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 1);
-  z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 1);
+	z-index: 1;
 }
 
 .container-account {
@@ -47,6 +47,7 @@ a {
 }
 
 .game-container {
+
   /* height: 100%;
   width: 100%; */
   display: flex;
@@ -67,47 +68,47 @@ a {
 }
 
 .user-container {
-  /* border: 1px solid yellow; */
-  background-color: black;
-  height: 180px;
-  width: 100px;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin: 20px;
-  opacity: 1;
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 1);
+	/* border: 1px solid yellow; */
+	background-color: black;
+	height: 180px;
+	width: 100px;
+	border-radius: 10px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 20px;
+	opacity: 1;
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 1);
 }
 
 .opponent-container {
-  border: 1px solid yellow;
-  height: 180px;
-  width: 120px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 10px;
-  margin: 20px;
-  background-color: black;
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
-  font-size: large;
+	border: 1px solid yellow;
+	height: 180px;
+	width: 120px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-radius: 10px;
+	margin: 20px;
+	background-color: black;
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+	font-size: large;
 }
 
 .player1-hp {
-  border: 1px solid yellow;
-  background-color: black;
-  height: 60px;
-  width: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 250px;
-  left: 250px;
-  border-radius: 10px;
-  opacity: 1;
-  font-weight: bold;
+	border: 1px solid yellow;
+	background-color: black;
+	height: 60px;
+	width: 150px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	bottom: 250px;
+	left: 250px;
+	border-radius: 10px;
+	opacity: 1;
+	font-weight: bold;
 }
 
 .player2-hp {
@@ -125,170 +126,170 @@ a {
 }
 
 .gameplay-card {
-  height: 180px;
-  width: 120px;
-  opacity: 1;
+	height: 180px;
+	width: 120px;
+	opacity: 1;
 }
 
 .player-div {
-  border: 1px solid yellow;
-  background-color: transparent;
-  height: 180px;
-  width: 100px;
-  border-radius: 10px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin: 20px;
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 1);
-  z-index: 15;
-  /* pointer-events: none; */
+	border: 1px solid yellow;
+	background-color: transparent;
+	height: 180px;
+	width: 100px;
+	border-radius: 10px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 20px;
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 1);
+	z-index: 15;
+	/* pointer-events: none; */
 }
 
 .no-touchy {
-  height: 200px;
-  z-index: 100;
-  pointer-events: none;
+	height: 200px;
+	z-index: 100;
+	pointer-events: none;
 }
 
 .touch-div {
-  border: 2px solid orange;
-  background-color: transparent;
-  height: 200px;
-  width: 100%;
-  z-index: 100;
-  pointer-events: all;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+	border: 2px solid orange;
+	background-color: transparent;
+	height: 200px;
+	width: 100%;
+	z-index: 100;
+	pointer-events: all;
+	position: fixed;
+	bottom: 0;
+	left: 0;
 }
 
 .hidden {
-  display: none;
+	display: none;
 }
 
 .notouch-div {
-  border: 2px solid orange;
-  background-color: transparent;
-  height: 200px;
-  width: 100%;
-  z-index: 100;
-  pointer-events: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+	border: 2px solid orange;
+	background-color: transparent;
+	height: 200px;
+	width: 100%;
+	z-index: 100;
+	pointer-events: none;
+	position: fixed;
+	bottom: 0;
+	left: 0;
 }
 
 .load-container {
-  background-color: black;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+	background-color: black;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
 }
 
 .ready-btn {
-  background-color: transparent;
-  border-style: solid;
-  border-color: black;
-  /* background-image: url("http://vignette2.wikia.nocookie.net/fictional-battle-omniverse/images/8/8b/Goku_Dragon_Ball_Z.png/revision/latest?cb=20150508010447"); */
+	background-color: transparent;
+	border-style: solid;
+	border-color: black;
+	/* background-image: url("http://vignette2.wikia.nocookie.net/fictional-battle-omniverse/images/8/8b/Goku_Dragon_Ball_Z.png/revision/latest?cb=20150508010447"); */
 }
 
 .container1 {
-  display: block;
-  position: relative;
-  /* bottom: -600px; */
-  width: 600px;
-  height: 500px;
-  border-radius: 50px;
-  text-align: center;
-  font-family: "Ravi Prakash", cursive;
-  -webkit-text-stroke: 2px black;
-  font-size: 50px;
-  font-weight: 500;
-  perspective: 600px;
-  perspective-origin: 50% 0;
-  background-image: url("/images/gokufirst.gif");
-  background-size: cover;
+	display: block;
+	position: relative;
+	/* bottom: -600px; */
+	width: 600px;
+	height: 500px;
+	border-radius: 50px;
+	text-align: center;
+	font-family: 'Ravi Prakash', cursive;
+	-webkit-text-stroke: 2px black;
+	font-size: 50px;
+	font-weight: 500;
+	perspective: 600px;
+	perspective-origin: 50% 0;
+	background-image: url('/images/gokufirst.gif');
+	background-size: cover;
 }
 
 .dbztext {
-  color: yellow;
-  background: linear-gradient(to bottom, yellow 0%, red 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	color: yellow;
+	background: linear-gradient(to bottom, yellow 0%, red 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .textleft {
-  transform-origin: 20% 0%;
-  transform-style: preserve-3d;
-  transform: rotateY(10deg);
+	transform-origin: 20% 0%;
+	transform-style: preserve-3d;
+	transform: rotateY(10deg);
 }
 
 .textscroll {
-  animation: scrolling 40s linear 0s infinite;
+	animation: scrolling 40s linear 0s infinite;
 }
 
 @keyframes scrolling {
-  from {
-    transform: translateY(25%);
-  }
-  to {
-    transform: translateY(-100%);
-  }
+	from {
+		transform: translateY(25%);
+	}
+	to {
+		transform: translateY(-100%);
+	}
 }
 
 .dbzlogo {
-  max-width: 100%;
-  padding: 0px;
-  margin: 0px;
+	max-width: 100%;
+	padding: 0px;
+	margin: 0px;
 }
 
 .ready-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-  color: #f0833a;
-  font-family: "Ravi Prakash", cursive;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	color: #f0833a;
+	font-family: 'Ravi Prakash', cursive;
 }
 
 .dragon-balls {
-  height: 150px;
-  width: 150px;
-  position: absolute;
+	height: 150px;
+	width: 150px;
+	position: absolute;
 }
 
 .db1 {
-  left: 140px;
+	left: 140px;
 }
 
 .db2 {
-  right: 40px;
-  top: 160px;
+	right: 40px;
+	top: 160px;
 }
 
 .db3 {
-  left: 20px;
-  top: 100px;
+	left: 20px;
+	top: 100px;
 }
 .db4 {
-  right: 300px;
-  top: 40px;
+	right: 300px;
+	top: 40px;
 }
 .db5 {
-  right: 100px;
-  bottom: 150px;
+	right: 100px;
+	bottom: 150px;
 }
 .db6 {
-  height: 140px;
-  width: 170px;
-  right: 250px;
-  top: 350px;
+	height: 140px;
+	width: 170px;
+	right: 250px;
+	top: 350px;
 }
 .db7 {
-  left: 50px;
-  bottom: 50px;
+	left: 50px;
+	bottom: 50px;
 }
