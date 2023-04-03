@@ -86,7 +86,7 @@ const Loading = () => {
 
     channel.on(
       "broadcast",
-      { event: "getUserInfo/" + Router.query.id },
+      { event: "readyUp/" + Router.query.id },
       (payload) => {
         console.log(payload.payload, "READY UP PAYLOAD");
         dispatch(gameActions.setPlayer1(player));
