@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useRef } from "react";
 import { gameActions } from "@/store/slices/gameSlice";
 import Router from "next/router";
+import { AnimatePresence } from "framer-motion";
 
 let oppCard = null;
 let myCard = null;
@@ -24,18 +25,13 @@ const GameComponent = (props) => {
   const myRef = useRef(null);
   const duelRef = useRef(null);
   const sendRef = useRef(null);
-  // const [taps, setTaps] = useState(0);
   const [playAudio, setPlayAudio] = useState(true);
   const cardRefs = useRef(new Array());
   const myCardRefs = useRef(new Array());
   const buttonRef = useRef();
   const divRef = useRef(null);
   const [loading, setLoading] = useState(false);
-  const [presences, setPresences] = useState([]);
 
-  // Determine the winning element
-  // const [opponentDeck, setOpponentDeck] = useState([]);
-  // const [opponentInfo, setOpponentInfo] = useState({});
   const dispatch = useDispatch();
   const audioRef = useRef(null);
   const [set, setShowSet] = useState(false);
@@ -44,14 +40,6 @@ const GameComponent = (props) => {
 
   const user = useSelector((state) => {
     return state.user.user;
-  });
-
-  const userDeck = useSelector((state) => {
-    return state.deck;
-  });
-
-  const player2 = useSelector((state) => {
-    return state.game.player2;
   });
 
   const player2Deck = useSelector((state) => {
@@ -64,7 +52,6 @@ const GameComponent = (props) => {
 
   const resetCard = () => {
     if (myCardPos !== null && oppCardPos !== null) {
-      // console.log(myCardRefs.current[myCardPos - 1]);
       oppImage = null;
       if (myCardRefs.current[myCardPos - 1] !== null) {
         myCardRefs.current[myCardPos - 1].remove();
@@ -179,7 +166,6 @@ const GameComponent = (props) => {
 
   useEffect(() => {
     console.log("GAME HAS ENDDED NOT DOING ANYMORE CHECKS");
-    // if (!ended) {
     setInterval(() => {
       checkCards(myCard, oppCard);
     }, 2000);
@@ -210,8 +196,7 @@ const GameComponent = (props) => {
       .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {
         console.log(payload, "Broadcast GETUSERDECK TO SAVE IN GAME COMPONENT");
         setLoading(true);
-        // setOpponentDeck((opponentDeck) => payload.payload?.data?.userDeck);
-        // setOpponentInfo((opponentInfo) => payload.payload.data?.user);
+
         setLoading(false);
       })
       .on("broadcast", { event: "cardmove" }, (payload) => {
@@ -223,11 +208,8 @@ const GameComponent = (props) => {
         setTimeout(() => {
           oppCard = payload.payload.data.cardInfo;
         }, 2000);
-        // checks();
       })
-      .on("broadcast", { event: "cardmove" }, () => {
-        // checks();
-      });
+      .on("broadcast", { event: "cardmove" }, () => {});
   }, []);
 
   const setMyCard = (card, index) => {
@@ -250,23 +232,13 @@ const GameComponent = (props) => {
         .select("*")
         .eq("id", channels)
         .single();
-      // console.log(
-      //   "🚀 ~ file: GameComponent.js:257 ~ DeleteCurrentGame ~ channel.id:",
-      //   channels
-      // );
-      // console.log("CURRENT GAME", data);
+
       let currentGame = data;
       if (currentGame.isDraw === false && !currentGame.winner) {
         supabase.removeAllChannels();
         console.log("removed all channels");
         Router.push("http://localhost:3000/lobby/");
-        // supabase.subscribe(async (status) => {
-        //   if (trackStatus === "ok") {
-        //     const untrackStatus = await channel.untrack();
-        //     console.log(trackStatus, "TRACKSTATUS LINE 57");
-        //     console.log(untrackStatus, "STATUS/HAS LEFT");
-        //   }
-        // });
+
         await supabase.from("game").delete().eq("id", channels);
       }
     };
@@ -292,7 +264,6 @@ const GameComponent = (props) => {
               <Card
                 user={user}
                 setShowSet={setShowSet}
-                // checks={checks}
                 key={uuidv4()}
                 setMyCard={setMyCard}
                 index={i + 1}
@@ -303,24 +274,26 @@ const GameComponent = (props) => {
               />
             );
           })}
-        <div className="no-touchy">
-          {player2Deck &&
-            player2Deck.length > 0 &&
-            player2Deck.map((card, i) => {
-              return (
-                <OpponentCard
-                  showMyCard={showMyCard}
-                  key={uuidv4()}
-                  zIndex={i + 1}
-                  card={card}
-                  ref={(el) => (cardRefs.current[i] = el)}
-                  x={i * -150}
-                  index={i}
-                  setOppCardPos={setOppCardPos}
-                />
-              );
-            })}
-        </div>
+        <AnimatePresence node="wait">
+          <div key={uuidv4()} className="no-touchy">
+            {player2Deck &&
+              player2Deck.length > 0 &&
+              player2Deck.map((card, i) => {
+                return (
+                  <OpponentCard
+                    showMyCard={showMyCard}
+                    key={uuidv4()}
+                    zIndex={i + 1}
+                    card={card}
+                    ref={(el) => (cardRefs.current[i] = el)}
+                    x={i * -150}
+                    index={i}
+                    setOppCardPos={setOppCardPos}
+                  />
+                );
+              })}
+          </div>
+        </AnimatePresence>
         <Player1HP />
         <Player2HP />
       </GameContainer>

@@ -1,5 +1,4 @@
 "use client";
-import { userActions } from "@/store/slices/userSlice";
 import { gameActions } from "@/store/slices/gameSlice";
 import { useUser } from "@supabase/auth-helpers-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,22 +8,15 @@ import { supabase } from "@/lib/supabase";
 import { searchUser } from "@/store/slices/userSlice";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
 import Router from "next/router";
-import { v4 as uuidv4 } from "uuid";
 import Throwaway from "./Throwaway";
 import { useRef } from "react";
-import OpponentInfo from "./OpponentInfo";
 
 let player2info = null;
 let player2Deck2 = null;
 
 const Loading = () => {
   const audioRef = useRef(null);
-  // const [throwaway, setThrowaway] = useState(false);
   const [localLoading, setLocalLoading] = useState(false);
-  const [presence, setPresence] = useState([]);
-  const [trackingStatus, setTrackingStatus] = useState([]);
-
-  // const router = useRouter();
 
   const user = useUser();
   const dispatch = useDispatch();
@@ -35,10 +27,6 @@ const Loading = () => {
 
   const userDeck = useSelector((state) => {
     return state.deck;
-  });
-
-  const loading = useSelector((state) => {
-    return state.load;
   });
 
   useEffect(() => {
@@ -131,8 +119,7 @@ const Loading = () => {
       )}
 
       <Throwaway player2info={player2info} player2Deck={player2Deck2} />
-      {/* <h1>YOUR OPPONENT: </h1>
-      <OpponentInfo /> */}
+
       <button onClick={readyHandler}>Ready!</button>
     </div>
   );
