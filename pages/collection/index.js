@@ -129,7 +129,7 @@ const Collection = () => {
 						{sortedData !== undefined ? (
 							sortedData.map((card) => (
 								<motion.div
-									whileHover={{ scale: 1.5 }}
+									whileHover={{ scale: 1.4 }}
 									key={card.id}
 									onClick={() => {
 										setShowModal(!showModal);
@@ -216,7 +216,7 @@ const Collection = () => {
 						{sortedData !== undefined ? (
 							sortedData.map((card) => (
 								<motion.div
-									whileHover={{ scale: 1.5 }}
+									whileHover={{ scale: 1.4 }}
 									key={card.id}
 									onClick={() => {
 										setShowModal(!showModal);

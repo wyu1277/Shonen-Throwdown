@@ -1,4 +1,4 @@
-.homepageContainer{
+.homepageContainer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -6,7 +6,7 @@
 	margin-top: -30px;
 }
 
-.imgContainer{
+.imgContainer {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -17,14 +17,14 @@
 	max-height: 900px;
 }
 
-.img{
+.img {
 	width: 100%;
 	height: auto;
 	max-height: 900px;
 	max-width: 1920px;
 }
 
-.button{
+.button {
 	position: absolute;
 	bottom: 23%;
 	width: 200px;
@@ -35,14 +35,15 @@
 	font-size: 20px;
 }
 
-.button:hover{
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+.button:hover {
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 	background-color: yellow;
 	color: black;
+	cursor: pointer;
 }
 
-.section{
-	display:flex;
+.section {
+	display: flex;
 	flex-direction: column;
 	position: relative;
 	width: 100%;
@@ -52,7 +53,7 @@
 	justify-content: center;
 }
 
-.sectionImg{
+.sectionImg {
 	width: 100%;
 	height: auto;
 	max-height: 600px;
@@ -60,7 +61,7 @@
 	opacity: 0.5;
 }
 
-.sectionInfo{
+.sectionInfo {
 	position: absolute;
 	display: flex;
 	flex-direction: row;
@@ -69,7 +70,7 @@
 	width: 100%;
 }
 
-.sectionContainer{
+.sectionContainer {
 	display: flex;
 	text-align: center;
 	flex-direction: column;
@@ -77,16 +78,16 @@
 	justify-content: center;
 }
 
-.sectionTextContainer h2{
+.sectionTextContainer h2 {
 	margin: 10px;
 }
 
-.sectionTextContainer h1{
+.sectionTextContainer h1 {
 	margin: 10px;
 	font-size: 50px;
 }
 
-.sectionTextContainer button{
+.sectionTextContainer button {
 	margin: 10px;
 	width: 200px;
 	height: 50px;
@@ -96,20 +97,32 @@
 	font-size: 20px;
 }
 
-.sectionTextContainer button:hover{
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+.sectionTextContainer button:hover {
+	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 	background-color: yellow;
 	color: black;
+	cursor: pointer;
 }
 
-.cardImg{
+.cardImg {
 	margin-left: 200px;
 	width: 15%;
 	max-width: 300px;
 }
 
-.cardImg2{
+.cardImg2 {
 	margin-right: 200px;
 	width: 45%;
 	max-width: 800px;
+}
+
+.loading {
+	font-size: 100px;
+	margin-top: 200px;
+}
+
+.pageContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

@@ -70,16 +70,17 @@ let EndModal = () => {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.2 }}
-        className={styles.card}
+        className={player.id === loser?.id ? styles.cardLose : styles.cardWin}
       >
         {player.id === loser?.id ? (
-          <h1 className={styles.winMessage}>You lost!</h1>
+          <h1 className={styles.loseMessage}>
+            You lost! You've been sent to the shadow realm!
+          </h1>
         ) : (
-          <h1 className={styles.winMessage}>You win!</h1>
+          <h1 className={styles.winMessage}>You win! You earned 3 tokens!</h1>
         )}
-        <h1 className={styles.winMessage}>{winnerUsername} wins!</h1>
-        <button className={styles.link} onClick={handleEndGame}>
-          Return to game lobby
+        <button className={styles.returnHome} onClick={handleEndGame}>
+          Return Home
         </button>
       </motion.div>
       <audio src="/audio/gogo.mp3" ref={winRef} />
