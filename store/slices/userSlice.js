@@ -16,11 +16,14 @@ export const searchUser = createAsyncThunk("search4user", async (hope) => {
 
 export const updateUser = createAsyncThunk("updateUser", async (hope) => {
   try {
-    const updatedUser = await supabase
+    const {data} = await supabase
       .from("users")
       .update(hope)
-      .eq("id", hope.id);
-    return updatedUser;
+      .eq("id", hope.id)
+      .select()
+      .single();
+    console.log(data)
+    return data;
   } catch (error) {
     console.log(error);
   }
@@ -67,6 +70,8 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         console.log(" Update User fulfilled");
         state.loading = false;
+        state.user = action.payload;
+        return state
       })
       .addCase(updateWallet.fulfilled, (state, action) => {
         state.user = action.payload;
