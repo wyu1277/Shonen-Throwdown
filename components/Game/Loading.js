@@ -10,6 +10,7 @@ import { fetchDeckCards } from "@/store/slices/deckSlice";
 import Router, { useRouter } from "next/router";
 import Throwaway from "./Throwaway";
 import { useRef } from "react";
+import { motion } from "framer-motion";
 
 let player2info = null;
 let player2Deck2 = null;
@@ -110,7 +111,26 @@ const Loading = () => {
       {localLoading && <div>LOADING...</div>}
 
       <Throwaway player2info={player2info} player2Deck={player2Deck2} />
-
+      <div className="container1">
+        <div className="textleft">
+          <div className="textscroll">
+            <img
+              src="http://img05.deviantart.net/cef3/i/2015/122/c/4/dragon_ball_z__dbz__nuevo_logo_by_saodvd-d8rx6aw.png"
+              className="dbzlogo"
+            />
+            <p className="dbztext">
+              A Saiyan warrior who was sent to Earth as a baby and was raised by
+              a kind-hearted human named Grandpa Gohan. Goku possesses
+              incredible strength, speed, and martial arts skills, which he uses
+              to protect the Earth from various threats. He is known for his
+              cheerful and adventurous personality, and his insatiable love for
+              food. Goku is also famous for his iconic spiky black hair, his
+              trademark orange gi, and his ability to transform into powerful
+              Super Saiyan forms when pushed to his limits.
+            </p>
+          </div>
+        </div>
+      </div>
       <button onClick={readyHandler} className="ready-btn">
         <div className="goku"></div>
       </button>
