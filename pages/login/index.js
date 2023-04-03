@@ -1,29 +1,30 @@
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
-import classes from "../../styles/LoginPage.module.css";
-import { motion } from "framer-motion";
-import container from "@/styles/variants";
+import { Auth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { useUser, useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import classes from '../../styles/LoginPage.module.css';
+import { motion } from 'framer-motion';
+import container from '@/styles/variants';
 
 const LoginPage = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const supabaseClient = useSupabaseClient();
-  const user = useUser();
-  const [data, setData] = useState();
+	const router = useRouter();
+	const dispatch = useDispatch();
+	const supabaseClient = useSupabaseClient();
+	const user = useUser();
+	const [data, setData] = useState();
 
-  useEffect(() => {
-    async function loadData() {
-      const { data } = await supabaseClient.from("cards").select("*");
-      setData(data);
-    }
-    // Only run query once user is logged in.
-    if (user) loadData();
-    if (user) router.push("/");
-  }, [user]);
+	useEffect(() => {
+		async function loadData() {
+			const { data } = await supabaseClient.from('cards').select('*');
+			setData(data);
+		}
+		// Only run query once user is logged in.
+		if (user) loadData();
+		if (user) router.push('/');
+	}, [user]);
+
 
   if (!user)
     return (

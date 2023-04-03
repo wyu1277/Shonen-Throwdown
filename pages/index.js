@@ -1,44 +1,45 @@
-"use client";
-import { Roboto } from "next/font/google";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { searchUser } from "@/store/slices/userSlice";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { useUser } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
-import { motion } from "framer-motion";
-import container from "@/styles/variants";
-import { fetchDeckCards } from "@/store/slices/deckSlice";
-import styles from "../styles/home.module.css";
-import Router from "next/router";
-import shonenthrowdown from '../public/images/shonenthrowdown.gif'
-import Image from "next/image";
+'use client';
+import { Roboto } from 'next/font/google';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { searchUser } from '@/store/slices/userSlice';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
+import { useUser } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
+import container from '@/styles/variants';
+import { fetchDeckCards } from '@/store/slices/deckSlice';
+import styles from '../styles/home.module.css';
+import Router from 'next/router';
+import shonenthrowdown from '../public/images/shonenthrowdown.gif';
+import Image from 'next/image';
 
 const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
+	weight: '400',
+	subsets: ['latin']
 });
 
 const Home = ({ user }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const userInfo = useUser();
+	const [isLoading, setIsLoading] = useState(true);
+	const router = useRouter();
+	const dispatch = useDispatch();
+	const userInfo = useUser();
 
-  const userData = useSelector((state) => {
-    return state.user.user;
-  });
+	const userData = useSelector((state) => {
+		return state.user.user;
+	});
 
-  const loadState = useSelector((state) => {
-    return state.user.loading;
-  });
+	const loadState = useSelector((state) => {
+		return state.user.loading;
+	});
 
-  const shouldReload = useSelector((state) => {
-    return state.game.shouldReload;
-  });
+	const shouldReload = useSelector((state) => {
+		return state.game.shouldReload;
+	});
 
-  useEffect(() => {
-    // console.log("loading");
+	useEffect(() => {
+		// console.log("loading");
+
 
     if (shouldReload) {
       window.location.reload();
@@ -98,35 +99,35 @@ const Home = ({ user }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const supabase = createServerSupabaseClient(context);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+	const supabase = createServerSupabaseClient(context);
+	const {
+		data: { session }
+	} = await supabase.auth.getSession();
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
+	if (!session) {
+		return {
+			redirect: {
+				destination: '/login',
+				permanent: false
+			}
+		};
+	}
 
-  // if (session && userData?.[0].username === null) {
-  // 	return {
-  // 		redirect: {
-  // 			destination: '/login/setup-account',
-  // 			permanent: false
-  // 		}
-  // 	};
-  // }
+	// if (session && userData?.[0].username === null) {
+	// 	return {
+	// 		redirect: {
+	// 			destination: '/login/setup-account',
+	// 			permanent: false
+	// 		}
+	// 	};
+	// }
 
-  console.log(session, "getting session");
-  return {
-    props: {
-      initialSession: session,
-      user: session.user,
-    },
-  };
+	console.log(session, 'getting session');
+	return {
+		props: {
+			initialSession: session,
+			user: session.user
+		}
+	};
 };
 export default Home;
