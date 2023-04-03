@@ -62,12 +62,30 @@ const Loading = () => {
 
   useEffect(() => {
     channel.subscribe(async (status) => {
-      console.log(status, "STATUS");
+      await channel.track();
+    });
+
+    channel.on("presence", { event: "sync" }, (status) => {
+      console.log("sync");
+      channel.send({
+        type: "broadcast",
+        event: "getUserInfo/" + Router.query.id,
+        payload: { player, userDeck },
+      });
+    });
+
+    channel.on("presence", { event: "join" }, ({ newPresences }) => {
+      console.log("joined");
+      channel.send({
+        type: "broadcast",
+        event: "getUserInfo/" + Router.query.id,
+        payload: { player, userDeck },
+      });
     });
 
     channel.on(
       "broadcast",
-      { event: "readyUp" + Router.query.id },
+      { event: "getUserInfo/" + Router.query.id },
       (payload) => {
         console.log(payload.payload, "READY UP PAYLOAD");
         dispatch(gameActions.setPlayer1(player));
@@ -78,11 +96,7 @@ const Loading = () => {
   }, [user]);
 
   const playGame = () => {
-    console.log(player, "PLAYER");
-    // console.log(player2, "PLAYER2");
-    console.log(userDeck, "USERDECK");
-    // console.log(player2Deck, "PLAYER2DECK");
-    console.log(loading, "LOADING STATUS");
+    dispatch(loadActions.setLoading(false));
   };
 
   const readyHandler = async () => {
@@ -116,8 +130,8 @@ const Loading = () => {
       )}
 
       <Throwaway player2info={player2info} player2Deck={player2Deck2} />
-
-      <button onClick={readyHandler}>Ready?</button>
+      <h1>YOUR OPPONENT: </h1>
+      <OpponentInfo />
     </div>
   );
 };

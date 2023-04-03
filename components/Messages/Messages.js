@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
@@ -10,7 +9,6 @@ const notoSerif = Noto_Serif({
   subsets: ["latin"],
   weight: "400",
 });
-
 
 const Messages = (props) => {
   const [channels, setChannels] = useState(null);
@@ -30,7 +28,6 @@ const Messages = (props) => {
   };
 
   const user = props.props;
-
 
   useEffect(() => {
     const getData = async () => {
@@ -75,6 +72,23 @@ const Messages = (props) => {
       channel_id: channels,
     });
   };
+
+  useEffect(() => {
+    if (isVisible === true) {
+      let textArea = document.getElementById("textarea");
+      if (textArea !== null) {
+        console.log("text are block", textArea);
+        console.log("isvisible block", isVisible);
+        textArea.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("myBtn").click();
+          }
+        });
+      }
+    }
+  }, [isVisible]);
+
   // console.log("chat", chat);
   // console.log("current channel", channels);
 
@@ -91,15 +105,9 @@ const Messages = (props) => {
 
   return (
     <div className={styles.wrapper}>
-
-      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>
-        CHAT
-      </h2>
-
-      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>CHAT</h2>
-
+      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}></h2>
       {isVisible && (
-        <>
+        <div className={`${styles.body} body`}>
           <div
             className={`${styles.messagesContainer} messagesContainer`}
             ref={messagesUl}
@@ -109,25 +117,31 @@ const Messages = (props) => {
                 <h6 className={`${notoSerif.className}`}>
                   {message.created_at}
                 </h6>
-                <h4 className={`${notoSerif.className}`}>
-                  {message.username}:
-                  <span className={styles.messageContent}>
-                    {message.content}
+                <span className={styles.messageContent}>
+                  <span>
+                    <h4 className={`${notoSerif.className}`}>
+                      {message.username}:
+                    </h4>
                   </span>
-                </h4>
+
+                  <span> </span>
+                  {message.content}
+                </span>
               </div>
             ))}
           </div>
           <form className={styles.form} onSubmit={submitHandler}>
-            <label htmlFor="content">Message</label>
             <textarea
               className={styles.textarea}
               name="content"
               type="text"
+              id={"textarea"}
             ></textarea>
-            <button className={styles.button}>Send</button>
+            <button id={"myBtn"} className={styles.button}>
+              Send
+            </button>
           </form>
-        </>
+        </div>
       )}
     </div>
   );
