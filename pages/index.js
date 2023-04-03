@@ -87,7 +87,7 @@ const Home = ({ user }) => {
                 <h2>EASY TO LEARN, FUN TO PLAY!</h2>
                 <h1>BEGIN YOUR ADVENTURE</h1>
                 <h1>WITH OUR HOW TO PLAY!</h1>
-                <button className={roboto.className} onClick={()=> router.push('/market')}>LEARN MORE &#62;</button>
+                <button className={roboto.className} onClick={()=> router.push('/how-to-play')}>LEARN MORE &#62;</button>
               </div>
             </div>
           </div>
