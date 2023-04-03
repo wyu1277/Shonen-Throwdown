@@ -69,7 +69,7 @@ const Card = (props, refs) => {
     if (!cardInPlay) {
       props.setMyCard(props.card, props.index);
       setTapCard(!tapCard);
-      // audioRef.current.play();
+      audioRef.current.play();
       supabase
         .channel(channels)
         .subscribe(async (status) => {

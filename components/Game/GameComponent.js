@@ -23,6 +23,7 @@ let taps = 0;
 const GameComponent = (props) => {
   const myRef = useRef(null);
   const duelRef = useRef(null);
+  const sendRef = useRef(null);
   // const [taps, setTaps] = useState(0);
   const [playAudio, setPlayAudio] = useState(true);
   const cardRefs = useRef(new Array());
@@ -186,7 +187,6 @@ const GameComponent = (props) => {
     setInterval(() => {
       if (myCard) {
         dispatch(gameActions.setCardToPlay(true));
-        audioRef.current.play();
       }
     }, 100);
   }, []);
@@ -281,6 +281,7 @@ const GameComponent = (props) => {
     //window container
     <>
       <button onClick={test}>Music</button>
+      <audio src="/audio/Cut.wav" ref={sendRef} />
       <audio src="/audio/duel.mp3" ref={duelRef} />
       <audio src="/audio/music.mp3" ref={audioRef} />
       <button onClick={leaveHandler}>Leave Room</button>

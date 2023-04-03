@@ -13,6 +13,7 @@ const OpponentCard = (props, ref) => {
 
   const [tapCard, setTapCard] = useState(false);
   const opponentCardHandler = () => {
+    audioRef.current.play();
     setTapCard(!tapCard);
     props.setOppCardPos(props.index);
   };
