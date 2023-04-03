@@ -28,8 +28,7 @@ const Market = () => {
 	const [noMoney, setNoMoney] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [newCards, SetNewCards] = useState([]);
-  const [currentBanner, setCurrentBanner] = useState(1);
-  const [selectedTitle, setSelectedTitle] = useState(null);
+  const [currentBanner, setCurrentBanner] = useState(3);
 
   useEffect(() => {
     dispatch(fetchAllCards());
