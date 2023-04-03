@@ -105,11 +105,9 @@ const Messages = (props) => {
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>
-        CHAT
-      </h2>
+      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}></h2>
       {isVisible && (
-        <>
+        <div className={`${styles.body} body`}>
           <div
             className={`${styles.messagesContainer} messagesContainer`}
             ref={messagesUl}
@@ -119,17 +117,20 @@ const Messages = (props) => {
                 <h6 className={`${notoSerif.className}`}>
                   {message.created_at}
                 </h6>
-                <h4 className={`${notoSerif.className}`}>
-                  {message.username}:
-                  <span className={styles.messageContent}>
-                    {message.content}
+                <span className={styles.messageContent}>
+                  <span>
+                    <h4 className={`${notoSerif.className}`}>
+                      {message.username}:
+                    </h4>
                   </span>
-                </h4>
+
+                  <span> </span>
+                  {message.content}
+                </span>
               </div>
             ))}
           </div>
           <form className={styles.form} onSubmit={submitHandler}>
-            <label htmlFor="content">Message</label>
             <textarea
               className={styles.textarea}
               name="content"
@@ -140,7 +141,7 @@ const Messages = (props) => {
               Send
             </button>
           </form>
-        </>
+        </div>
       )}
     </div>
   );
