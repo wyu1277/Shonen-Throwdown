@@ -1,10 +1,5 @@
 "use client";
-<<<<<<< HEAD
 import React, { useEffect } from "react";
-=======
-import React from "react";
->>>>>>> 4972f39f2a7c214a246da13a131ab5b266b72d52
-// import TeamMate from "@/components/teammate";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
 import styles from "./About.module.css";
