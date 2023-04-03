@@ -1,8 +1,31 @@
 import NewsDisplay from "@/components/News/NewsDisplay";
 import { supabase } from "@/lib/supabase";
+import classes from "./index.module.css";
+import { motion } from "framer-motion";
 
 const NewsDetails = ({ articleData }) => {
-  return <NewsDisplay props={articleData} />;
+  return (
+    <motion.div
+      initial={{
+        backgroundImage: "url('/images/capsulecorp.jpg')",
+        backgroundSize: "cover",
+        y: 500,
+      }}
+      animate={{
+        y: 0,
+      }}
+    >
+      <motion.div
+        initial={{
+          x: 0,
+          y: -1000,
+        }}
+        animate={{ x: 0, y: 0 }}
+      >
+        <NewsDisplay props={articleData} />
+      </motion.div>
+    </motion.div>
+  );
 };
 
 export const getStaticPaths = async () => {
