@@ -1,4 +1,3 @@
-
 "use client";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { supabase } from "../../lib/supabase";
@@ -11,8 +10,8 @@ const notoSerif = Noto_Serif({
   weight: "400",
 });
 
-
 const Messages = (props) => {
+  const audioRef = useRef(null);
   const [channels, setChannels] = useState(null);
   const [chat, setChat] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -30,7 +29,6 @@ const Messages = (props) => {
   };
 
   const user = props.props;
-
 
   useEffect(() => {
     const getData = async () => {
@@ -63,6 +61,7 @@ const Messages = (props) => {
   }, []);
 
   const submitHandler = async (e) => {
+    audioRef.current.play();
     e.preventDefault();
     const form = e.currentTarget;
     const { content } = Object.fromEntries(new FormData(form));
@@ -91,12 +90,14 @@ const Messages = (props) => {
 
   return (
     <div className={styles.wrapper}>
-
+      <audio src="/audio/whip.mp3" ref={audioRef} />
       <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>
         CHAT
       </h2>
 
-      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>CHAT</h2>
+      <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}>
+        CHAT
+      </h2>
 
       {isVisible && (
         <>
