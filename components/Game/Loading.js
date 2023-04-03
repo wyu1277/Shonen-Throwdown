@@ -209,9 +209,41 @@ const Loading = () => {
         </div>
       </div>
       <button onClick={readyHandler} className="ready-btn">
-        <div className="goku">
-          <p className="ready-text">Are you ready?</p>
-        </div>
+        <motion.div
+          initial={{
+            scale: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "450px",
+            width: "300px",
+            backgroundImage:
+              "url('http://vignette2.wikia.nocookie.net/fictional-battle-omniverse/images/8/8b/Goku_Dragon_Ball_Z.png/revision/latest?cb=20150508010447')",
+            backgroundSize: "150px auto",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "50% 0",
+            filter: "none",
+          }}
+          // animate={{
+          //   scale: 1.5,
+          // }}
+          whileHover={{
+            height: "450px",
+            width: "300px",
+            backgroundImage:
+              "url('http://vignette3.wikia.nocookie.net/vsbattles/images/5/56/Goku_%28Base%29.png/revision/latest?cb=20160315175220')",
+            backgroundSize: "200px auto",
+            filter: "drop-shadow(0px 0px 10px #eefe27)",
+          }}
+        >
+          <motion.p
+            initial={{ scale: 0 }}
+            animate={{ scale: 1, y: 200 }}
+            className="ready-text"
+          >
+            Are you ready?
+          </motion.p>
+        </motion.div>
       </button>
     </div>
   );
