@@ -201,10 +201,10 @@ const GameComponent = (props) => {
   });
 
   useEffect(() => {
-    duelRef.current.play();
-    setTimeout(() => {
-      audioRef.current.play();
-    }, 4500);
+    // duelRef.current.play();
+    // setTimeout(() => {
+    //   //   audioRef.current.play();
+    // }, 4500);
 
     channel
       .on("broadcast", { event: "getUserDeck/" + channels }, (payload) => {

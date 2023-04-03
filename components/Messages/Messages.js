@@ -11,7 +11,7 @@ const notoSerif = Noto_Serif({
 });
 
 const Messages = (props) => {
-  // const audioRef = useRef(null);
+  const audioRef = useRef(null);
   const [channels, setChannels] = useState(null);
   const [chat, setChat] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -61,7 +61,7 @@ const Messages = (props) => {
   }, []);
 
   const submitHandler = async (e) => {
-    // audioRef.current.play();
+    audioRef.current.play();
     e.preventDefault();
     const form = e.currentTarget;
     const { content } = Object.fromEntries(new FormData(form));
@@ -107,6 +107,8 @@ const Messages = (props) => {
 
   return (
     <div className={styles.wrapper}>
+      <audio src="/audio/whip.mp3" ref={audioRef} />
+
       <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}></h2>
       {isVisible && (
         <div className={`${styles.body} body`}>

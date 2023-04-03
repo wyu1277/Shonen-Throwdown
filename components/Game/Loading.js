@@ -100,8 +100,8 @@ const Loading = () => {
     dispatch(loadActions.setLoading(false));
   };
 
-  const readyHandler = async () => {
-    await channel.send({
+  const readyHandler = () => {
+    channel.send({
       type: "broadcast",
       event: "readyUp" + Router.query.id,
       payload: { data: player, userDeck },
