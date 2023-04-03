@@ -321,8 +321,8 @@ const GameComponent = (props) => {
               );
             })}
         </div>
-        <Player1HP user={props.user} />
-        <Player2HP opp={player2.username} />
+        <Player1HP />
+        <Player2HP />
       </GameContainer>
     </>
   );

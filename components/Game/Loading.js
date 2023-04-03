@@ -12,6 +12,7 @@ import Router from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import Throwaway from "./Throwaway";
 import { useRef } from "react";
+import OpponentInfo from "./OpponentInfo";
 
 let player2info = null;
 let player2Deck2 = null;
@@ -89,7 +90,7 @@ const Loading = () => {
       (payload) => {
         console.log(payload.payload, "READY UP PAYLOAD");
         dispatch(gameActions.setPlayer1(player));
-        dispatch(gameActions.setPlayer2(payload.payload.data));
+        dispatch(gameActions.setPlayer2(payload.payload.player));
         dispatch(gameActions.setPlayer2Deck(payload.payload.userDeck));
       }
     );
@@ -130,8 +131,9 @@ const Loading = () => {
       )}
 
       <Throwaway player2info={player2info} player2Deck={player2Deck2} />
-      <h1>YOUR OPPONENT: </h1>
-      <OpponentInfo />
+      {/* <h1>YOUR OPPONENT: </h1>
+      <OpponentInfo /> */}
+      <button onClick={readyHandler}>Ready!</button>
     </div>
   );
 };
