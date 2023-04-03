@@ -57,7 +57,7 @@ let EndModal = () => {
     dispatch(gameActions.setShouldReload(true));
     dispatch(gameActions.setWinnerUsername(null));
     supabase.removeAllChannels();
-    Router.push("/");
+    if (typeof window !== "undefined") Router.push("/");
   };
 
   const checkstate = () => {

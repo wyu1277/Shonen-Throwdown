@@ -7,7 +7,7 @@ import { loadActions } from "@/store/slices/loadSlice";
 import { supabase } from "@/lib/supabase";
 import { searchUser } from "@/store/slices/userSlice";
 import { fetchDeckCards } from "@/store/slices/deckSlice";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Throwaway from "./Throwaway";
 import { useRef } from "react";
 
@@ -15,6 +15,7 @@ let player2info = null;
 let player2Deck2 = null;
 
 const Loading = () => {
+  const router = useRouter;
   const audioRef = useRef(null);
   const [localLoading, setLocalLoading] = useState(false);
 
@@ -29,20 +30,22 @@ const Loading = () => {
     return state.deck;
   });
 
+  const channelID = typeof window !== "undefined" && Router.query.id;
+
   useEffect(() => {
     if (!player) dispatch(searchUser(user.id));
     if (userDeck.length === 0) dispatch(fetchDeckCards(user.id));
   }, []);
 
-  const channel = supabase.channel(Router.query.id, {
-    config: { presence: { key: player.username } },
+  const channel = supabase.channel(Router.channelID, {
+    config: { presence: { key: player?.username } },
   });
 
   const player1id = async () => {
     let { data } = await supabase
       .from("game")
       .select("player1")
-      .eq("id", Router.query.id)
+      .eq("id", channelID)
       .single();
     console.log("player1id", data);
     return data;
@@ -58,7 +61,7 @@ const Loading = () => {
       console.log("sync");
       channel.send({
         type: "broadcast",
-        event: "getUserInfo/" + Router.query.id,
+        event: "getUserInfo/" + channelID,
         payload: { player, userDeck },
       });
     });
@@ -67,21 +70,17 @@ const Loading = () => {
       console.log("joined");
       channel.send({
         type: "broadcast",
-        event: "getUserInfo/" + Router.query.id,
+        event: "getUserInfo/" + channelID,
         payload: { player, userDeck },
       });
     });
 
-    channel.on(
-      "broadcast",
-      { event: "readyUp/" + Router.query.id },
-      (payload) => {
-        console.log(payload.payload, "READY UP PAYLOAD");
-        dispatch(gameActions.setPlayer1(player));
-        dispatch(gameActions.setPlayer2(payload.payload.player));
-        dispatch(gameActions.setPlayer2Deck(payload.payload.userDeck));
-      }
-    );
+    channel.on("broadcast", { event: "readyUp/" + channelID }, (payload) => {
+      console.log(payload.payload, "READY UP PAYLOAD");
+      dispatch(gameActions.setPlayer1(player));
+      dispatch(gameActions.setPlayer2(payload.payload.player));
+      dispatch(gameActions.setPlayer2Deck(payload.payload.userDeck));
+    });
   }, [user]);
 
   const playGame = () => {
@@ -91,7 +90,7 @@ const Loading = () => {
   const readyHandler = () => {
     channel.send({
       type: "broadcast",
-      event: "readyUp/" + Router.query.id,
+      event: "readyUp/" + channelID,
       payload: { player, userDeck },
     });
     console.log(audioRef, "AUDIO REF");
@@ -102,7 +101,7 @@ const Loading = () => {
         await supabase
           .from("game")
           .update({ player2: user.id })
-          .eq("id", Router.query.id);
+          .eq("id", channelID);
       };
       setPlayer2();
     }

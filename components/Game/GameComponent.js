@@ -234,7 +234,11 @@ const GameComponent = (props) => {
         .single();
 
       let currentGame = data;
-      if (currentGame.isDraw === false && !currentGame.winner) {
+      if (
+        currentGame.isDraw === false &&
+        !currentGame.winner &&
+        typeof window !== "undefined"
+      ) {
         supabase.removeAllChannels();
         console.log("removed all channels");
         Router.push("http://localhost:3000/lobby/");

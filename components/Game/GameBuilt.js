@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState, useContext } from "react";
 import Messages from "@/components/Messages/Messages";
 import { supabase } from "@/lib/supabase";
@@ -12,7 +11,7 @@ import Loading from "@/components/Game/Loading";
 import EndModal from "@/components/Game/EndModal";
 import Throwaway from "@/components/Game/Throwaway";
 
-const Game = (props) => {
+const GameBuilt = () => {
   const authUser = useUser();
   const publicUser = useSelector((state) => state.user.user);
   const [conUser, setConUser] = useState(null);
@@ -41,10 +40,10 @@ const Game = (props) => {
         {!loading && <GameComponent user={user} userDeck={userDeck} />}
         {ended && <EndModal />}
         <Throwaway />
-        <Messages props={publicUser} />
+        {/* <Messages props={publicUser} /> */}
       </GlobalContext.Provider>
     </div>
   );
 };
 
-export default Game;
+export default GameBuilt;
