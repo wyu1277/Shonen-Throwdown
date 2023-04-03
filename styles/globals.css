@@ -161,11 +161,12 @@ a {
 
 .load-container {
   background-color: black;
-  height: 99vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 .ready-btn {
@@ -198,7 +199,6 @@ a {
 .container1 {
   display: block;
   position: relative;
-  left: 60px;
   bottom: -600px;
   width: 40%;
   text-align: center;
