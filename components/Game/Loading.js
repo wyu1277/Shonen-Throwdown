@@ -132,7 +132,9 @@ const Loading = () => {
         </div>
       </div>
       <button onClick={readyHandler} className="ready-btn">
-        <div className="goku"></div>
+        <div className="goku">
+          <p className="ready-text">Are you ready?</p>
+        </div>
       </button>
     </div>
   );
