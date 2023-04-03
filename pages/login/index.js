@@ -37,7 +37,7 @@ const LoginPage = () => {
         <Auth
           redirectTo="http://localhost:3000/"
           appearance={{ theme: ThemeSupa }}
-          theme="default"
+          theme="dark"
           supabaseClient={supabaseClient}
           providers={["google", "github"]}
           socialLayout="horizontal"
@@ -52,7 +52,7 @@ const LoginPage = () => {
       animate="visible"
       exit="exit"
     >
-      <button onClick={() => supabaseClient.auth.signOut()}>Sign out</button>
+      <p>loading...</p>
     </motion.div>
   );
 };
