@@ -1,0 +1,46 @@
+.container {
+    border: 1px solid white;
+    text-align: center;
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container button{
+    margin: 10px;
+    width: 300px;
+      height: 50px;
+      border-radius: 8px;
+      background-color: blue;
+      color: white;
+      font-size: 18px;
+  }
+  
+  .container button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      background-color: yellow;
+      color: black;
+  }
+  
+ .field{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+ }
+
+ .field input{
+    height: 40px;
+    width: 300px;
+    border-radius: 8px;
+    margin: 10px;
+    background-color: gray;
+    color:white;
+ }
+
+ .field input::placeholder { 
+    color: white;
+    opacity: 1;
+  }
