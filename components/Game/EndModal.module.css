@@ -8,10 +8,14 @@
 	color: aqua;
 }
 
-
 .throwaway {
 	z-index: -3;
 	position: fixed;
 	opacity: 0%;
 }
 
+.card {
+	z-index: 3;
+	position: fixed;
+	background-color: #fff;
+}

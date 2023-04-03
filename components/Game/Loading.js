@@ -11,6 +11,7 @@ import { fetchDeckCards } from '@/store/slices/deckSlice';
 import Router from 'next/router';
 import { v4 as uuidv4 } from 'uuid';
 import Throwaway from './Throwaway';
+import Throwaway2 from './Throwaway2';
 
 let player2info = null;
 let player2Deck2 = null;
@@ -18,7 +19,6 @@ let player2Deck2 = null;
 const Loading = () => {
 	// const [throwaway, setThrowaway] = useState(false);
 	const [localLoading, setLocalLoading] = useState(false);
-	const [presence, setPresence] = useState([]);
 	const [trackingStatus, setTrackingStatus] = useState([]);
 
 	// const router = useRouter();
@@ -38,14 +38,14 @@ const Loading = () => {
 		return state.load;
 	});
 
+	const lobbyPlayers = useSelector((state) => {
+		return state.gameLobby.players;
+	});
+
 	useEffect(() => {
 		if (!player) dispatch(searchUser(user.id));
 		if (userDeck.length === 0) dispatch(fetchDeckCards(user.id));
 	}, []);
-
-	const channel = supabase.channel(Router.query.id, {
-		config: { presence: { key: player.username } }
-	});
 
 	const player1id = async () => {
 		let { data } = await supabase.from('game').select('player1').eq('id', Router.query.id).single();
@@ -54,11 +54,11 @@ const Loading = () => {
 	};
 	player1id();
 
-	useEffect(() => {
-		channel.subscribe(async (status) => {
-			console.log(status, 'STATUS');
-		});
+	const channel = supabase.channel(Router.query.id, {
+		config: { presence: { key: player.username } }
+	});
 
+	useEffect(() => {
 		channel.on('broadcast', { event: 'readyUp' + Router.query.id }, (payload) => {
 			console.log(payload.payload, 'READY UP PAYLOAD');
 			dispatch(gameActions.setPlayer1(player));
@@ -67,20 +67,13 @@ const Loading = () => {
 		});
 	}, [user]);
 
-	const playGame = () => {
-		console.log(player, 'PLAYER');
-		// console.log(player2, "PLAYER2");
-		console.log(userDeck, 'USERDECK');
-		// console.log(player2Deck, "PLAYER2DECK");
-		console.log(loading, 'LOADING STATUS');
-	};
-
 	const readyHandler = async () => {
 		await channel.send({
 			type: 'broadcast',
 			event: 'readyUp' + Router.query.id,
 			payload: { data: player, userDeck }
 		});
+
 		dispatch(loadActions.setLoading(false));
 		if (player1id && player1id !== user.id) {
 			const setPlayer2 = async () => {
@@ -92,11 +85,9 @@ const Loading = () => {
 
 	return (
 		<div>
-			{localLoading ? <div>LOADING...</div> : <button onClick={playGame}>Click to Play!</button>}
-
 			<Throwaway player2info={player2info} player2Deck={player2Deck2} />
-
-			<button onClick={readyHandler}>Ready?</button>
+			<Throwaway2 />
+			{lobbyPlayers?.length === 2 ? <button onClick={readyHandler}>Ready?</button> : 'Waiting for opponent to join'}
 		</div>
 	);
 };
