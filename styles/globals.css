@@ -199,8 +199,10 @@ a {
 .container1 {
   display: block;
   position: relative;
-  bottom: -600px;
-  width: 40%;
+  /* bottom: -600px; */
+  width: 600px;
+  height: 500px;
+  border-radius: 50px;
   text-align: center;
   font-family: "Ravi Prakash", cursive;
   -webkit-text-stroke: 2px black;
@@ -208,6 +210,8 @@ a {
   font-weight: 500;
   perspective: 600px;
   perspective-origin: 50% 0;
+  background-image: url("/images/gokufirst.gif");
+  background-size: cover;
 }
 
 .dbztext {
@@ -249,4 +253,42 @@ a {
   height: 50px;
   color: #f0833a;
   font-family: "Ravi Prakash", cursive;
+}
+
+.dragon-balls {
+  height: 150px;
+  width: 150px;
+  position: absolute;
+}
+
+.db1 {
+  left: 140px;
+}
+
+.db2 {
+  right: 40px;
+  top: 160px;
+}
+
+.db3 {
+  left: 20px;
+  top: 100px;
+}
+.db4 {
+  right: 300px;
+  top: 40px;
+}
+.db5 {
+  right: 100px;
+  bottom: 150px;
+}
+.db6 {
+  height: 140px;
+  width: 170px;
+  right: 250px;
+  top: 350px;
+}
+.db7 {
+  left: 50px;
+  bottom: 50px;
 }

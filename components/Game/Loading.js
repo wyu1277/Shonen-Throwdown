@@ -107,6 +107,83 @@ const Loading = () => {
   return (
     <div className="load-container">
       <audio src="/audio/cut.wav" ref={audioRef} />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3, delay: 0.7 }}
+        src="/images/1star1.png"
+        className="dragon-balls db1"
+      />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3, delay: 0.8 }}
+        src="/images/2star.png"
+        className="dragon-balls db2"
+      />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3, delay: 0.1 }}
+        src="/images/3star.png"
+        className="dragon-balls db3"
+      />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3 }}
+        src="/images/4star.png"
+        className="dragon-balls db4"
+      />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3, delay: 0.2 }}
+        src="/images/5star.png"
+        className="dragon-balls db5"
+      />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3, delay: 0.4 }}
+        src="/images/6star.png"
+        className="dragon-balls db6"
+      />
+      <motion.img
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: [1, 1.5, 1],
+        }}
+        transition={{ repeat: Infinity, duration: 3, delay: 0.6 }}
+        src="/images/7star.png"
+        className="dragon-balls db7"
+      />
 
       {localLoading && <div>LOADING...</div>}
 
