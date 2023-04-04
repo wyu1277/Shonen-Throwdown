@@ -6,14 +6,10 @@ import { toggleActions } from "@/store/slices/toggleSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-const roboto = Roboto({
-  weight: "400",
-  subsets: ["latin"],
-});
-
 const notoSerif = Noto_Serif({
   subsets: ["latin"],
   weight: "400",
+  color: "black",
 });
 export default function HowToPlay() {
   const toggledState = useSelector((state) => {
@@ -38,12 +34,12 @@ export default function HowToPlay() {
     >
       {!toggledState ? (
         <>
-          <h1 className={roboto.className}>Welcome To Shonen Throwdown!</h1>
+          <h1 className={styles.header}>Welcome To Shonen Throwdown!</h1>
           <img
             className={styles.bannerimg}
             src="https://i.imgur.com/zXVH6ZY.jpeg"
           />
-          <h2 className={roboto.className}>Introduction:</h2>
+          <h2 className={styles.sectionTitle}>Introduction:</h2>
           <p className={`${notoSerif.className} ${styles.p}`}>
             Welcome to Shonen Throwdown! This is a strategic 1v1 trading card
             game that combines elements of chance, skill, and luck. Players
@@ -57,7 +53,7 @@ export default function HowToPlay() {
             other players online. In this article, we'll go over the basic rules
             of the game so you can start playing right away!
           </p>
-          <h2 className={roboto.className}>Deck Building:</h2>
+          <h2 className={styles.sectionTitle}>Deck Building:</h2>
           <figure className={styles.figure}>
             <img
               className={styles.cardimg}
@@ -76,7 +72,7 @@ export default function HowToPlay() {
             keep in mind the strengths and weaknesses of each card, as well as
             how they work together to create a cohesive strategy.
           </p>
-          <h2 className={roboto.className}>Gameplay:</h2>
+          <h2 className={styles.sectionTitle}>Gameplay:</h2>
           <p className={`${notoSerif.className} ${styles.p}`}>
             Once you've built your deck, you're ready to start playing Shonen
             Throwdown! The goal of the game is to reduce your opponent's HP to
@@ -108,7 +104,7 @@ export default function HowToPlay() {
               game ends in a draw.
             </li>
           </ol>
-          <h2 className={roboto.className}>Conclusion:</h2>
+          <h2 className={styles.sectionTitle}>Conclusion:</h2>
           <p className={`${notoSerif.className} ${styles.p}`}>
             And that's how you play Shonen Throwdown! Remember to build your
             deck carefully, strategize your moves, and use your cards wisely to

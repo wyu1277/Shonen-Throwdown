@@ -1,45 +1,61 @@
 .howToPlayContainer {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	padding-left: 100px;
-	padding-right: 100px;
-	width: 60%;
-	max-width: 1700px;
-	margin: 0 auto;
-	margin-top: -30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  width: 60%;
+  max-width: 1700px;
+  margin: 0 auto;
+  margin-top: -30px;
+  background-image: url(https://i.imgur.com/xXPfQqL.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
 }
 
 .bannerimg {
-	margin: 20px;
-	width: 70%;
-	height: 70%;
+  margin: 20px;
+  width: 70%;
+  height: 70%;
 }
 
 .p {
-	margin: 20px;
-	text-align: center;
+  margin: 20px;
+  text-align: center;
+  color: black;
+}
+
+.sectionTitle {
+  color: black;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.header {
+  color: black;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .caption {
-	text-align: center;
-	font-size: smaller;
-	font-style: italic;
+  text-align: center;
+  font-size: smaller;
+  font-style: italic;
+  color: black;
 }
 
 .cardimg {
-	margin: 20px;
-	width: 50%;
-	height: 50%;
+  margin: 20px;
+  width: 50%;
+  height: 50%;
 }
 
 .figure {
-	margin: 20px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
