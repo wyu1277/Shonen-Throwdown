@@ -68,7 +68,7 @@ const GameRoom = ({ props }) => {
   const leaveHandler = async () => {
     supabase.removeAllChannels();
     console.log("removed all channels");
-    router.push("http://localhost:3000/");
+    router.push("/");
     setTrackingStatus("closed");
     // supabase.subscribe(async (status) => {
     //   if (trackStatus === "ok") {
