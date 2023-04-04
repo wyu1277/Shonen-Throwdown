@@ -48,7 +48,7 @@ const Channels = () => {
 				{/*create room will cause trigger to create new game row and create route user to newly created game[id].js set player1 to user who created and wait for player 2*/}
 				<h2 className={styles.existingHeading}>OPEN GAMES</h2>
 				{listChannels.length === 0 ? (
-					<h1 className={styles.noGames}>No games avalible, create your own game!</h1>
+					<h1 className={styles.noGames}>No games available, create your own game!</h1>
 				) : (
 					listChannels.map((channel, index) => (
 						<div className={styles.game} key={channel.id}>
