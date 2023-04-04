@@ -295,3 +295,14 @@ a {
 	left: 50px;
 	bottom: 50px;
 }
+
+.authLoadingParent {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.authLoading {
+	font-size: 100px;
+	margin-top: 200px;
+}

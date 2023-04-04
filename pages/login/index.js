@@ -25,37 +25,25 @@ const LoginPage = () => {
 		if (user) router.push('/');
 	}, [user]);
 
+	if (!user)
+		return (
+			<motion.div variants={container} initial="initial" animate="visible" exit="exit" className={classes.auth}>
+				<Auth
+					redirectTo="http://localhost:3000/"
+					appearance={{ theme: ThemeSupa }}
+					theme="dark"
+					supabaseClient={supabaseClient}
+					providers={['google', 'github']}
+					socialLayout="horizontal"
+				/>
+			</motion.div>
+		);
 
-  if (!user)
-    return (
-      <motion.div
-        variants={container}
-        initial="initial"
-        animate="visible"
-        exit="exit"
-        className={classes.auth}
-      >
-        <Auth
-          redirectTo="http://localhost:3000/"
-          appearance={{ theme: ThemeSupa }}
-          theme="dark"
-          supabaseClient={supabaseClient}
-          providers={["google", "github"]}
-          socialLayout="horizontal"
-        />
-      </motion.div>
-    );
-
-  return (
-    <motion.div
-      variants={container}
-      initial="initial"
-      animate="visible"
-      exit="exit"
-    >
-      <p>loading...</p>
-    </motion.div>
-  );
+	return (
+		<motion.div className="authLoadingParent" variants={container} initial="initial" animate="visible" exit="exit">
+			<h1 className="authLoading">LOADING...</h1>
+		</motion.div>
+	);
 };
 
 export default LoginPage;
