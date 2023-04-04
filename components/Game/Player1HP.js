@@ -22,8 +22,13 @@ const Player1HP = (props) => {
 
   return (
     <motion.div
-      initial={{ scale: 0, backgroundColor: " #220901" }}
-      animate={{ scale: 1, backgroundColor: ["white", "red", " #220901"] }}
+      initial={{ scale: 0, backgroundColor: " black" }}
+      animate={{
+        scale: 1,
+        backgroundColor: ["white", "red", " black"],
+        fontWeight: "bold",
+        opacity: 1,
+      }}
       className="player1-hp"
     >
       {player1.username} HP: {health1}

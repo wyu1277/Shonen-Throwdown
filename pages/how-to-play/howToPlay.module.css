@@ -1,43 +1,45 @@
-.howToPlayContainer{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    padding-left: 100px;
-    padding-right: 100px;
-    width:60%;
-    margin: 0 auto;
+.howToPlayContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	padding-left: 100px;
+	padding-right: 100px;
+	width: 60%;
+	max-width: 1700px;
+	margin: 0 auto;
+	margin-top: -30px;
 }
 
-.bannerimg{
-    margin: 20px;
-    width: 70%;
-    height: 70%
+.bannerimg {
+	margin: 20px;
+	width: 70%;
+	height: 70%;
 }
 
-.p{
-    margin: 20px;
-    text-align: center;
+.p {
+	margin: 20px;
+	text-align: center;
 }
 
-.caption{
-    text-align: center;
-    font-size: smaller;
-    font-style: italic;
+.caption {
+	text-align: center;
+	font-size: smaller;
+	font-style: italic;
 }
 
-.cardimg{
-    margin: 20px;
-    width:50%;
-    height: 50%;
+.cardimg {
+	margin: 20px;
+	width: 50%;
+	height: 50%;
 }
 
-.figure{
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.figure {
+	margin: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }

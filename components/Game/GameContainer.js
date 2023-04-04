@@ -8,14 +8,14 @@ const GameContainer = (props) => {
         width: 200,
         height: 200,
         borderRadius: "50%",
-        opacity: 0,
+        // opacity: 0,
       }}
       animate={{
         scale: 1,
         borderRadius: "2%",
-        height: "95vh",
-        width: "95vw",
-        opacity: 0.3,
+        height: "99vh",
+        width: "99vw",
+        // opacity: 1,
       }}
       transition={{ duration: 1.5 }}
       className="game-box"

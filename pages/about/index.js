@@ -1,15 +1,16 @@
 "use client";
-import React from "react";
-// import TeamMate from "@/components/teammate";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
 import styles from "./About.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin, faSquareGithub } from "@fortawesome/free-brands-svg-icons";
+import { faSquareEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const About = () => {
-  const buttons =
-    typeof window !== "undefined" &&
-    document.querySelectorAll("[data-carousel-button]");
-  if (typeof window !== "undefined") {
+  useEffect(() => {
+    const buttons = document.querySelectorAll("[data-carousel-button]");
+
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         const offset = button.dataset.carouselButton === "next" ? 1 : -1;
@@ -25,7 +26,8 @@ const About = () => {
         delete activeSlide.dataset.active;
       });
     });
-  }
+  });
+
   return (
     <motion.div
       variants={container}
@@ -50,50 +52,98 @@ const About = () => {
             <div className={styles.slide} data-active>
               <img
                 className={styles.slideImg}
-                src="https://i.imgur.com/GDBpXpC.png"
+                src="https://i.imgur.com/viDgPzH.png"
                 alt="developer-card-kyle"
               ></img>
-              <h3>Kyle Wong</h3>
-              <p>loremipsumloreamipsum</p>
-              <a href={`mailto:kwong498@gmail.com}`}>✉️</a>
-              <a href={`https://www.linkedin.com/in/kylematthewwong`}>👨🏽‍💼</a>
-              <a href={`https://github.com/Kywongster`}>🐈‍⬛</a>
+              <div className={styles.cardButtons}>
+                <a href={`mailto:kwong498@gmail.com}`}>
+                  <FontAwesomeIcon
+                    icon={faSquareEnvelope}
+                    className={styles.icons}
+                  />
+                </a>
+                <a href={`https://www.linkedin.com/in/kylematthewwong`}>
+                  <FontAwesomeIcon icon={faLinkedin} className={styles.icons} />
+                </a>
+                <a href={`https://github.com/Kywongster`}>
+                  <FontAwesomeIcon
+                    icon={faSquareGithub}
+                    className={styles.icons}
+                  />
+                </a>
+              </div>
             </div>
             <div className={styles.slide}>
               <img
                 className={styles.slideImg}
-                src="https://i.imgur.com/u7SeDyz.png"
+                src="https://i.imgur.com/mbhsWYT.png"
                 alt="developer-card-victor"
               ></img>
-              <h3>Victor Flores</h3>
-              <p>loremipsumloreamipsum</p>
-              <a href={`mailto:thelegendofvictor@gmail.com}`}>✉️</a>
-              <a href={`https://www.linkedin.com/in/mikloflores`}>👨🏽‍💼</a>
-              <a href={`https://github.com/Miklo1775`}>🐈‍⬛</a>
+              <div className={styles.cardButtons}>
+                <a href={`mailto:thelegendofvictor@gmail.com}`}>
+                  <FontAwesomeIcon
+                    icon={faSquareEnvelope}
+                    className={styles.icons}
+                  />
+                </a>
+                <a href={`https://www.linkedin.com/in/mikloflores`}>
+                  <FontAwesomeIcon icon={faLinkedin} className={styles.icons} />
+                </a>
+                <a href={`https://github.com/Miklo1775`}>
+                  <FontAwesomeIcon
+                    icon={faSquareGithub}
+                    className={styles.icons}
+                  />
+                </a>
+              </div>
             </div>
             <div className={styles.slide}>
               <img
                 className={styles.slideImg}
-                src="https://i.imgur.com/nmhfFBZ.png"
+                src="https://i.imgur.com/pQneKpj.png"
                 alt="developer-card-wilson"
               ></img>
-              <h3>Wilson Yu</h3>
-              <p>loremipsumloreamipsum</p>
-              <a href={`mailto:wyu1277@gmail.com}`}>✉️</a>
-              <a href={`https://www.linkedin.com/in/whydesigns`}>👨🏽‍💼</a>
-              <a href={`https://github.com/github`}>🐈‍⬛</a>
+              <div className={styles.cardButtons}>
+                <a href={`mailto:wyu1277@gmail.com}`}>
+                  <FontAwesomeIcon
+                    icon={faSquareEnvelope}
+                    className={styles.icons}
+                  />
+                </a>
+                <a href={`https://www.linkedin.com/in/whydesigns`}>
+                  <FontAwesomeIcon icon={faLinkedin} className={styles.icons} />
+                </a>
+                <a href={`https://github.com/github`}>
+                  <FontAwesomeIcon
+                    icon={faSquareGithub}
+                    className={styles.icons}
+                  />
+                </a>
+              </div>
             </div>
             <div className={styles.slide}>
               <img
                 className={styles.slideImg}
-                src="https://i.imgur.com/u7SeDyz.png"
+                src="https://i.imgur.com/TFR01Al.png"
                 alt="developer-card-jon"
               ></img>
-              <h3>Jonathan Wei</h3>
-              <p>loremipsumloreamipsum</p>
-              <a href={`mailto:jkwei.86@gmail.com}`}>✉️</a>
-              <a href={`https://www.linkedin.com/in/linkedIn}`}>👨🏽‍💼</a>
-              <a href={`https://github.com/github}`}>🐈‍⬛</a>
+              <div className={styles.cardButtons}>
+                <a href={`mailto:jkwei.86@gmail.com}`}>
+                  <FontAwesomeIcon
+                    icon={faSquareEnvelope}
+                    className={styles.icons}
+                  />
+                </a>
+                <a href={`https://www.linkedin.com/in/linkedIn}`}>
+                  <FontAwesomeIcon icon={faLinkedin} className={styles.icons} />
+                </a>
+                <a href={`https://github.com/github}`}>
+                  <FontAwesomeIcon
+                    icon={faSquareGithub}
+                    className={styles.icons}
+                  />
+                </a>
+              </div>
             </div>
             <button
               className={styles.carouselButtonNext}

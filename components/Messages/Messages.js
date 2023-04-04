@@ -4,10 +4,12 @@ import { supabase } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import styles from "./Messages.module.css";
 import { Noto_Serif } from "next/font/google";
+import { motion } from "framer-motion";
+
 
 const notoSerif = Noto_Serif({
-  subsets: ["latin"],
-  weight: "400",
+	subsets: ['latin'],
+	weight: '400'
 });
 
 const Messages = (props) => {
@@ -106,7 +108,11 @@ const Messages = (props) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <motion.div
+      animate={{ y: 60 }}
+      whileHover={{ y: 0 }}
+      className={styles.wrapper}
+    >
       <audio src="/audio/whip.mp3" ref={audioRef} />
 
       <h2 className={styles.h2} onClick={() => setIsVisible(!isVisible)}></h2>
@@ -147,7 +153,7 @@ const Messages = (props) => {
           </form>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

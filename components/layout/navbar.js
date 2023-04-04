@@ -20,6 +20,11 @@ const Navbar = () => {
 		setShowDropdown(!showDropdown);
 		audioRef.current.play();
 	};
+
+	const audioHandler = () => {
+		audioRef.current.volume = 0.2;
+		audioRef.current.play();
+	};
 	return (
 		<div className={styles.nav}>
 			<audio src="/audio/click.wav" ref={audioRef} />
@@ -30,27 +35,27 @@ const Navbar = () => {
 				<Link className={styles.link} onClick={() => audioRef.current.play()} href="/news">
 					NEWS AND UPDATES
 				</Link>
-				<Link className={styles.link} onClick={() => audioRef.current.play()} href="/about">
+				<Link className={styles.link} onClick={audioHandler} href="/about">
 					ABOUT
 				</Link>
-				<Link className={styles.link} onClick={() => audioRef.current.play()} href="/how-to-play">
+				<Link className={styles.link} onClick={audioHandler} href="/how-to-play">
 					HOW TO PLAY
 				</Link>
-				<Link className={styles.link} onClick={() => audioRef.current.play()} href="/collection">
+				<Link className={styles.link} onClick={audioHandler} href="/collection">
 					CARDS
 				</Link>
 				{user && (
-					<Link className={styles.link} onClick={() => audioRef.current.play()} href="/market">
+					<Link className={styles.link} onClick={audioHandler} href="/market">
 						MARKET
 					</Link>
 				)}
 				{user && (
-					<Link className={styles.link} onClick={() => audioRef.current.play()} href="/lobby">
+					<Link className={styles.link} onClick={audioHandler} href="/lobby">
 						PLAY!
 					</Link>
 				)}
 				{!user && (
-					<Link className={styles.link} onClick={() => audioRef.current.play()} href="/login">
+					<Link className={styles.link} onClick={audioHandler} href="/login">
 						LOGIN/SIGNUP
 					</Link>
 				)}
@@ -63,11 +68,15 @@ const Navbar = () => {
 			{showDropdown && (
 				<div className={styles.dropDown}>
 					{user && (
-						<Link className={styles.dropDownLink} onClick={() => audioRef.current.play()} href="/user">
+						<Link className={styles.dropDownLink} onClick={audioHandler} href="/user">
 							MY ACCOUNT
 						</Link>
 					)}
-					{user && <button onClick={() => signOutHandler()}>Sign Out</button>}
+					{user && (
+						<button className={styles.signout} onClick={() => signOutHandler()}>
+							Sign Out
+						</button>
+					)}
 				</div>
 			)}
 		</div>
