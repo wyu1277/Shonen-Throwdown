@@ -24,8 +24,8 @@ const Navbar = () => {
 		<div className={styles.nav}>
 			<audio src="/audio/click.wav" ref={audioRef} />
 			<Link className={styles.logoContainer} onClick={() => audioRef.current.play()} href="/">
-					<img className={styles.logo} src="https://i.imgur.com/igGs067.png" />
-				</Link>
+				<img className={styles.logo} src="https://i.imgur.com/igGs067.png" />
+			</Link>
 			<div className={styles.linkContainer}>
 				<Link className={styles.link} onClick={() => audioRef.current.play()} href="/news">
 					NEWS AND UPDATES
@@ -67,7 +67,11 @@ const Navbar = () => {
 							MY ACCOUNT
 						</Link>
 					)}
-					{user && <button onClick={() => signOutHandler()}>Sign Out</button>}
+					{user && (
+						<button className={styles.signout} onClick={() => signOutHandler()}>
+							Sign Out
+						</button>
+					)}
 				</div>
 			)}
 		</div>
