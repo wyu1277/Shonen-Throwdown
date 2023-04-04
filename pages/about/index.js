@@ -4,7 +4,11 @@ import container from "@/styles/variants";
 import styles from "./About.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faSquareGithub } from "@fortawesome/free-brands-svg-icons";
-import { faSquareEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAnglesLeft,
+  faAnglesRight,
+  faSquareEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
 
 const About = () => {
   useEffect(() => {
@@ -41,11 +45,11 @@ const About = () => {
           alt="Pick a developer, any developer!"
         ></img>
         <div className={styles.carousel} data-carousel>
-          <button
-            className={styles.carouselButtonPrev}
-            data-carousel-button="prev"
-          >
-            &#11160;
+          <button data-carousel-button="prev">
+            <FontAwesomeIcon
+              icon={faAnglesLeft}
+              className={styles.carouselButtonPrev}
+            />
           </button>
           <ul className={styles.dataSlides} data-slides>
             <li className={styles.slide} data-active>
@@ -144,11 +148,11 @@ const About = () => {
                 </a>
               </div>
             </li>
-            <button
-              className={styles.carouselButtonNext}
-              data-carousel-button="next"
-            >
-              &#11162;
+            <button data-carousel-button="next">
+              <FontAwesomeIcon
+                icon={faAnglesRight}
+                className={styles.carouselButtonNext}
+              />
             </button>
           </ul>
         </div>

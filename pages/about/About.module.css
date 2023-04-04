@@ -89,11 +89,10 @@
   top: 50%;
   z-index: 2;
   transform: translateY(-50%);
-  color: white;
+  color: rgb(255, 200, 0);
+  opacity: 70%;
   cursor: pointer;
   left: 1rem;
-  text-shadow: 0px 0px 15px rgb(255, 196, 0);
-  inset: 0px 0px 15px rgb(255, 196, 0);
 }
 
 .carouselButtonNext {
@@ -104,13 +103,12 @@
   top: 50%;
   z-index: 2;
   transform: translateY(-50%);
-  color: white;
+  color: rgb(255, 200, 0);
+  opacity: 70%;
   cursor: pointer;
   border-radius: 0.25rem;
   padding: 0.5rem;
   right: 1rem;
-  text-shadow: 0px 0px 15px rgb(255, 196, 0);
-  inset: 0px 0px 15px rgb(255, 196, 0);
 }
 
 .icons {
