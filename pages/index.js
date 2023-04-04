@@ -95,9 +95,9 @@ const Home = ({ user }) => {
 						<div className={styles.sectionInfo}>
 							<img className={styles.cardImg2} src="https://i.imgur.com/1RbpkCe.png" alt="4 cards fanned out" />
 							<div className={styles.sectionTextContainer}>
-								<h2>EASY TO LEARN, FUN TO PLAY!</h2>
-								<h1>BEGIN YOUR ADVENTURE</h1>
-								<h1>WITH OUR HOW TO PLAY!</h1>
+								<h2>Easy To Learn, Fun To Play!</h2>
+								<h1>Begin your adventure</h1>
+								<h1>with our how to play!</h1>
 								<button className={roboto.className} onClick={() => router.push('/how-to-play')}>
 									LEARN MORE &#62;
 								</button>
