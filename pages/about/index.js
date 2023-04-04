@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import container from "@/styles/variants";
@@ -48,15 +47,15 @@ const About = () => {
           >
             &#11160;
           </button>
-          <div className={styles.dataSlides} data-slides>
-            <div className={styles.slide} data-active>
+          <ul className={styles.dataSlides} data-slides>
+            <li className={styles.slide} data-active>
               <img
                 className={styles.slideImg}
                 src="https://i.imgur.com/viDgPzH.png"
                 alt="developer-card-kyle"
               ></img>
               <div className={styles.cardButtons}>
-                <a href={`mailto:kwong498@gmail.com}`}>
+                <a href={`mailto:kwong498@gmail.com`}>
                   <FontAwesomeIcon
                     icon={faSquareEnvelope}
                     className={styles.icons}
@@ -72,15 +71,15 @@ const About = () => {
                   />
                 </a>
               </div>
-            </div>
-            <div className={styles.slide}>
+            </li>
+            <li className={styles.slide}>
               <img
                 className={styles.slideImg}
                 src="https://i.imgur.com/mbhsWYT.png"
                 alt="developer-card-victor"
               ></img>
               <div className={styles.cardButtons}>
-                <a href={`mailto:thelegendofvictor@gmail.com}`}>
+                <a href={`mailto:thelegendofvictor@gmail.com`}>
                   <FontAwesomeIcon
                     icon={faSquareEnvelope}
                     className={styles.icons}
@@ -96,15 +95,15 @@ const About = () => {
                   />
                 </a>
               </div>
-            </div>
-            <div className={styles.slide}>
+            </li>
+            <li className={styles.slide}>
               <img
                 className={styles.slideImg}
                 src="https://i.imgur.com/pQneKpj.png"
                 alt="developer-card-wilson"
               ></img>
               <div className={styles.cardButtons}>
-                <a href={`mailto:wyu1277@gmail.com}`}>
+                <a href={`mailto:wyu1277@gmail.com`}>
                   <FontAwesomeIcon
                     icon={faSquareEnvelope}
                     className={styles.icons}
@@ -113,45 +112,45 @@ const About = () => {
                 <a href={`https://www.linkedin.com/in/whydesigns`}>
                   <FontAwesomeIcon icon={faLinkedin} className={styles.icons} />
                 </a>
-                <a href={`https://github.com/github`}>
+                <a href={`https://github.com/wyu1277`}>
                   <FontAwesomeIcon
                     icon={faSquareGithub}
                     className={styles.icons}
                   />
                 </a>
               </div>
-            </div>
-            <div className={styles.slide}>
+            </li>
+            <li className={styles.slide}>
               <img
                 className={styles.slideImg}
                 src="https://i.imgur.com/TFR01Al.png"
                 alt="developer-card-jon"
               ></img>
               <div className={styles.cardButtons}>
-                <a href={`mailto:jkwei.86@gmail.com}`}>
+                <a href={`mailto:jkwei.86@gmail.com`}>
                   <FontAwesomeIcon
                     icon={faSquareEnvelope}
                     className={styles.icons}
                   />
                 </a>
-                <a href={`https://www.linkedin.com/in/linkedIn}`}>
+                <a href={`https://www.linkedin.com/in/wei-jon/`}>
                   <FontAwesomeIcon icon={faLinkedin} className={styles.icons} />
                 </a>
-                <a href={`https://github.com/github}`}>
+                <a href={`https://github.com/JonWei86`}>
                   <FontAwesomeIcon
                     icon={faSquareGithub}
                     className={styles.icons}
                   />
                 </a>
               </div>
-            </div>
+            </li>
             <button
               className={styles.carouselButtonNext}
               data-carousel-button="next"
             >
               &#11162;
             </button>
-          </div>
+          </ul>
         </div>
       </div>
     </motion.div>

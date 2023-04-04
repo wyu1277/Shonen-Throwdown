@@ -16,7 +16,11 @@
   height: 30vh;
   margin-bottom: 40%;
 }
-
+.carousel > ul {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
 .carousel {
   width: 40vw;
   height: 40vh;
@@ -47,6 +51,7 @@
 .slide[data-active] {
   opacity: 1;
   animation: anime 2.5s infinite ease-in-out alternate;
+  z-index: 99;
 }
 
 .slideImg {
@@ -118,7 +123,7 @@
   cursor: pointer;
   transition: 0.5s;
 }
-/* .icons:before {
+.icons:before {
   position: absolute;
   content: "";
   background: #000bd3;
@@ -137,4 +142,4 @@
 .icons:hover {
   color: #3037ba;
   box-shadow: 0 0 15px #000bd3;
-} */
+}
