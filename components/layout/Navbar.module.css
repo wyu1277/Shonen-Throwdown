@@ -1,10 +1,12 @@
 .nav {
 	display: flex;
-	justify-content: right;
+	justify-content: center;
 	align-items: center;
 	height: 60px;
 	background-color: rgb(243, 249, 249);
 	margin-bottom: 30px;
+	max-width: 1800px;
+	margin: 0 auto 30px auto;
 }
 
 .link {
@@ -33,7 +35,7 @@
 
 .logo {
 	height: 60%;
-	width: 60%;
+	width: 85%;
 }
 
 .logo:hover {
@@ -81,4 +83,15 @@
 
 .dropDownLink:hover {
 	color: rgb(187, 42, 20);
+}
+
+.signout {
+	height: 30px;
+	width: 80px;
+	border-radius: 5px;
+}
+
+.signout:hover {
+	background-color: red;
+	color: #fff;
 }

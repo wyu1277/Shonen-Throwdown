@@ -1,7 +1,9 @@
 .newsbody {
-  height: 95vh;
-  /* background-color: blue; */
-  background-image: url("/images/news.jpeg");
-  background-size: cover;
-  opacity: 0.8;
+	height: 95vh;
+	/* background-color: blue; */
+	background-image: url('/images/news.jpeg');
+	background-size: cover;
+	opacity: 0.8;
+	max-width: 1800px;
+	margin: 0 auto;
 }
