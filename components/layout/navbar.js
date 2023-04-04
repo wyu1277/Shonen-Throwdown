@@ -28,11 +28,11 @@ const Navbar = () => {
 	return (
 		<div className={styles.nav}>
 			<audio src="/audio/click.wav" ref={audioRef} />
-			<div className={styles.linkContainer}>
-				<Link className={styles.logoContainer} onClick={audioHandler} href="/">
+			<Link className={styles.logoContainer} onClick={() => audioRef.current.play()} href="/">
 					<img className={styles.logo} src="https://i.imgur.com/igGs067.png" />
 				</Link>
-				<Link className={styles.link} onClick={audioHandler} href="/news">
+			<div className={styles.linkContainer}>
+				<Link className={styles.link} onClick={() => audioRef.current.play()} href="/news">
 					NEWS AND UPDATES
 				</Link>
 				<Link className={styles.link} onClick={audioHandler} href="/about">
