@@ -34,6 +34,7 @@
 .logo {
 	height: 60%;
 	width: 60%;
+	max-width: 100px;
 }
 
 .logo:hover {
