@@ -61,7 +61,6 @@ const Home = ({ user }) => {
       animate="visible"
       exit="exit"
     >
-      <meta charset="UTF-8"></meta>
       {loadState ? (
         <div className={styles.loading}>LOADING...</div>
       ) : (
