@@ -45,11 +45,17 @@ const About = () => {
           alt="Pick a developer, any developer!"
         ></img>
         <div className={styles.carousel} data-carousel>
-          <button data-carousel-button="prev">
-            <FontAwesomeIcon
-              icon={faAnglesLeft}
-              className={styles.carouselButtonPrev}
-            />
+          <button
+            className={styles.carouselButtonNext}
+            data-carousel-button="next"
+          >
+            <FontAwesomeIcon icon={faAnglesRight} />
+          </button>
+          <button
+            className={styles.carouselButtonPrev}
+            data-carousel-button="prev"
+          >
+            <FontAwesomeIcon icon={faAnglesLeft} />
           </button>
           <ul className={styles.dataSlides} data-slides>
             <li className={styles.slide} data-active>
@@ -148,12 +154,6 @@ const About = () => {
                 </a>
               </div>
             </li>
-            <button data-carousel-button="next">
-              <FontAwesomeIcon
-                icon={faAnglesRight}
-                className={styles.carouselButtonNext}
-              />
-            </button>
           </ul>
         </div>
       </div>
