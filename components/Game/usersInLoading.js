@@ -2,15 +2,17 @@ import { useUser } from "@supabase/auth-helpers-react";
 import {useSelector} from 'react-redux'
 import { useState, useEffect } from "react";
 import {supabase} from '@/lib/supabase'
-const Chat = () => {
+import Router, { useRouter } from "next/router";
+const UsersInLobby = () => {
     const userData = useSelector((state)=>{
         return state.user.user
     })
+    const channelID = Router.query.id + 1
 
     const username = userData.username
     const [users, setUsers] = useState();
-
-    const channel = supabase.channel('presenceCheck',{
+    
+    const channel = supabase.channel(channelID,{
         config:{
             presence:{
                 key:'username'
@@ -48,9 +50,9 @@ const Chat = () => {
     console.log('this is users in lobby', users)
     return(
         <div>
-            <h1>{users ? users.join(', '): 'loading'}</h1>
+            <h1>Users In Lobby: {users ? users.join(', '): 'loading'}</h1>
         </div>
     )
 };
 
-export default Chat;
+export default UsersInLobby;

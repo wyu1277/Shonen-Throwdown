@@ -11,6 +11,7 @@ import Router, { useRouter } from "next/router";
 import Throwaway from "./Throwaway";
 import { useRef } from "react";
 import { motion } from "framer-motion";
+import UsersInLoading from "./usersInLoading"
 
 let player2info = null;
 let player2Deck2 = null;
@@ -54,27 +55,7 @@ const Loading = () => {
   player1id();
 
   useEffect(() => {
-    channel.subscribe(async (status) => {
-      await channel.track();
-    });
-
-    channel.on("presence", { event: "sync" }, (status) => {
-      console.log("sync");
-      channel.send({
-        type: "broadcast",
-        event: "getUserInfo/" + channelID,
-        payload: { player, userDeck },
-      });
-    });
-
-    channel.on("presence", { event: "join" }, ({ newPresences }) => {
-      console.log("joined");
-      channel.send({
-        type: "broadcast",
-        event: "getUserInfo/" + channelID,
-        payload: { player, userDeck },
-      });
-    });
+    channel.subscribe();
 
     channel.on("broadcast", { event: "readyUp/" + channelID }, (payload) => {
       console.log(payload.payload, "READY UP PAYLOAD");
@@ -105,6 +86,8 @@ const Loading = () => {
   };
 
   return (
+    <>
+    <UsersInLoading/>
     <div className="load-container">
       <audio src="/audio/cut.wav" ref={audioRef} />
       <motion.img
@@ -246,6 +229,7 @@ const Loading = () => {
         </motion.div>
       </button>
     </div>
+    </>
   );
 };
 
