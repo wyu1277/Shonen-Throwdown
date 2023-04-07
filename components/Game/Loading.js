@@ -20,6 +20,9 @@ const Loading = () => {
   const router = useRouter;
   const audioRef = useRef(null);
   const [localLoading, setLocalLoading] = useState(false);
+  const [readyHandler, setReadyHandler] = useState(() => () => {});
+  const [users, setUsers] = useState();
+
 
   const user = useUser();
   const dispatch = useDispatch();
@@ -40,8 +43,12 @@ const Loading = () => {
   }, []);
 
   const channel = supabase.channel(channelID, {
-    config: { presence: { key: player?.username } },
-  });
+    config:{
+        presence:{
+            key:'username'
+        }
+    }
+});
 
   const player1id = async () => {
     let { data } = await supabase
@@ -55,39 +62,59 @@ const Loading = () => {
   player1id();
 
   useEffect(() => {
-    channel.subscribe();
+    channel
+    .subscribe(async (status)=>{
+        if (status === 'SUBSCRIBED'){
+            const presenceTrackStatus = await channel.track({
+                user: player.username
+            })
+            console.log(presenceTrackStatus)
+        }
+    })
 
     channel.on("broadcast", { event: "readyUp/" + channelID }, (payload) => {
       console.log(payload.payload, "READY UP PAYLOAD");
       dispatch(gameActions.setPlayer1(player));
       dispatch(gameActions.setPlayer2(payload.payload.player));
       dispatch(gameActions.setPlayer2Deck(payload.payload.userDeck));
-    });
+    })
+    .on('presence',{event: 'sync'}, ()=>{
+      const state = channel.presenceState()
+      const usersInLobby = state.username ? state.username.map((user)=> user.user) : []
+      setUsers(usersInLobby)
+      console.log('this is state',users)
+  })
+  .on('presence',{event:'join'},({key, newPresences})=>{
+      console.log(key, newPresences,"has joined")
+  })
+  .on('presence',{event:'leave'},({key, leftPresences})=>{
+      console.log(key, leftPresences,"has left")
+  })
+
+    setReadyHandler(()=>()=>{
+      channel.send({
+        type: "broadcast",
+        event: "readyUp/" + channelID,
+        payload: { player, userDeck },
+      });
+      console.log(audioRef, "AUDIO REF");
+  
+      dispatch(loadActions.setLoading(false));
+      if (player1id && player1id !== user.id) {
+        const setPlayer2 = async () => {
+          await supabase
+            .from("game")
+            .update({ player2: user.id })
+            .eq("id", channelID);
+        };
+        setPlayer2();
+      }
+    })
   }, [user]);
-
-  const readyHandler = () => {
-    channel.send({
-      type: "broadcast",
-      event: "readyUp/" + channelID,
-      payload: { player, userDeck },
-    });
-    console.log(audioRef, "AUDIO REF");
-
-    dispatch(loadActions.setLoading(false));
-    if (player1id && player1id !== user.id) {
-      const setPlayer2 = async () => {
-        await supabase
-          .from("game")
-          .update({ player2: user.id })
-          .eq("id", channelID);
-      };
-      setPlayer2();
-    }
-  };
 
   return (
     <>
-    <UsersInLoading/>
+    <h1>{users ? users.join(', '): 'loading'}</h1>
     <div className="load-container">
       <audio src="/audio/cut.wav" ref={audioRef} />
       <motion.img
@@ -191,7 +218,7 @@ const Loading = () => {
           </div>
         </div>
       </div>
-      <button onClick={readyHandler} className="ready-btn">
+      <button onClick={()=>{if(users.length === 2){readyHandler()}}} className="ready-btn">
         <motion.div
           initial={{
             scale: 1,
@@ -224,7 +251,7 @@ const Loading = () => {
             animate={{ scale: 1, y: 200 }}
             className="ready-text"
           >
-            Are you ready?
+            {users ? users.length === 2 ? 'Are you ready?':'Waiting for opponent!': 'loading'}
           </motion.p>
         </motion.div>
       </button>

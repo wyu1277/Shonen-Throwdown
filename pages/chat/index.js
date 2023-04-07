@@ -9,6 +9,7 @@ const Chat = () => {
 
     const username = userData.username
     const [users, setUsers] = useState();
+    const [sendMessage, setSendMessage] = useState(() => () => {});
 
     const channel = supabase.channel('presenceCheck',{
         config:{
@@ -39,16 +40,27 @@ const Chat = () => {
         .on('presence',{event:'leave'},({key, leftPresences})=>{
             console.log(key, leftPresences,"has left")
         })
+        .on('broadcast', { event: 'supa' }, (payload) => setUsers(prevState => [...prevState, payload.payload.username]))
+        
+        setSendMessage(() => () => {
+            channel.send({
+                type: "broadcast",
+                event: "supa",
+                payload: { username: "username"},
+            });
+        });
+        
         return()=>{
             channel.unsubscribe()
         }
     }, [])
-   
+
     console.log('this is my username:',username)
     console.log('this is users in lobby', users)
     return(
         <div>
-            <h1>{users ? users.join(', '): 'loading'}</h1>
+            <h1>{users ? users: 'loading'}</h1>
+            <button onClick={sendMessage}>Test</button>
         </div>
     )
 };
